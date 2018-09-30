@@ -14,12 +14,13 @@ class FirepadAce extends Component {
     };
 
     window.firebase.initializeApp(config);
-    //// Get Firebase Database reference.
     let firepadRef = firebase.database().ref();
-    //// Create ACE
+    
+    // create Ace editor and config
     let editor = ace.edit("firepad-container");
     editor.setTheme("ace/theme/tomorrow_night");
     editor.$blockScrolling = 1;
+    
     let session = editor.getSession();
     session.setUseWrapMode(true);
     session.setUseWorker(false);
@@ -27,7 +28,7 @@ class FirepadAce extends Component {
     session.setMode("ace/mode/javascript");
 
     let firepad = window.Firepad.fromACE(firepadRef, editor, {
-      defaultText: '// JavaScript Editing with Firepad!\nfunction go() {\n  var message = "Hello, world.";\n  console.log(message);\n}'
+      defaultText: 'howdy world'
     });
   }
 
