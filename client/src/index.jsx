@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 //import Editor from './Components/Editor.jsx';
 import io from "socket.io-client";
-import Firepad from './Components/Firepad.jsx';
+import Firepad from './Components/Firepad-ace.jsx';
 
 class App extends Component {
   constructor(props) {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../../dist/darcula.css';
 
 class Firepad extends Component {
   constructor(props) {
@@ -8,18 +9,21 @@ class Firepad extends Component {
 
   componentDidMount() {
     const config = {
-      apiKey: "AIzaSyAxYw8yYf8KtAqcLdi97MnZWVdFQQzcivY",
-      authDomain: "athesio-66b77.firebaseapp.com",
-      databaseURL: "https://athesio-66b77.firebaseio.com",
-      projectId: "athesio-66b77",
-      storageBucket: "athesio-66b77.appspot.com",
-      messagingSenderId: "481686922961"
+      apiKey: '',
+      authDomain: 'athesio-66b77.firebaseapp.com',
+      databaseURL: 'https://athesio-66b77.firebaseio.com'
     };
 
     window.firebase.initializeApp(config);
-    var firepadRef = firebase.database().ref();
-    var editor = window.ace.edit('firepad-container');
-    var firepad = window.Firepad.fromACE(firepadRef, editor, { userColor: 'white' });
+    let firepadRef = firebase.database().ref();
+    let codeMirror = window.CodeMirror(document.getElementById('firepad-container'), 
+      { lineNumbers: true, mode: {name: 'javascript', json: true }, theme: 'darcula', tabSize: 2 });
+    let firepad = window.Firepad.fromCodeMirror(firepadRef, codeMirror);
+    // firepad.on('ready', function () {
+    //   if (firepad.isHistoryEmpty()) {
+    //     firepad.te('<span style="font-size: 24px;">Rich-text editing with <span style="color: red">Firepad!</span></span><br/><br/>Collaborative-editing made easy.\n');
+    //   }
+    // });
   }
 
   render() {
