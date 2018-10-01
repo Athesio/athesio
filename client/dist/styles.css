@@ -10,6 +10,7 @@ a.powered-by-firepad {
 body {
   height: 100%;
   width: 100%;
+  background-color: #25282d;
 }
 
 #Midway {
@@ -96,8 +97,10 @@ body {
 #Editor {
   transition: margin-left .5s;
   padding: 16px;
+  padding-top: 0px;
   margin-left: 20px;
   margin-right: 0px;
+  top: -1px;
   /* height: 100%; */
 }
 
@@ -183,6 +186,7 @@ iframe {
 #Ace {
   width: 50%;
   padding-right:0px;
+  padding-left: 0px;
 }
 #res {
   padding-left: 0px;
