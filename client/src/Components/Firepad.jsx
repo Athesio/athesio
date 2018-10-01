@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../../dist/darcula.css';
 
 class Firepad extends Component {
   constructor(props) {
@@ -15,21 +14,27 @@ class Firepad extends Component {
     };
 
     window.firebase.initializeApp(config);
-
     let firepadRef = firebase.database().ref();
     
-    let codeMirror = window.CodeMirror(document.getElementById('firepad-container'), 
-      { lineNumbers: true, mode: {name: 'javascript', json: true }, theme: 'darcula', tabSize: 2 });
+    // create Ace editor and config
+    let editor = ace.edit("firepad-container");
+    editor.setTheme("ace/theme/tomorrow_night");
+    editor.$blockScrolling = 1;
+    
+    let session = editor.getSession();
+    session.setUseWrapMode(true);
+    session.setUseWorker(false);
+    session.setTabSize(2);
+    session.setMode("ace/mode/javascript");
 
-    let firepad = window.Firepad.fromCodeMirror(firepadRef, codeMirror);
+    let firepad = window.Firepad.fromACE(firepadRef, editor, {
+      defaultText: 'howdy world'
+    });
   }
 
   render() {
     return (
       <div>
-        <h2>
-          Firepad!!!
-        </h2>
         <div id='firepad-container'>
         </div>
       </div>
