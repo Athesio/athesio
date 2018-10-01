@@ -56,7 +56,7 @@ class Dashboard extends React.Component {
         <div id="Editor" className="container" >
         <div className="row" >
           <div className="col-md-12" >
-            <h2>APP NAME</h2>
+            <h2>ATHESIO</h2>
           </div>
         </div>
         <div  className="row">
@@ -64,7 +64,7 @@ class Dashboard extends React.Component {
           <div className="col-xs-6 col-md-6" id="userDiv" >
             {otherUsers.map((user, i) => {
               return (
-                <a style={{ color: '#f1f1f1', padding: '10px', fontSize: '8px'}} className="joinedUsers" >
+                <a style={{ color: '#f1f1f1', padding: '10px', fontSize: '10px', float: 'right'}} className="joinedUsers" >
                   <img className="img-circle text-right" id="userImg" src={user.img} key={i} /> {user.username}
                 </a>
               )
