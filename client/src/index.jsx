@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Editor from './Components/Editor.jsx';
+//import Editor from './Components/Editor.jsx';
 import io from "socket.io-client";
+import Firepad from './Components/Firepad-ace.jsx';
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,10 +40,11 @@ class App extends React.Component {
     return (
       <div>
         <div className='editor-container'>
-          <Editor
+          {/* <Editor
             onCodeUpdate={this.onCodeUpdate}
             code={this.state.code}
-          />
+          /> */}
+          <Firepad />
         </div>
       </div>
     );
