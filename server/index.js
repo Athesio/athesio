@@ -11,8 +11,6 @@ const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
 const _ = require('lodash');
 
-const GITHUB_CLIENT_ID = `411028a3a75a80bbc473`;
-const GITHUB_CLIENT_SECRET = `d2b40c5a59d167ad32130acdbc85f60518416449`;
 
 
 passport.serializeUser(function(user, done){
