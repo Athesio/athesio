@@ -4,10 +4,10 @@ const UserNav = (props) => {
   return (
     <div>
       <a href="javascript:void(0)" className="closebtn" onClick={props.close}>&times;</a>
-      <a href="#">User</a>
-      {/* <a href="#">Services</a>
-      <a href="#">Clients</a>
-      <a href="#">Contact</a> */}
+
+      <a className="text-center" ><img className="img-circle " id="currUser" src={props.user.img} /></a>
+      <em>Welcome back, </em>
+      <h3 className="text-center" id="currUsername" >{props.user.username}</h3>
     </div>
   )
 }

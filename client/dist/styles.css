@@ -30,7 +30,6 @@ body {
 }
 
 #Midway .container-fluid {
-
   min-height: 100%;
   /* Fallback for browsers do NOT support vh unit */
   min-height: 99%;
@@ -40,8 +39,8 @@ body {
   /* top: 50px; */
 }
 
-#MidwayBox {
-  top: 50%;
+#formBox {
+  padding-top: 5%;
 }
 
 .wrapper {
@@ -190,6 +189,7 @@ iframe {
 }
 #res {
   padding-left: 0px;
+  padding-right: 0px;
 }
 
 #userDiv {
@@ -202,8 +202,19 @@ iframe {
   border-radius: 60px;
 }
 
+#currUser {
+  height: 30%;
+  width: 30%;
+  border-radius: 75%; 
+}
+
+#currUsername {
+  color: #f1f1f1;
+}
+
 #EditorBox {
   border-color: #1e1f21;
   border-width: .5px;
   border-style: solid;
 }
+

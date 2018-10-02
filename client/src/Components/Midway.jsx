@@ -14,7 +14,7 @@ class Midway extends React.Component {
     return (
       <div id="Midway" >
         <div className="container-fluid" id="MidwayBox" >
-        <div className="row" >
+        <div className="row" id="formBox" >
           <div className="col-md-3"   ></div>
           <div className="col-md-6"  >
           <form role="form" >
@@ -22,7 +22,7 @@ class Midway extends React.Component {
               <label htmlFor="NewEditor">Open New Editor</label><br />
               <button className="btn" onClick={this.props.changeScreens} type="button" >New Editor</button>
             </div>
-            <div className="form-group" >
+            <div className="form-group" style={{ marginLeft: '10px', marginRight: '10px'  }} >
               <a className="text-center" >Join a Room </a><br />
               <div className="input-group">
                 <input type="text" className="form-control" placeholder="Room Key"></input>

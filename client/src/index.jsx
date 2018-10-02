@@ -9,7 +9,15 @@ class App extends Component {
     super(props);
     this.state = {
       code: '',
-      currScreen: 'Midway'
+      currScreen: 'Midway',
+      userData: {
+        username: 'Darth Maul-ineisha',
+        img: 'https://vignette.wikia.nocookie.net/starwars/images/5/50/Darth_Maul_profile.png/revision/latest?cb=20140209162228'
+      },
+      githubData: {
+        Organization: '',
+        Repos: [] 
+      }
     };
 
     this.socket = io.connect();
@@ -46,7 +54,8 @@ class App extends Component {
         {this.state.currScreen === 'Dashboard' ? 
         <Dashboard  
           onCodeUpdate={this.onCodeUpdate.bind(this)} 
-          code={this.state.code}  
+          code={this.state.code} 
+          user={this.state.userData} 
         />
         : 
         <Midway changeScreens={this.changeScreens.bind(this)} /> 
