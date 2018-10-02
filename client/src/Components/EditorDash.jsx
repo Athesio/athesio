@@ -15,13 +15,13 @@ class Dashboard extends React.Component {
   }
   componentDidMount() {
     let component = document.getElementById('Editor');
-    console.log(component);
+    // console.log(component);
     
   }
 
   openNav() {
     document.getElementById("userNav").style.width = "30%";
-    document.getElementById("Editor").style.marginLeft = "30%";
+    document.getElementById("Editor").style.marginLeft = "30%";   
   }
 
   closeNav() {
@@ -82,10 +82,19 @@ class Dashboard extends React.Component {
 
           {/* HOLDS BOTH THE FIREPAD AND THE IFRAME */}
           <div className="row" >
-            <div className="col-md-12" >
+            <div className="col-xs-12s col-sm-12 col-md-12" >
               <EditorHolder />
             </div>
           </div>
+          <div className="row" >
+            <div className="col-md-11 col-lg-11" >
+               {/* <button type="button" >Save</button>  */}
+            </div>
+            <div className="col-md-1 col-lg-1" >
+               <button type="button"  >Run</button>
+            </div>
+          </div>      
+
           <span className="githubSpan" name="Github" onClick={this.openRightNav.bind(this)}>GitHub</span>
           <span className="chatSpan" name="Chat" onClick={this.openRightNav.bind(this)}>Slack</span>
           <span className="chatSpan" name="Testing" onClick={this.openRightNav.bind(this)} style={{ top: '100px', right: '15px'}} >Testing</span>
