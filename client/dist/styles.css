@@ -1,0 +1,220 @@
+a.powered-by-firepad {
+  display: none;
+}
+
+#firepad-container {
+  width: 100%;
+  height: 500px;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  background-color: #25282d;
+}
+
+#Midway {
+  height: 99vh;
+  width: 100%;
+  /*  rgb(63, 63, 63) */
+  background-color: #25282d;
+  color: white;
+  top: 50%;
+}
+
+#Midway form {
+  border-color: gray;
+  border-style: solid;
+  border-width: 2px;
+  text-align: center;
+}
+
+#Midway .container-fluid {
+  min-height: 100%;
+  /* Fallback for browsers do NOT support vh unit */
+  min-height: 99%;
+  /* These two lines are counted as one :-)       */
+  align-items: center;
+  display: inline;
+  /* top: 50px; */
+}
+
+#formBox {
+  padding-top: 5%;
+}
+
+.wrapper {
+  /* background-color: #111; */
+  background-color: #131313;
+  height: 940px;   
+}
+
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  /* background-color: #111; */
+  background-color: #1e1f21;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.userSpan {
+  padding-left: 10px;
+  top: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #f1f1f1;
+}
+
+#Editor {
+  transition: margin-left .5s;
+  padding: 16px;
+  padding-top: 0px;
+  margin-left: 20px;
+  margin-right: 0px;
+  top: -1px;
+  /* height: 100%; */
+}
+
+#Editor h2 {
+  text-align: center;
+  size: 80px;
+  color: #f1f1f1;
+}
+
+@media screen and (max-height: 100%) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 18px;}
+}
+@media (max-heigh:100%) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+.rightNav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  /* background-color: #111; */
+  background-color: #1e1f21;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.rightNav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.rightNav a:hover {
+  color: #f1f1f1;
+}
+
+.rightNav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-right: 50px;
+}
+
+.githubSpan {
+  color:#f1f1f1;
+  top: 20px;
+  right: 15px;
+  cursor: pointer;
+  position: fixed;
+  font-size: 25px;
+}
+
+.chatSpan {
+  color:#f1f1f1;
+  top: 60px;
+  right: 15px;
+  cursor: pointer;
+  position: fixed;
+  font-size: 25px;
+}
+
+iframe {
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  background-color: black;
+  width: 100%;
+  height: 500px;
+  padding: 0px;
+}
+
+#Ace {
+  width: 50%;
+  padding-right:0px;
+  padding-left: 0px;
+}
+#res {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+#userDiv {
+  margin-bottom: 30px;
+}
+
+#userImg {
+  height: 30px;
+  width: 30px;
+  border-radius: 60px;
+}
+
+#currUser {
+  height: 30%;
+  width: 30%;
+  border-radius: 75%; 
+}
+
+#currUsername {
+  color: #f1f1f1;
+}
+
+#EditorBox {
+  border-color: #1e1f21;
+  border-width: .5px;
+  border-style: solid;
+}
+
