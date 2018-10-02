@@ -4,7 +4,8 @@ const {GraphQLObjectType,
     GraphQLString, 
     GraphQLSchema,
     GraphQLID,
-    GraphQLInt
+    GraphQLInt,
+    GraphQLList
 } = graphql;
 const _ = require('lodash');
 
@@ -14,6 +15,10 @@ var rooms = [
     {name: "Rumpus", random:"Taro", id:'1', user_id:"1"},
     {name: "BoomBoom", random:"Jacob", id:'2', user_id:"2"},
     {name: "War", random:"Sieh", id:'3', user_id:"3"},
+    {name: "Party", random:"Jacob", id:'3', user_id:"2"},
+    {name: "Dungeon", random:"Shawn", id:'3', user_id:"1"},
+    {name: "Living", random:"Taro", id:'3', user_id:"3"},
+    {name: "Family", random:"Sieh", id:'3', user_id:"2"}
 ]
 
 var users = [
@@ -44,7 +49,13 @@ const UserType = new GraphQLObjectType({
     fields:() =>({
         id:{type: GraphQLID},
         name: {type: GraphQLString},
-        age: {type: GraphQLInt}
+        age: {type: GraphQLInt},
+        rooms: {
+            type: new GraphQLList(RoomType),
+            resolve(parent, args){
+                return _.filter(rooms, {user_id: parent.id});
+            }
+        }
     })
 })
 const RootQuery = new GraphQLObjectType ({

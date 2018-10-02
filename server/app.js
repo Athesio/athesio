@@ -64,12 +64,12 @@ app.get('/', isAuthenticated, function(req, res){
 
 app.get('/login', function(req, res){
     res.send('Hello from lambda')
-  res.sendFile(path.join(__dirname, '../client/dist/login.html'));
+//   res.sendFile(path.join(__dirname, '../client/dist/login.html'));
 });
 
 app.get('/logout', function(req, res){
   req.logout();
-  res.sendFile(path.join(__dirname, '../client/dist/login.html'));
+//   res.sendFile(path.join(__dirname, '../client/dist/login.html'));
 });
 
 
