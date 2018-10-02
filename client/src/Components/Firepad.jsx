@@ -6,6 +6,17 @@ class Firepad extends Component {
     this.state = {};
   }
 
+  getRandomID() {
+    let alpha = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let result = [1, 2, 3, 4, 5].reduce((a, c) => {
+      a += alpha.substr(Math.floor(Math.random() * Math.floor(52)), 1);
+      return a;
+    }, '');
+
+    return result;
+  }
+
+
   componentDidMount() {
     const config = {
       apiKey: '',
@@ -14,7 +25,7 @@ class Firepad extends Component {
     };
 
     window.firebase.initializeApp(config);
-    let firepadRef = firebase.database().ref();
+    let firepadRef = firebase.database().ref(this.getRandomID());
     
     // create Ace editor and config
     let editor = ace.edit("firepad-container");
@@ -28,7 +39,7 @@ class Firepad extends Component {
     session.setMode("ace/mode/javascript");
 
     let firepad = window.Firepad.fromACE(firepadRef, editor, {
-      defaultText: 'howdy world'
+      defaultText: 'console.log("hello world");'
     });
   }
 
