@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import io from "socket.io-client";
-import Firepad from './Components/Firepad.jsx';
+import Midway from './Components/Midway.jsx';
+import Dashboard from './Components/EditorDash.jsx';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: ''
+      code: '',
+      currScreen: 'Midway',
+      userData: {
+        username: 'Darth Maul-ineisha',
+        img: 'https://vignette.wikia.nocookie.net/starwars/images/5/50/Darth_Maul_profile.png/revision/latest?cb=20140209162228'
+      },
+      githubData: {
+        Organization: '',
+        Repos: [] 
+      }
     };
 
     this.socket = io.connect();
@@ -34,17 +44,22 @@ class App extends Component {
       this.socket.emit('clientUpdateCode', newCode);
     });
   }
+  changeScreens() {
+    this.state.currScreen === 'Midway' ? this.setState({currScreen: 'Dashboard'}) : this.setState({currScreen: 'Midway'})
+  }
 
   render() {
     return (
       <div>
-        <div className='editor-container'>
-          {/* <Editor
-            onCodeUpdate={this.onCodeUpdate}
-            code={this.state.code}
-          /> */}
-          <Firepad />
-        </div>
+        {this.state.currScreen === 'Dashboard' ? 
+        <Dashboard  
+          onCodeUpdate={this.onCodeUpdate.bind(this)} 
+          code={this.state.code} 
+          user={this.state.userData} 
+        />
+        : 
+        <Midway changeScreens={this.changeScreens.bind(this)} /> 
+        }
       </div>
     );
   }
