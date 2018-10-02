@@ -1,0 +1,10 @@
+{
+  "lambda": {
+    "role": "athesio-executor",
+    "name": "athesio",
+    "region": "eu-central-1"
+  },
+  "api": {
+    "id": "uit73vwq75"
+  }
+}

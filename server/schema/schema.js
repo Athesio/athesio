@@ -11,9 +11,9 @@ const _ = require('lodash');
 //dummyData
 
 var rooms = [
-    {name: "Rumpus", random:"Taro", id:'1'},
-    {name: "BoomBoom", random:"Jacob", id:'2'},
-    {name: "War", random:"Sieh", id:'3'},
+    {name: "Rumpus", random:"Taro", id:'1', user_id:"1"},
+    {name: "BoomBoom", random:"Jacob", id:'2', user_id:"2"},
+    {name: "War", random:"Sieh", id:'3', user_id:"3"},
 ]
 
 var users = [
@@ -27,7 +27,15 @@ const RoomType = new GraphQLObjectType({
     fields:() =>({
         id: {type: GraphQLID},
         name: {type: GraphQLString},
-        random: {type: GraphQLString}
+        random: {type: GraphQLString},
+        user_id: {
+            type: UserType,
+            resolve(parent, args){
+                console.log(parent);
+                return _.find(users, {id: parent.user_id});
+            }
+        
+        }
     })
 });
 
