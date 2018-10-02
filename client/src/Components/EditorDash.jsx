@@ -83,7 +83,7 @@ class Dashboard extends React.Component {
           {/* HOLDS BOTH THE FIREPAD AND THE IFRAME */}
           <div className="row" >
             <div className="col-xs-12s col-sm-12 col-md-12" >
-              <EditorHolder />
+              <EditorHolder refId={this.props.refId}/>
             </div>
           </div>
           <div className="row" >

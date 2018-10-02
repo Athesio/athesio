@@ -8,7 +8,7 @@ const EditorHolder = (props) => {
       <div className="row">
         <div className="col-xs-12  col-sm-12 col-md-12 col-lg-6" id="Ace" >
           <div className='editor-container'>
-            <Firepad />
+            <Firepad refId={props.refId} />
           </div>
         </div>
         {/* IFRAME FOR CODE EXECUTION */}

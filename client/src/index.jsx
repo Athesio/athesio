@@ -17,7 +17,8 @@ class App extends Component {
       githubData: {
         Organization: '',
         Repos: [] 
-      }
+      },
+      refId: ""
     };
 
     this.socket = io.connect();
@@ -36,6 +37,7 @@ class App extends Component {
     });
 
     this.onCodeUpdate = this.onCodeUpdate.bind(this);
+    this.passRef = this.passRef.bind(this);
   }
 
   onCodeUpdate(newCode, e) {
@@ -48,6 +50,10 @@ class App extends Component {
     this.state.currScreen === 'Midway' ? this.setState({currScreen: 'Dashboard'}) : this.setState({currScreen: 'Midway'})
   }
 
+  passRef(ref){
+    this.setState({refId: ref})
+  }
+
   render() {
     return (
       <div>
@@ -57,9 +63,10 @@ class App extends Component {
           onCodeUpdate={this.onCodeUpdate.bind(this)} 
           code={this.state.code} 
           user={this.state.userData} 
+          refId={this.state.refId}
         />
         : 
-        <Midway changeScreens={this.changeScreens.bind(this)} /> 
+        <Midway changeScreens={this.changeScreens.bind(this)} passRef={this.passRef} /> 
         }
       </div>
     );
