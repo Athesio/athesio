@@ -4,7 +4,7 @@ class Midway extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+        value:""
     }
   }
 
@@ -25,10 +25,10 @@ class Midway extends React.Component {
             <div className="form-group" style={{ marginLeft: '10px', marginRight: '10px'  }} >
               <a className="text-center" >Join a Room </a><br />
               <div className="input-group">
-                <input type="text" className="form-control" placeholder="Room Key"></input>
+                <input type="text" className="form-control" placeholder="Room Key" value={this.state.value} onChange={(e)=>{this.setState({value: e.target.value})}}></input>
 
                 <span className="input-group-btn">
-                  <button className="btn" type="button" onClick={this.props.changeScreens}>JOIN</button>
+                  <button className="btn" type="button" onClick={()=>{this.props.changeScreens(); this.props.passRef(this.state.value)}}>JOIN</button>
                 </span>
               </div>
             </div>

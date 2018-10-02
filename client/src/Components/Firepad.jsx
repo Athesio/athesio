@@ -16,10 +16,9 @@ class Firepad extends Component {
       databaseURL: 'https://athesio-66b77.firebaseio.com'
     };
 
-    //implement server side logic for generating random board ID; 
-    axios.get('/api/refId').then((data)=>{
+    let enterRoom=(refId)=>{
       window.firebase.initializeApp(config);
-      let firepadRef = firebase.database().ref(data.data);
+      let firepadRef = firebase.database().ref(refId);
       // create Ace editor and config
       let editor = ace.edit("firepad-container");
       editor.setTheme("ace/theme/tomorrow_night");
@@ -34,7 +33,16 @@ class Firepad extends Component {
       let firepad = window.Firepad.fromACE(firepadRef, editor, {
         defaultText: 'console.log("hello world");'
       });
-    });
+
+    }
+    //implement server side logic for generating random board ID; 
+    if(this.props.refId){
+      enterRoom(this.props.refId);
+    } else{
+      axios.get('/api/refId').then((data)=>{
+        enterRoom(data.data);
+      });
+    }
   }
 
   render() {
