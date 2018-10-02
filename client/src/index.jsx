@@ -51,6 +51,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <a href="/logout">Logout</a>
         {this.state.currScreen === 'Dashboard' ? 
         <Dashboard  
           onCodeUpdate={this.onCodeUpdate.bind(this)} 
