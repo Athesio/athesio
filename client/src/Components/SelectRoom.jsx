@@ -1,19 +1,20 @@
 import React from 'react';
 
-class Midway extends React.Component {
+class SelectRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        value:""
+        value:''
     }
   }
 
 
   render() {
+    // let url = `room/${this.props.value}`;
 
     return (
-      <div id="Midway" >
-        <div className="container-fluid" id="MidwayBox" >
+      <div id="SelectRoom" >
+        <div className="container-fluid" id="SelectRoomBox" >
         <div className="row" id="formBox" >
           <div className="col-md-3"   ></div>
           <div className="col-md-6"  >
@@ -28,7 +29,7 @@ class Midway extends React.Component {
                 <input type="text" className="form-control" placeholder="Room Key" value={this.state.value} onChange={(e)=>{this.setState({value: e.target.value})}}></input>
 
                 <span className="input-group-btn">
-                  <button className="btn" type="button" onClick={()=>{this.props.changeScreens(); this.props.passRef(this.state.value)}}>JOIN</button>
+                      <button className="btn" type="button" onClick={() => { this.props.changeScreens(); this.props.passRoomId(this.state.value) }}>JOIN</button>
                 </span>
               </div>
             </div>
@@ -42,4 +43,5 @@ class Midway extends React.Component {
   }
 }
 
-export default Midway;
+export default SelectRoom;
+
