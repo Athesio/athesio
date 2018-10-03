@@ -4,7 +4,9 @@ import axios from 'axios';
 class Firepad extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+
+    };
   }
 
 
@@ -16,30 +18,34 @@ class Firepad extends Component {
       databaseURL: 'https://athesio-66b77.firebaseio.com'
     };
 
-    let enterRoom=(refId)=>{
-      window.firebase.initializeApp(config);
-      let firepadRef = firebase.database().ref(refId);
-      // create Ace editor and config
-      let editor = ace.edit("firepad-container");
-      editor.setTheme("ace/theme/tomorrow_night");
-      editor.$blockScrolling = 1;
-      
-      let session = editor.getSession();
-      session.setUseWrapMode(true);
-      session.setUseWorker(false);
-      session.setTabSize(2);
-      session.setMode("ace/mode/javascript");
+    let enterRoom = (roomId) => {
+      // we have a ref id
+      // send off request to '/enterroom'
+      axios.post('/api/enterroom', { roomId: roomId }).then((data) => {
+        window.firebase.initializeApp(config);
+        let firepadRef = firebase.database().ref(data.data);
+        // create Ace editor and config
+        let editor = ace.edit("firepad-container");
+        editor.setTheme("ace/theme/tomorrow_night");
+        editor.$blockScrolling = 1;
 
-      let firepad = window.Firepad.fromACE(firepadRef, editor, {
-        defaultText: 'console.log("hello world");'
+        let session = editor.getSession();
+        session.setUseWrapMode(true);
+        session.setUseWorker(false);
+        session.setTabSize(2);
+        session.setMode("ace/mode/javascript");
+
+        let firepad = window.Firepad.fromACE(firepadRef, editor, {
+          defaultText: 'console.log("hello world");'
+        });
+
       });
-
     }
     //implement server side logic for generating random board ID; 
-    if(this.props.refId){
-      enterRoom(this.props.refId);
-    } else{
-      axios.get('/api/refId').then((data)=>{
+    if(this.props.roomId) {
+      enterRoom(this.props.roomId);
+    } else {
+      axios.get('/api/roomId').then((data) => {
         enterRoom(data.data);
       });
     }
