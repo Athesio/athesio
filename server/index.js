@@ -110,14 +110,9 @@ app.get('/api/roomId', (req, res) => {
 });
 
 app.post('/api/enterroom', (req, res) => {
-  console.log('in enter room: ', req.body.roomId);
   axios.get(process.env.RANDOM_ID_URL)
   .then((response) => {
     let { login, id } = JSON.parse(req.session.passport.user._raw);
-
-    console.log('refId: ', response.data);
-    console.log('roomId: ', req.body.roomId);
-    console.log('user: ', login, id);
 
     let user = {
       username: login,
@@ -126,11 +121,8 @@ app.post('/api/enterroom', (req, res) => {
 
     // existing room
     if (roomInfo[req.body.roomId]) {
-      console.log('roomInfo: ', roomInfo);
       roomInfo[req.body.roomId].userCount += 1;
       roomInfo[req.body.roomId].users[user.id] = user.username;
-
-      console.log('users: ', roomInfo);
       res.send(roomInfo[req.body.roomId].ref);
     } else { // new room
       roomInfo[req.body.roomId] = {
@@ -141,12 +133,11 @@ app.post('/api/enterroom', (req, res) => {
         }
       };
 
-      console.log('users: ', roomInfo);
       res.send(response.data);
     }
 
   })
-  .catch((err) => console.log(err));
+  .catch(console.log);
 });
 
 app.get('*', (req, res) => {
