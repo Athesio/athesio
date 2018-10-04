@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 class SelectRoom extends Component {
   constructor(props) {
@@ -6,12 +8,28 @@ class SelectRoom extends Component {
     this.state = {
         value:''
     }
+
+    this.createRoomId = this.createRoomId.bind(this);
+    this.createNewRoom = this.createNewRoom.bind(this);
+  }
+
+  createRoomId(cb) {
+    axios.get('/api/roomId')
+    .then((data) => {
+      this.setState({
+        value: data.data
+      }, cb)
+    });
+  }
+
+  createNewRoom() {
+    this.createRoomId(() => {
+      this.props.history.push(`/room/${this.state.value}`);
+    });
   }
 
 
   render() {
-    // let url = `room/${this.props.value}`;
-
     return (
       <div id="SelectRoom" >
         <div className="container-fluid" id="SelectRoomBox" >
@@ -21,7 +39,7 @@ class SelectRoom extends Component {
           <form role="form" >
             <div className="form-group" >
               <label htmlFor="NewEditor">Open New Editor</label><br />
-              <button className="btn" onClick={this.props.changeScreens} type="button" >New Editor</button>
+              <button className="btn" onClick={() => this.createNewRoom()} type="button" >New Editor</button>
             </div>
             <div className="form-group" style={{ marginLeft: '10px', marginRight: '10px'  }} >
               <a className="text-center" >Join a Room </a><br />
@@ -29,7 +47,13 @@ class SelectRoom extends Component {
                 <input type="text" className="form-control" placeholder="Room Key" value={this.state.value} onChange={(e)=>{this.setState({value: e.target.value})}}></input>
 
                 <span className="input-group-btn">
-                      <button className="btn" type="button" onClick={() => { this.props.changeScreens(); this.props.passRoomId(this.state.value) }}>JOIN</button>
+                      <button 
+                      className="btn" 
+                      type="button" 
+                      onClick={() => {
+                        this.props.history.push(`/room/${this.state.value}`);
+                      }}
+                      >JOIN</button>
                 </span>
               </div>
             </div>
@@ -43,4 +67,4 @@ class SelectRoom extends Component {
   }
 }
 
-export default SelectRoom;
+export default withRouter(SelectRoom);

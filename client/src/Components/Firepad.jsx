@@ -5,11 +5,9 @@ class Firepad extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      roomId: this.props.roomId
     };
   }
-
-
 
   componentDidMount() {
     const config = {
@@ -19,8 +17,6 @@ class Firepad extends Component {
     };
 
     let enterRoom = (roomId) => {
-      // we have a ref id
-      // send off request to '/enterroom'
       axios.post('/api/enterroom', { roomId: roomId }).then((data) => {
         window.firebase.initializeApp(config);
         let firepadRef = firebase.database().ref(data.data);

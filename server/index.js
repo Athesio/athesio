@@ -15,7 +15,7 @@ const bodyParser = require('body-parser');
 const uuidv1 = require('uuid/v1');
 
 const roomInfo = {
-
+  
 };
 
 const users = {
@@ -46,8 +46,9 @@ passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
   callbackURL: "http://localhost:3000/auth/github/callback"
-  }, (accessToken, refreshToken, profile, done) => {  
-    done(null, profile);
+  }, (accessToken, refreshToken, profile, done) => {
+    persistGithubUser(accessToken, profile, done);
+    //done(null, profile);
   }
 ));
 
@@ -59,34 +60,31 @@ app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-
+// const isAuthenticated = (req, res, next) => {
+//   if(req.isAuthenticated()) {
+//     return next();
+//   }
+//   res.redirect('/login');
+// };
 
 const isAuthenticated = (req, res, next) => {
-  if(req.isAuthenticated()){
-    return next();
+  if (req.session.passport) {
+    let { id } = JSON.parse(req.session.passport.user._raw);
+
+    if (users[id]) {
+      return next();
+    }
   }
   res.redirect('/login');
 };
 
-app.use(isAuthenticated);
-
-// app.get('/', isAuthenticated, (req, res) => {
-//   //app.use(express.static(__dirname + '/../client/dist'));
-//   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-// });
-
-// app.get('/', (req, res) => {
-//   //app.use(express.static(__dirname + '/../client/dist'));
-//   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-// });
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
+app.get('/', isAuthenticated, (req, res) => {
+  //app.use(express.static(__dirname + '/../client/dist'));
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
 // app.get('/login', (req, res) => {
-//   res.sendStatus(200);
-//   //res.sendFile(path.join(__dirname, '../client/dist/login.html'));
+  
 // });
 
 app.get('/logout', (req, res) => {
@@ -96,15 +94,14 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/auth/github', 
-  passport.authenticate('github', {scope: ['user:email']}),
-  (req, res) => {
-    console.log(res);
+  passport.authenticate('github', {scope: ['user:email']}), (req, res) => {
+    console.log('/auth/github res: ', res);
   }
 );
 
 app.get('/auth/github/callback', 
   passport.authenticate('github', {failureRedirect: '/login'}), (req, res) => {
-    res.redirect('/');
+    res.redirect('/selectroom');
   }
 );
 
@@ -116,6 +113,11 @@ app.post('/api/enterroom', (req, res) => {
   axios.get(process.env.RANDOM_ID_URL)
   .then((response) => {
     let { login, id } = JSON.parse(req.session.passport.user._raw);
+
+    console.log('refId: ', response.data);
+    console.log('roomId: ', req.body.roomId);
+    console.log('user: ', login, id);
+
     let user = {
       username: login,
       id: id
@@ -136,16 +138,18 @@ app.post('/api/enterroom', (req, res) => {
   });
 });
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
+});
+
+
 let code = '';
 
 io.on('connection', (socket) => {
-  console.log('New client connected: ', socket.id);
-
   io.emit('newClientConnection', code);
 
   socket.on('clientUpdateCode', (newCode) => {
     code = newCode;
-    console.log('updated to: ', code);
     io.emit('serverUpdateCode', code);
   });
 

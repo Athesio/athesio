@@ -56,12 +56,11 @@ class App extends Component {
       <div>
         <Switch>
           <Route exact path='/logout' component={Logout} />
-          <Route path='/login' component={Login} />
+          <Route exact path='/login' component={Login} />
           <Route exact path='/selectroom' render={() => <SelectRoom passRoomId={this.passRoomId} />} />
           <Route path='/room/:id' render={(props) => <Room roomId={this.state.roomId} /> } />
-          <Redirect to='/' />
+          <Route path='/' component={LandingPage} />
         </Switch>
-        <LandingPage />
       </div>
 
       // <div>

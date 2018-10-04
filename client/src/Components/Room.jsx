@@ -4,13 +4,16 @@ import UserNav from './DashUserNav.jsx';
 import GithubNav from './DashGithubNav.jsx';
 import ChatNav from './ChatNav.jsx';
 import otherUsers from '../../fakeOtherUsers.js';
+import axios from 'axios';
 
 class Room extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       clickedTab: '',
-      tabs: ['GitHub', 'Comm']
+      tabs: ['GitHub', 'Comm'],
+      roomId: window.location.pathname.split('/')[2],
+      user: {}
     }
 
     this.closeNav = this.closeNav.bind(this);
@@ -20,7 +23,7 @@ class Room extends React.Component {
   }
 
   componentDidMount() {
-  
+    //axios.get('/api/userInfo', { roomId: this.state.roomId });
   }
 
   openNav() {
@@ -52,12 +55,11 @@ class Room extends React.Component {
 
 
   render() {
-    console.log('roomId: ', this.props.roomId);
     return (
       <div className="wrapper">
         {/* USER NAVIGATION BAR */}
         <nav id="userNav" className="sidenav">
-          <UserNav close={this.closeNav} user={this.props.user}/>
+          {/* <UserNav close={this.closeNav} user={this.props.user}/> */}
         </nav>
         <span className="userSpan" onClick={this.openNav}>&#9776;</span>
 
@@ -70,7 +72,7 @@ class Room extends React.Component {
               <h2 style={{ fontSize: '60px' }} >ATHESIO</h2>
             </div>
             <div className="col-md-6">
-              <h2>Share room: {this.props.roomId}</h2>
+              <h2>Share room: {this.state.roomId}</h2>
             </div>
           </div>
 
@@ -80,7 +82,7 @@ class Room extends React.Component {
               {otherUsers.map((user, i) => {
                 return (
                   <a key={i} style={{ color: '#f1f1f1', padding: '10px', fontSize: '12px', float: 'right' }} className="joinedUsers" >
-                    <img className="img-circle text-right" id="userImg" src={user.img} /> {user.username}
+                    {/* <img className="img-circle text-right" id="userImg" src={user.img} /> {user.username} */}
                   </a>
                 )
               })
@@ -91,7 +93,7 @@ class Room extends React.Component {
           {/* HOLDS BOTH THE FIREPAD AND THE IFRAME */}
           <div className="row" >
             <div className="col-xs-12s col-sm-12 col-md-12" >
-              <EditorHolder roomId={this.props.roomId}/>
+              <EditorHolder roomId={this.state.roomId}/>
             </div>
           </div>
           <div className="row" >
