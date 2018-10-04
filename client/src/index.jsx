@@ -12,15 +12,6 @@ class App extends Component {
     super(props);
     this.state = {
       code: '',
-      currScreen: 'SelectRoom',
-      userData: {
-        username: 'Darth Maul-ineisha',
-        img: 'https://vignette.wikia.nocookie.net/starwars/images/5/50/Darth_Maul_profile.png/revision/latest?cb=20140209162228'
-      },
-      githubData: {
-        Organization: '',
-        Repos: [] 
-      },
       roomId: ''
     };
 
@@ -55,41 +46,41 @@ class App extends Component {
   }
 
   passRoomId(roomId) {
-    console.log('roomId iin passRoomId: ', roomId);
+    console.log('roomId in passRoomId: ', roomId);
     this.setState({roomId: roomId})
   }
 
   render() {
     return (
-      // <div>
-      //   <Switch>
-      //     <Route exact path='/logout' component={Logout} />
-      //     <Route exact path='/login' component={Login} />
-      //     <Route exact path='/selectroom' component={SelectRoom} />
-      //     <Route exact path='/room/:id' component={Room} />
-      //     <Redirect exact path='/' />
-      //   </Switch>
-      // </div>
-
       <div>
-        <a href="/logout">Logout</a>
-        {this.state.currScreen === 'Room' ? 
-        <Room  
-          onCodeUpdate={this.onCodeUpdate} 
-          code={this.state.code} 
-          user={this.state.userData} 
-          roomId={this.state.roomId}
-        />
-        : 
-        <SelectRoom changeScreens={this.changeScreens} passRoomId={this.passRoomId} /> 
-        }
+        <Switch>
+          <Route exact path='/logout' component={Logout} />
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/selectroom' render={() => <SelectRoom passRoomId={this.passRoomId} />} />
+          <Route exact path='/room/:id' render={(props) => <Room roomId={this.state.roomId} /> } />
+          <Redirect exact path='/' />
+        </Switch>
       </div>
+
+      // <div>
+      //   <a href="/logout">Logout</a>
+      //   {this.state.currScreen === 'Room' ? 
+      //   <Room  
+      //     onCodeUpdate={this.onCodeUpdate} 
+      //     code={this.state.code} 
+      //     user={this.state.userData} 
+      //     roomId={this.state.roomId}
+      //   />
+      //   : 
+      //   <SelectRoom changeScreens={this.changeScreens} /> 
+      //   }
+      // </div>
     );
   }
 }
 
 ReactDOM.render(
-  // <BrowserRouter>
+  <BrowserRouter>
     <App />
-  // </BrowserRouter>
+  </BrowserRouter>
   , document.getElementById('app'));

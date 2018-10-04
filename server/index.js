@@ -55,7 +55,7 @@ app.use(cors());
 app.use(session({ secret: 'top secret key', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(express.static(__dirname + '/../client/dist'));
+//app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
@@ -67,20 +67,24 @@ const isAuthenticated = (req, res, next) => {
 };
 
 app.get('/', isAuthenticated, (req, res) => {
-  //console.log('whats here: ', JSON.parse(req.session.passport.user._raw))
-  app.use(express.static(__dirname + '/../client/dist'));
+  //app.use(express.static(__dirname + '/../client/dist'));
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/login.html'));
+app.get('/*', (req, res) => {
+  res.redirect('/');
 });
+
+// app.get('/login', (req, res) => {
+//   res.sendStatus(200);
+//   //res.sendFile(path.join(__dirname, '../client/dist/login.html'));
+// });
 
 app.get('/logout', (req, res) => {
   req.logout();
-  res.sendFile(path.join(__dirname, '../client/dist/login.html'));
+  res.redirect('/login');
+  //res.sendFile(path.join(__dirname, '../client/dist/login.html'));
 });
-
 
 app.get('/auth/github', 
   passport.authenticate('github', {scope: ['user:email']}),
