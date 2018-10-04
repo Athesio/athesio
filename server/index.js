@@ -124,14 +124,22 @@ app.post('/api/enterroom', (req, res) => {
     };
 
     // existing room
-    if (roomInfo[req.roomId]) {
+    if (roomInfo[req.body.roomId]) {
       roomInfo[req.roomId].userCount += 1;
+      roomInfo[req.roomId].users[user.id] = user.username;
+
+      console.log('users: ', roomInfo);
       res.send(roomInfo[req.roomId].ref);
     } else { // new room
-      roomInfo[req.roomId] = {
+      roomInfo[req.body.roomId] = {
         ref: response.data,
-        userCount: 1
+        userCount: 1,
+        users: {
+          [`${id}`]: user.username
+        }
       };
+
+      console.log('users: ', roomInfo);
       res.send(response.data);
     }
 
