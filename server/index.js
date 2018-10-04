@@ -141,6 +141,7 @@ app.post('/api/enterroom', (req, res) => {
 });
 
 app.get('/api/authstate', (req, res) => {
+  console.log('/api/authstate: ', req.session)
   if (req.session && req.session.passport && req.session.passport.user) {
     res.send(true);
   } else {

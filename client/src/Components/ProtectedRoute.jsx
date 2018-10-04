@@ -8,7 +8,6 @@ class ProtectedRoute extends Component {
     this.state = {
       authstate: false
     }
-    //let authstate = this.getAuthState();
   }
 
   async getAuthState() {
@@ -35,11 +34,5 @@ class ProtectedRoute extends Component {
       />);
   }
 }
-
-// const ProtectedRoute = async ({ component: Component }) => {
-//   let authstate = await getAuthState();
-//   console.log('auth state: ', authstate);
-  
-// };
 
 export default withRouter(ProtectedRoute);
