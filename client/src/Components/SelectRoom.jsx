@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class SelectRoom extends React.Component {
+class SelectRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,4 +44,3 @@ class SelectRoom extends React.Component {
 }
 
 export default SelectRoom;
-

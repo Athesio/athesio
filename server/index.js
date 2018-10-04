@@ -51,13 +51,15 @@ passport.use(new GitHubStrategy({
   }
 ));
 
+app.use(express.static(__dirname + '/../client/dist'));
 app.use(cors());
 app.use(session({ secret: 'top secret key', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
-//app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+
+
 
 const isAuthenticated = (req, res, next) => {
   if(req.isAuthenticated()){
@@ -66,13 +68,20 @@ const isAuthenticated = (req, res, next) => {
   res.redirect('/login');
 };
 
-app.get('/', isAuthenticated, (req, res) => {
-  //app.use(express.static(__dirname + '/../client/dist'));
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-});
+app.use(isAuthenticated);
 
-app.get('/*', (req, res) => {
-  res.redirect('/');
+// app.get('/', isAuthenticated, (req, res) => {
+//   //app.use(express.static(__dirname + '/../client/dist'));
+//   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+// });
+
+// app.get('/', (req, res) => {
+//   //app.use(express.static(__dirname + '/../client/dist'));
+//   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+// });
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
 
 // app.get('/login', (req, res) => {

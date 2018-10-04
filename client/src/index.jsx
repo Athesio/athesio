@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import io from "socket.io-client";
 import SelectRoom from './Components/SelectRoom.jsx';
 import Room from './Components/Room.jsx';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Login from './Components/Login.jsx';
 import Logout from './Components/Logout.jsx';
+import LandingPage from './Components/LandingPage.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -55,11 +56,12 @@ class App extends Component {
       <div>
         <Switch>
           <Route exact path='/logout' component={Logout} />
-          <Route exact path='/login' component={Login} />
+          <Route path='/login' component={Login} />
           <Route exact path='/selectroom' render={() => <SelectRoom passRoomId={this.passRoomId} />} />
-          <Route exact path='/room/:id' render={(props) => <Room roomId={this.state.roomId} /> } />
-          <Redirect exact path='/' />
+          <Route path='/room/:id' render={(props) => <Room roomId={this.state.roomId} /> } />
+          <Redirect to='/' />
         </Switch>
+        <LandingPage />
       </div>
 
       // <div>
@@ -79,8 +81,7 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
-  , document.getElementById('app'));
+ReactDOM.render((
+<BrowserRouter>
+  <App />
+</BrowserRouter>), document.getElementById('app'));
