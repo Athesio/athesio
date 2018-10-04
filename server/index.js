@@ -110,6 +110,7 @@ app.get('/api/roomId', (req, res) => {
 });
 
 app.post('/api/enterroom', (req, res) => {
+  console.log('in enter room: ', req.body.roomId);
   axios.get(process.env.RANDOM_ID_URL)
   .then((response) => {
     let { login, id } = JSON.parse(req.session.passport.user._raw);
@@ -143,7 +144,8 @@ app.post('/api/enterroom', (req, res) => {
       res.send(response.data);
     }
 
-  });
+  })
+  .catch((err) => console.log(err));
 });
 
 app.get('*', (req, res) => {
