@@ -61,8 +61,10 @@ class App extends Component {
           {/* <Route exact path='/selectroom' component={SelectRoom} />
           <Route path='/room/:id' component={Room} /> */}
           <ProtectedRoute path='/room/:id' component={Room} />
-          <ProtectedRoute path='selectroom' component={SelectRoom} />
-          <Route path='/' component={LandingPage} />
+          <ProtectedRoute path='/room/*' component={Room} />
+          <ProtectedRoute path='/selectroom' component={SelectRoom} />
+          <Route exact path='/' component={LandingPage} />
+          <Redirect to='/' />
         </Switch>
       </div>
     );

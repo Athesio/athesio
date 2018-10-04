@@ -140,6 +140,19 @@ app.post('/api/enterroom', (req, res) => {
   .catch(console.log);
 });
 
+app.get('/api/authstate', (req, res) => {
+  if (req.session && req.session.passport && req.session.passport.user) {
+    res.send(true);
+  } else {
+    res.send(false);
+  }
+  
+});
+
+app.get('/room/*', (req, res) => {
+  res.redirect('/login');
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });

@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 const ProtectedRoute = ({ component: Component }) => {
-  axios.get('/api/authstate')
-  .then(authState => {
-    return (
-      <Route
-        render={() =>
-          authState.data ? (
-            <Component  />
-          ) : (
-            <Redirect to={{
-                pathname: '/login'
-              }}
-            />
+  return (
+    <Route
+      render={() =>
+        false ? (
+          <Component />
+        ) : (
+            <Redirect to='/login' />
           )
-        }
-      />);
-  });
+      }
+    />);
+  // // axios.get('/api/authstate')
+  // // .then(authState => {
+    
+  // });
 };
 
-export default ProtectedRoute;
+export default withRouter(ProtectedRoute);

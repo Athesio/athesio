@@ -23,6 +23,7 @@ class Room extends React.Component {
   }
 
   componentDidMount() {
+    console.log('rendering room');
     //axios.get('/api/userInfo', { roomId: this.state.roomId });
   }
 
