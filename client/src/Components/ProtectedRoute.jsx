@@ -19,7 +19,7 @@ class ProtectedRoute extends Component {
   };
 
   componentDidMount() {
-    this.setState({ authstate: this.getAuthState() });
+    this.setState({ authstate: this.getAuthState() }, this.render);
   }
 
   render() {
