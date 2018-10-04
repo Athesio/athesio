@@ -7,6 +7,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Login from './Components/Login.jsx';
 import Logout from './Components/Logout.jsx';
 import LandingPage from './Components/LandingPage.jsx';
+import ProtectedRoute from './Components/ProtectedRoute.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -57,8 +58,10 @@ class App extends Component {
         <Switch>
           <Route exact path='/logout' component={Logout} />
           <Route exact path='/login' component={Login} />
-          <Route exact path='/selectroom' component={SelectRoom} />
-          <Route path='/room/:id' component={Room} />
+          {/* <Route exact path='/selectroom' component={SelectRoom} />
+          <Route path='/room/:id' component={Room} /> */}
+          <ProtectedRoute path='/room/:id' component={Room} />
+          <ProtectedRoute path='selectroom' component={SelectRoom} />
           <Route path='/' component={LandingPage} />
         </Switch>
       </div>
