@@ -57,25 +57,11 @@ class App extends Component {
         <Switch>
           <Route exact path='/logout' component={Logout} />
           <Route exact path='/login' component={Login} />
-          <Route exact path='/selectroom' render={() => <SelectRoom passRoomId={this.passRoomId} />} />
-          <Route path='/room/:id' render={(props) => <Room roomId={this.state.roomId} /> } />
+          <Route exact path='/selectroom' component={SelectRoom} />
+          <Route path='/room/:id' component={Room} />
           <Route path='/' component={LandingPage} />
         </Switch>
       </div>
-
-      // <div>
-      //   <a href="/logout">Logout</a>
-      //   {this.state.currScreen === 'Room' ? 
-      //   <Room  
-      //     onCodeUpdate={this.onCodeUpdate} 
-      //     code={this.state.code} 
-      //     user={this.state.userData} 
-      //     roomId={this.state.roomId}
-      //   />
-      //   : 
-      //   <SelectRoom changeScreens={this.changeScreens} /> 
-      //   }
-      // </div>
     );
   }
 }
