@@ -126,6 +126,7 @@ app.post('/api/enterroom', (req, res) => {
 
     // existing room
     if (roomInfo[req.body.roomId]) {
+      console.log('roomInfo: ', roomInfo);
       roomInfo[req.roomId].userCount += 1;
       roomInfo[req.roomId].users[user.id] = user.username;
 
