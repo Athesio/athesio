@@ -13,7 +13,8 @@ class ProtectedRoute extends Component {
   async getAuthState() {
     return await axios.get('/api/authstate')
       .then(authState => {
-        return authState.data
+        console.log('front end authentication state: ', authstate.data);
+        return authState.data;
       });
   };
 
@@ -22,6 +23,7 @@ class ProtectedRoute extends Component {
   }
 
   render() {
+    console.log('render authstate: ', this.state.authstate);
     return (
       <Route
         render={() =>
