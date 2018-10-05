@@ -34,7 +34,7 @@ class LandingPage extends Component {
       );
     } else if (!this.state.loading && localStorage.getItem('authenticated')) {
       console.log('im going to ProtectedRoute');
-      console.log('history: ', this.props.history);
+      console.log('authentication: ', localStorage.getItem('authenticated'));
       //this.props.history.push('/selectroom');
       return (<ProtectedRoute component={SelectRoom} />);
     } else {
