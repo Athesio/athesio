@@ -7,8 +7,7 @@ class SelectRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        value:'',
-        navigateToRoom: false
+        value:''
     }
 
     this.createRoomId = this.createRoomId.bind(this);
@@ -19,36 +18,25 @@ class SelectRoom extends Component {
     axios.get('/api/roomId')
     .then((data) => {
       this.setState({
-        value: data.data,
-        navigateToRoom: true
-      })
+        value: data.data
+      }, cb);
     });
   }
 
   createNewRoom() {
-    // this.createRoomId(() => {
-    //   return (<Redirect to={{
-    //     pathname: `/room/${this.state.value}`,
-    //     state: { authStatus: this.props.authStatus }
-    //   }} />);
-    //   // this.props.history.push(`/room/${this.state.value}`);
-    // });
-    this.createRoomId();
+    this.createRoomId(() => {
+      return (<Redirect to={{
+        pathname: `/room/${this.state.value}`,
+        state: { authStatus: this.props.authStatus }
+      }} />);
+      //this.props.history.push(`/room/${this.state.value}`);
+    });
   }
 
 
   render() {
     console.log('props authstatus: ', this.props.authStatus);
-    if (this.state.navigateToRoom && this.props.authStatus) {
-      console.log('redirecting to room');
-      return (
-        <ProtectedRoute path={`/room/${this.state.value}`} component={Room} authStatus={this.props.authStatus}/>
-        // <Redirect push to={{
-        //   pathname: `/room/${this.state.value}`,
-        //   state: { authStatus: this.props.authStatus }
-        // }} />
-      );
-    } else if (this.props.authStatus) {
+    if (this.props.authStatus) {
       return (
         <div id="SelectRoom" >
           <div className="container-fluid" id="SelectRoomBox" >
