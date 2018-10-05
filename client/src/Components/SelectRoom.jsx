@@ -24,7 +24,11 @@ class SelectRoom extends Component {
 
   createNewRoom() {
     this.createRoomId(() => {
-      this.props.history.push(`/room/${this.state.value}`);
+      return (<Redirect to={{
+        pathname: `/room/${this.state.value}`,
+        state: { authStatus: this.props.authStatus }
+      }} />);
+      // this.props.history.push(`/room/${this.state.value}`);
     });
   }
 
