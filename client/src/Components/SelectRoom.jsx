@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import ProtectedRoute from './ProtectedRoute';
 
 class SelectRoom extends Component {
   constructor(props) {
@@ -41,10 +42,11 @@ class SelectRoom extends Component {
     if (this.state.navigateToRoom && this.props.authStatus) {
       console.log('redirecting to room');
       return (
-        <Redirect push to={{
-          pathname: `/room/${this.state.value}`,
-          state: { authStatus: this.props.authStatus }
-        }} />
+        <ProtectedRoute path={`/room/${this.state.value}`} component={Room} authStatus={this.props.authStatus}/>
+        // <Redirect push to={{
+        //   pathname: `/room/${this.state.value}`,
+        //   state: { authStatus: this.props.authStatus }
+        // }} />
       );
     } else if (this.props.authStatus) {
       return (
