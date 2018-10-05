@@ -18,6 +18,8 @@ class LandingPage extends Component {
       .then(async authStatus => {
         console.log('authstatus data: ', authStatus.data);
         localStorage.setItem('authenticated', authStatus.data);
+        console.log('authstatus after adding to localstorage: ', localStorage.getItem('authenticated'));
+        console.log('authstatus type in localstorage: ', typeof localStorage.getItem('authenticated'));
         this.setState({
           loading: false
         })
