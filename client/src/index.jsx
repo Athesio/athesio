@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import io from "socket.io-client";
-import Midway from './Components/Midway.jsx';
-import Dashboard from './Components/EditorDash.jsx';
+import SelectRoom from './Components/SelectRoom.jsx';
+import Room from './Components/Room.jsx';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import Login from './Components/Login.jsx';
+import Logout from './Components/Logout.jsx';
+import LandingPage from './Components/LandingPage.jsx';
+import ProtectedRoute from './Components/ProtectedRoute.jsx';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       code: '',
-      currScreen: 'Midway',
-      userData: {
-        username: 'Darth Maul-ineisha',
-        img: 'https://vignette.wikia.nocookie.net/starwars/images/5/50/Darth_Maul_profile.png/revision/latest?cb=20140209162228'
-      },
-      githubData: {
-        Organization: '',
-        Repos: [] 
-      },
-      refId: ""
+      roomId: ''
     };
 
     this.socket = io.connect();
@@ -37,7 +33,8 @@ class App extends Component {
     });
 
     this.onCodeUpdate = this.onCodeUpdate.bind(this);
-    this.passRef = this.passRef.bind(this);
+    this.passRoomId = this.passRoomId.bind(this);
+    this.changeScreens = this.changeScreens.bind(this);
   }
 
   onCodeUpdate(newCode, e) {
@@ -47,30 +44,34 @@ class App extends Component {
     });
   }
   changeScreens() {
-    this.state.currScreen === 'Midway' ? this.setState({currScreen: 'Dashboard'}) : this.setState({currScreen: 'Midway'})
+    this.state.currScreen === 'SelectRoom' ? this.setState({currScreen: 'Room'}) : this.setState({currScreen: 'SelectRoom'})
   }
 
-  passRef(ref){
-    this.setState({refId: ref})
+  passRoomId(roomId) {
+    console.log('roomId in passRoomId: ', roomId);
+    this.setState({roomId: roomId})
   }
 
   render() {
     return (
       <div>
-        <a href="/logout">Logout</a>
-        {this.state.currScreen === 'Dashboard' ? 
-        <Dashboard  
-          onCodeUpdate={this.onCodeUpdate.bind(this)} 
-          code={this.state.code} 
-          user={this.state.userData} 
-          refId={this.state.refId}
-        />
-        : 
-        <Midway changeScreens={this.changeScreens.bind(this)} passRef={this.passRef} /> 
-        }
+        <Switch>
+          <Route exact path='/logout' component={Logout} />
+          <Route exact path='/login' component={Login} />
+          {/* <Route exact path='/selectroom' component={SelectRoom} />
+          <Route path='/room/:id' component={Room} /> */}
+          <ProtectedRoute path='/room/:id' component={Room} />
+          <ProtectedRoute path='/room/*' component={Room} />
+          <ProtectedRoute path='/selectroom' component={SelectRoom} />
+          <Route exact path='/' component={LandingPage} />
+          <Redirect to='/' />
+        </Switch>
       </div>
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render((
+<BrowserRouter>
+  <App />
+</BrowserRouter>), document.getElementById('app'));

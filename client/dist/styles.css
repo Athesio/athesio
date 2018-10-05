@@ -13,7 +13,7 @@ body {
   background-color: #25282d;
 }
 
-#Midway {
+#SelectRoom {
   height: 99vh;
   width: 100%;
   /*  rgb(63, 63, 63) */
@@ -22,14 +22,14 @@ body {
   top: 50%;
 }
 
-#Midway form {
+#SelectRoom form {
   border-color: gray;
   border-style: solid;
   border-width: 2px;
   text-align: center;
 }
 
-#Midway .container-fluid {
+#SelectRoom .container-fluid {
   min-height: 100%;
   /* Fallback for browsers do NOT support vh unit */
   min-height: 99%;

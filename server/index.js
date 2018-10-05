@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -10,90 +11,160 @@ const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
 const session = require('express-session');
 const axios = require('axios');
-const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
+const uuidv1 = require('uuid/v1');
 
-passport.serializeUser(function(user, done){
+const roomInfo = {
+  
+};
+
+const users = {
+
+};
+
+passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser(function(user, done){
+passport.deserializeUser((user, done) => {
   done(null, user);
 });
+
+const persistGithubUser = (accessToken, profile, done) => {
+  // save accessToken, login, and id in DB
+  let { login, id } = profile._json;
+
+  users[id] = {
+    accessToken: accessToken,
+    username: login
+  };
+  
+  done(null, profile);
+};
 
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/auth/github/callback"
-  }, 
-  function(accessToken, refreshToken, profile, done){
-  return done(null, profile);
+  callbackURL: "/auth/github/callback"
+  }, (accessToken, refreshToken, profile, done) => {
+    persistGithubUser(accessToken, profile, done);
+    //done(null, profile);
   }
-))
+));
 
+app.use(express.static(__dirname + '/../client/dist'));
 app.use(cors());
-app.use(session({secret: 'top secret key', resave: false, saveUninitialized: true}));
+app.use(session({ secret: 'top secret key', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-let isAuthenticated = function(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
+// const isAuthenticated = (req, res, next) => {
+//   if(req.isAuthenticated()) {
+//     return next();
+//   }
+//   res.redirect('/login');
+// };
+
+const isAuthenticated = (req, res, next) => {
+  if (req.session.passport) {
+    let { id } = JSON.parse(req.session.passport.user._raw);
+
+    if (users[id]) {
+      return next();
+    }
   }
   res.redirect('/login');
 };
 
-
-app.get('/', isAuthenticated, function(req, res){
-  console.log(JSON.parse(req.session.passport.user._raw).login)
-  app.use(express.static(__dirname + '/../client/dist'));
+app.get('/', isAuthenticated, (req, res) => {
+  //app.use(express.static(__dirname + '/../client/dist'));
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-app.get('/login', function(req, res){
-  res.sendFile(path.join(__dirname, '../client/dist/login.html'));
-});
+// app.get('/login', (req, res) => {
+  
+// });
 
-app.get('/logout', function(req, res){
+app.get('/logout', (req, res) => {
   req.logout();
-  res.sendFile(path.join(__dirname, '../client/dist/login.html'));
+  res.redirect('/login');
+  //res.sendFile(path.join(__dirname, '../client/dist/login.html'));
 });
-
 
 app.get('/auth/github', 
-  passport.authenticate('github', {scope: ['user:email']}),
-  function(req, res){
-    console.log(res);
+  passport.authenticate('github', {scope: ['user:email']}), (req, res) => {
+    console.log('/auth/github res: ', res);
   }
 );
 
 app.get('/auth/github/callback', 
-  passport.authenticate('github', {failureRedirect: '/login'}),
-  function(req, res){
+  passport.authenticate('github', {failureRedirect: '/login'}), (req, res) => {
     res.redirect('/');
   }
 );
 
+app.get('/api/roomId', (req, res) => {
+  res.send(uuidv1().substr(0, 8));
+});
+
+app.post('/api/enterroom', (req, res) => {
+  axios.get(process.env.RANDOM_ID_URL)
+  .then((response) => {
+    let { login, id } = JSON.parse(req.session.passport.user._raw);
+
+    let user = {
+      username: login,
+      id: id
+    };
+
+    // existing room
+    if (roomInfo[req.body.roomId]) {
+      roomInfo[req.body.roomId].userCount += 1;
+      roomInfo[req.body.roomId].users[user.id] = user.username;
+      res.send(roomInfo[req.body.roomId].ref);
+    } else { // new room
+      roomInfo[req.body.roomId] = {
+        ref: response.data,
+        userCount: 1,
+        users: {
+          [`${id}`]: user.username
+        }
+      };
+
+      res.send(response.data);
+    }
+
+  })
+  .catch(console.log);
+});
+
+app.get('/api/authstatus', (req, res) => {
+  console.log('/api/authstatus: ', req.session)
+  if (req.session && req.session.passport && req.session.passport.user) {
+    res.send(true);
+  } else {
+    res.send(false);
+  }
+});
+
+app.get('/room/*', (req, res) => {
+  res.redirect('/login');
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
+});
+
+
 let code = '';
 
-app.get('/api/refId', (req, res)=>{
-  axios.get(process.env.RANDOM_ID_URL).then((response)=>{
-    console.log(response.data);
-    res.send(response.data);
-  })
-})
-
 io.on('connection', (socket) => {
-  console.log('New client connected: ', socket.id);
-
   io.emit('newClientConnection', code);
 
   socket.on('clientUpdateCode', (newCode) => {
     code = newCode;
-    console.log('updated to: ', code);
     io.emit('serverUpdateCode', code);
   });
 
