@@ -9,8 +9,6 @@ class SelectRoom extends Component {
         value:''
     }
 
-    console.log('im in select room!!');
-
     this.createRoomId = this.createRoomId.bind(this);
     this.createNewRoom = this.createNewRoom.bind(this);
   }
@@ -32,7 +30,6 @@ class SelectRoom extends Component {
 
 
   render() {
-    console.log('select room render method: ', !!localStorage.getItem('authenticated'));
     if (localStorage.getItem('authenticated') === 'true') {
       return (
         <div id="SelectRoom" >
@@ -69,7 +66,6 @@ class SelectRoom extends Component {
         </div>
       )
     } else {
-      console.log('in redirect to login');
       <Redirect to='/login' />
     }
     
