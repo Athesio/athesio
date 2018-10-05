@@ -5,7 +5,7 @@ const ProtectedRoute = (props) => {
   console.log('im in protected route mutha fuckaaa --', props.authStatus);
   return (
     <Route
-      render={() => !!localStorage.get('authenticated') ?
+      render={() => !!localStorage.getItem('authenticated') ?
         (<props.component authStatus={props.authStatus} />) : (<Redirect to='/login' />)
       }
     />
