@@ -30,6 +30,7 @@ class SelectRoom extends Component {
 
 
   render() {
+    console.log('props authstatus: ', this.props.authStatus);
     if (this.props.authStatus) {
       return (
         <div id="SelectRoom" >
