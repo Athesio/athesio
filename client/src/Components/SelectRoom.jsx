@@ -53,7 +53,8 @@ class SelectRoom extends Component {
                           className="btn"
                           type="button"
                           onClick={() => {
-                            this.props.history.push(`/room/${this.state.value}`);
+                            <Redirect to={`/room/${this.state.value}`} />
+                            //this.props.history.push(`/room/${this.state.value}`);
                           }}
                         >JOIN</button>
                       </span>
