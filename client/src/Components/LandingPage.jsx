@@ -35,6 +35,7 @@ class LandingPage extends Component {
         <div>Loading...</div>
       );
     } else if (!this.state.loading && this.state.authStatus) {
+      console.log('im going to ProtectedRoute');
       return (<ProtectedRoute component={SelectRoom} authStatus={this.state.authStatus} />);
     } else {
       return (
