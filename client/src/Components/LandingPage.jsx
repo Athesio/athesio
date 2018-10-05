@@ -19,7 +19,6 @@ class LandingPage extends Component {
       .then(async authStatus => {
         localStorage.setItem('authenticated', authStatus.data);
         this.setState({
-          authStatus: authStatus.data,
           loading: false
         })
       });
@@ -30,13 +29,14 @@ class LandingPage extends Component {
   }
 
   render() {
-    console.log('state in landing page: ', this.state);
+    console.log('localStorage authenticated: ', localStorage.getItem('authenticated'));
     if (this.state.loading) {
       return (
         <div>Loading...</div>
       );
-    } else if (!this.state.loading && this.state.authStatus) {
+    } else if (!this.state.loading && localStorage.getItem('authenticated')) {
       console.log('im going to ProtectedRoute');
+      console.log('history: ', this.props.history);
       this.props.history.push('/selectroom');
       //return (<ProtectedRoute component={SelectRoom} authStatus={this.state.authStatus} />);
     } else {
