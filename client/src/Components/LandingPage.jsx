@@ -31,6 +31,8 @@ class LandingPage extends Component {
   }
 
   render() {
+    console.log('render method authenticated: ', !!localStorage.getItem('authenticated'));
+    console.log('render method auth type: ', typeof !!localStorage.getItem('authenticated'));
     if (this.state.loading) {
       return (
         <div>Loading...</div>
