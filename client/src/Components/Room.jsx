@@ -17,6 +17,8 @@ class Room extends React.Component {
       user: {}
     }
 
+    console.log('in Room constructor');
+
     this.closeNav = this.closeNav.bind(this);
     this.closeRightNav = this.closeRightNav.bind(this);
     this.openNav = this.openNav.bind(this);
