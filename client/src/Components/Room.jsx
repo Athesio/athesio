@@ -57,6 +57,7 @@ class Room extends React.Component {
 
 
   render() {
+    console.log('room render : ', this.props.location);
     if (this.props.location.state.authState) {
       return (
         <div className="wrapper">
