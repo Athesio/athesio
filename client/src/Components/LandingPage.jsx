@@ -37,7 +37,7 @@ class LandingPage extends Component {
       return (
         <div>Loading...</div>
       );
-    } else if (!this.state.loading && !!localStorage.getItem('authenticated')) {
+    } else if (!this.state.loading && localStorage.getItem('authenticated') === 'true') {
       console.log('im going to ProtectedRoute');
       console.log('authentication: ', !!localStorage.getItem('authenticated'));
       //this.props.history.push('/selectroom');
