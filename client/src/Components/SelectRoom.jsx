@@ -32,7 +32,7 @@ class SelectRoom extends Component {
 
 
   render() {
-    console.log('select room render method: ', localStorage.getItem('authenticated'));
+    console.log('select room render method: ', !!localStorage.getItem('authenticated'));
     if (!!localStorage.getItem('authenticated')) {
       return (
         <div id="SelectRoom" >
