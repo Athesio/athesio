@@ -86,6 +86,7 @@ class SelectRoom extends Component {
         </div>
       )
     } else {
+      console.log('in redirect to login');
       <Redirect to='/login' />
     }
     
