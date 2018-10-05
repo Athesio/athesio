@@ -9,6 +9,8 @@ class SelectRoom extends Component {
         value:''
     }
 
+    console.log('im in select room!!');
+
     this.createRoomId = this.createRoomId.bind(this);
     this.createNewRoom = this.createNewRoom.bind(this);
   }
