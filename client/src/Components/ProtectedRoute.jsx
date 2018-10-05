@@ -6,24 +6,24 @@ class ProtectedRoute extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authstate: false
+      authstate: null
     }
   }
 
   async getAuthState() {
     return await axios.get('/api/authstate')
       .then(authState => {
-        console.log('front end authentication state: ', authstate.data);
+        console.log('front end authentication state: ', authState.data);
         return authState.data;
       });
   };
-
   componentDidMount() {
-    this.setState({ authstate: this.getAuthState() }, this.render);
+    this.setState({
+      authstate: this.getAuthState()
+    });
   }
 
   render() {
-    console.log('render authstate: ', this.state.authstate);
     return (
       <Route
         render={() =>
