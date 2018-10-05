@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import ProtectedRoute from './ProtectedRoute';
 
 class SelectRoom extends Component {
   constructor(props) {
