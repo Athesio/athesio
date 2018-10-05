@@ -24,11 +24,7 @@ class SelectRoom extends Component {
 
   createNewRoom() {
     this.createRoomId(() => {
-      return (<Redirect to={{
-        pathname: `/room/${this.state.value}`,
-        state: { authStatus: this.props.authStatus }
-      }} />);
-      //this.props.history.push(`/room/${this.state.value}`);
+      this.props.history.push(`/room/${this.state.value}`);
     });
   }
 
@@ -57,11 +53,7 @@ class SelectRoom extends Component {
                           className="btn"
                           type="button"
                           onClick={() => {
-                            <Redirect to={{
-                              pathname: `/room/${this.state.value}`,
-                              state: { authStatus: this.props.authStatus }
-                            }}/>
-                            //this.props.history.push(`/room/${this.state.value}`);
+                            this.props.history.push(`/room/${this.state.value}`);
                           }}
                         >JOIN</button>
                       </span>

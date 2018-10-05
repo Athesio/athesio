@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute.jsx';
 import SelectRoom from './SelectRoom.jsx';
 import axios from 'axios';
@@ -17,6 +17,7 @@ class LandingPage extends Component {
     console.log('calling getAuthStatus')
     return await axios.get('/api/authstatus')
       .then(async authStatus => {
+        localStorage.set('authenticated', authStatus.data);
         this.setState({
           authStatus: authStatus.data,
           loading: false
@@ -36,7 +37,8 @@ class LandingPage extends Component {
       );
     } else if (!this.state.loading && this.state.authStatus) {
       console.log('im going to ProtectedRoute');
-      return (<ProtectedRoute component={SelectRoom} authStatus={this.state.authStatus} />);
+      this.props.history.push('/selectroom');
+      //return (<ProtectedRoute component={SelectRoom} authStatus={this.state.authStatus} />);
     } else {
       return (
         <div>
@@ -49,4 +51,4 @@ class LandingPage extends Component {
 
 }
 
-export default LandingPage;
+export default withRouter(LandingPage);
