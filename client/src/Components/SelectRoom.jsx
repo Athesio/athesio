@@ -41,7 +41,7 @@ class SelectRoom extends Component {
     if (this.state.navigateToRoom && this.props.authStatus) {
       console.log('redirecting to room');
       return (
-        <Redirect to={{
+        <Redirect push to={{
           pathname: `/room/${this.state.value}`,
           state: { authStatus: this.props.authStatus }
         }} />
