@@ -101,7 +101,7 @@ app.get('/auth/github',
 
 app.get('/auth/github/callback', 
   passport.authenticate('github', {failureRedirect: '/login'}), (req, res) => {
-    res.redirect('/selectroom');
+    res.redirect('/');
   }
 );
 
@@ -140,14 +140,13 @@ app.post('/api/enterroom', (req, res) => {
   .catch(console.log);
 });
 
-app.get('/api/authstate', (req, res) => {
-  console.log('/api/authstate: ', req.session)
+app.get('/api/authstatus', (req, res) => {
+  console.log('/api/authstatus: ', req.session)
   if (req.session && req.session.passport && req.session.passport.user) {
     res.send(true);
   } else {
     res.send(false);
   }
-  
 });
 
 app.get('/room/*', (req, res) => {
