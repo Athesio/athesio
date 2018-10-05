@@ -130,6 +130,7 @@ class Room extends React.Component {
           </div>
         )
       } else {
+        console.log('im redirecting from Room to Login');
         return (<Redirect to='/login' />)
       }
     }
