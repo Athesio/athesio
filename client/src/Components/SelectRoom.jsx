@@ -55,7 +55,7 @@ class SelectRoom extends Component {
                           onClick={() => {
                             <Redirect to={{
                               pathname: `/room/${this.state.value}`,
-                              state: { authState: this.props.authStatus }
+                              state: { authStatus: this.props.authStatus }
                             }}/>
                             //this.props.history.push(`/room/${this.state.value}`);
                           }}
