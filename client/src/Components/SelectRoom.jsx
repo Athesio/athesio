@@ -30,8 +30,8 @@ class SelectRoom extends Component {
 
 
   render() {
-    console.log('props authstatus: ', this.props.authStatus);
-    if (this.props.authStatus) {
+    console.log('select room render method: ', localStorage.getItem('authenticated'));
+    if (localStorage.getItem('authenticated')) {
       return (
         <div id="SelectRoom" >
           <div className="container-fluid" id="SelectRoomBox" >

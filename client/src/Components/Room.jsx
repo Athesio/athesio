@@ -28,7 +28,6 @@ class Room extends React.Component {
 
   componentDidMount() {
     console.log('rendering room');
-    //axios.get('/api/userInfo', { roomId: this.state.roomId });
   }
 
   openNav() {
@@ -60,7 +59,6 @@ class Room extends React.Component {
 
 
   render() {
-    console.log('room render : ', this.props.location);
     if (localStorage.getItem('authenticated')) {
       return (
         <div className="wrapper">
