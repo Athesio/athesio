@@ -16,6 +16,7 @@ class LandingPage extends Component {
   async getAuthStatus() {
     return await axios.get('/api/authstatus')
       .then(async authStatus => {
+        console.log('authstatus data: ', authStatus.data);
         localStorage.setItem('authenticated', authStatus.data);
         this.setState({
           loading: false
