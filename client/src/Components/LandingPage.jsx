@@ -14,7 +14,6 @@ class LandingPage extends Component {
   }
 
   async getAuthStatus() {
-    console.log('calling getAuthStatus')
     return await axios.get('/api/authstatus')
       .then(async authStatus => {
         localStorage.setItem('authenticated', authStatus.data);
@@ -29,7 +28,6 @@ class LandingPage extends Component {
   }
 
   render() {
-    console.log('localStorage authenticated: ', localStorage.getItem('authenticated'));
     if (this.state.loading) {
       return (
         <div>Loading...</div>
@@ -37,8 +35,8 @@ class LandingPage extends Component {
     } else if (!this.state.loading && localStorage.getItem('authenticated')) {
       console.log('im going to ProtectedRoute');
       console.log('history: ', this.props.history);
-      this.props.history.push('/selectroom');
-      //return (<ProtectedRoute component={SelectRoom} authStatus={this.state.authStatus} />);
+      //this.props.history.push('/selectroom');
+      return (<ProtectedRoute component={SelectRoom} />);
     } else {
       return (
         <div>
