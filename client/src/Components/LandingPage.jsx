@@ -132,24 +132,36 @@ class LandingPage extends Component {
                   <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASTSURBVGhD7ZltiFRVGMdXTRFsW9/BIikoUMIvGikqgpqEWdIHw7fIlIVdDVFBUUj8YLIbfdLQFRX2S2xknwqEkMIQKV+pXLINdMWXpLAURY3wZbfff+c/V6eZce89M7NecP/w49znOc/znHNmd+65505Vr8qkjo6OZ+ENWAr18CaMcne61dnZ+QSTXUZ7graDNk+4j8G7XPZ1WrrE5F6CXzzZNtgEMzDH0I6F2bAFLjjmOLzo9DBR5zl4C94uB0yojvYa7d+wmOs+HipP9OmvtgpuwhV4xV3JRGIt3KFgWUXN0/C8h+lWpEwg/rKJnReJpD/gZ3iNYq+WAjVmwZ9wHV7wELFFzkT4F762K54YfDRIG+wqSUxgvorR1tuVWORucY2ZdnUvguc4aY5dQaJEX2pMh1PwO/YAdyUWuYOpoe/LXru6F0kbQBptV2Ix4GT40XX0oWx1V7C0CLhKuXi3ZIJbCL5mM7HI1+Z2G/S92O2FzHd3sKixxrXi3Y4JbIVDNhOJPO0Dd+EHGAFzPfg0hwSLGgtda5JdxUVcfwL1aTbZFVvkVMNFaKdOjX0joQF7YFdQCaKOdnppgl3FRfA4RdIutyu2yFnh3NftKpuo+QF07Wu0+o/RWMW/KwQsUjCaaldskXsQzpJbdMcOFXVnwE5zXhOkPQojHJIrOhoVhLr+NZKI3BvQbLNiYm66rdeBvgJHsPu7677o2AfnbcaWimv15DbaVXExVr3HXGLXfWkRsM9mbGkh5P0Du+yquBizH+Pp2e2IXRnRUeMVBn2q5P0kbPaIGK8ZbtrMiDVM9UIW2ZVI5G10/st2VVxeyA2bGeFY7omMsyuRyBsFesI9TJng56q4Yow+jHUGcjdvHE1wm4D8u0BMkf++P4y9NCVvgg/TA2PV2pURjkPQajNY1PjQA+g8M8vusonSOj2uBj0KHcTu566McOgY2mKzJFHnHfjLC7pI8wXtNtqPQiH/Y/gUsuf5AzDMQ2aEv6yHKYlaTzLQStgPl6DkozM1dH7/BvQAmf+IQkdZDlOVEvOKdyMipuTDVCXFvOJtDQSUdJiqtJhbvM2agODDVE+J+enx6Sub+WKhwYepnhTz0wPtWZv5ojN7mKqzK5Vifo0gVduVKzqyZ2E99OnWllbaPM/CZ3Y6sre2VpoTaYX5/UareRbeIrILQam89WbF/LK34Md4IfiCn4TLLeaSfCH4hsK3cA9Owlh3xRY5gyB6+079GuzopwGu9QLvaZuy9TNc9BCoWHjKZvBCtmLraXgN/AoH7H8G1sF6o9yCr3/oa4Do9Mb1LmizKVv7QrQJc30YPrcpWy/7dtgMXsiX8L2vt8M5Xy+G6Hc/Lm/RDFff/0Vfk2Jsym6B6A0N1znnH11D9OKD1JxjBXbQQhbIQdsOUoO71FdN1xBT9BRI3Fz4zKYm8h72dpvqXwubbcrWhrfSpuw9sNBm2EIkJcAnsJS+R/7rKnMIW0jaxPwen4XMc4Be/xf8QTMNML9mWqnwzwp0DCDou0xMusU8H/5yhBi9R51CW/DH/jTA/MZ7ur3qVa8SqarqP6fmK/ZUpY11AAAAAElFTkSuQmCC" />
                 </a>
                 <br />
-                <a> Something...</a>
+                <a> Cloud Storage</a>
               </p>
             </div>
           </div>
           <div className="text-center" >
             <a style={{ color: '#ffffff' }}>____________________________________________________________________________</a>
-          </div>
+          {/* </div>
           <div className="row" >
             <div className="col-xs-12 col-md-12 col-lg-12" >
-            <p className="text-center" >
-              <h3>Our Team</h3>
-            </p>
+              <p className="text-center" >
+                <h3>Our Team</h3>
+              </p>
             </div>
-            <div className="row" > 
-            <div className="col-xs-12 col-md-12 col-lg-12" >
-              
-            </div>
-            </div>
+            <div className="row" >
+              <div className="col-xs-1 col-md-1 col-lg-1" ><a>1</a></div>
+
+              <div className="col-xs-10 col-md-10 col-lg-10" >
+                <div  >
+                  <a>
+                    <img src="https://avatars1.githubusercontent.com/u/20894704?s=460&v=4" alt="img" style={{ height: '60px', width: '60px' }}  />
+                  </a>
+                  <a>Jacob Hood</a>
+                  <p  >
+                    blah blah blah...
+              </p>
+                </div>
+              </div>
+              <div className="col-xs-1 col-md-1 col-lg-1" ></div> */}
+
+            {/* </div> */}
           </div>
         </div>
       );
