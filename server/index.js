@@ -48,7 +48,6 @@ passport.use(new GitHubStrategy({
   callbackURL: "/auth/github/callback"
   }, (accessToken, refreshToken, profile, done) => {
     persistGithubUser(accessToken, profile, done);
-    //done(null, profile);
   }
 ));
 
@@ -95,7 +94,7 @@ app.get('/logout', (req, res) => {
 
 app.get('/auth/github', 
   passport.authenticate('github', {scope: ['user:email']}), (req, res) => {
-    console.log('/auth/github res: ', res);
+    // console.log('/auth/github res: ', res);
   }
 );
 
@@ -141,7 +140,6 @@ app.post('/api/enterroom', (req, res) => {
 });
 
 app.get('/api/authstatus', (req, res) => {
-  console.log('/api/authstatus: ', req.session)
   if (req.session && req.session.passport && req.session.passport.user) {
     res.send(true);
   } else {
