@@ -7,6 +7,7 @@ a.powered-by-firepad {
   height: 500px;
 }
 
+<<<<<<< HEAD
 .ace_scroller {
   min-width: 350px;
 }
@@ -15,6 +16,12 @@ body, html {
   /* height: 100vh; */
   /* width: 100%; */
   background-color: #1e1f21;
+=======
+body, html {
+  height: 100%;
+  width: 100%;
+  background-color: #25282d;
+>>>>>>> Add styling and an overlay to Login Page
 }
 
 #SelectRoom {
