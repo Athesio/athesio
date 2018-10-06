@@ -19,8 +19,6 @@ class Room extends React.Component {
       refId: null
     }
 
-    console.log('in Room constructor');
-
     this.closeRightNav = this.closeRightNav.bind(this);
     this.openRightNav = this.openRightNav.bind(this);
     this.logout = this.logout.bind(this);
@@ -42,6 +40,7 @@ class Room extends React.Component {
 
   logout() {
     axios.post('/api/logout', { roomId: this.state.roomId, user: this.state.user })
+      .then(result => window.location.assign('/'));
   }
 
   openRightNav(e) {
@@ -51,7 +50,6 @@ class Room extends React.Component {
     } else {
       this.setState({ clickedTab: 'chat' });
     }
-    console.log(this.state.clickedTab);
     document.getElementById("rightNav").style.width = "30%";
     document.getElementById("Editor").style.marginRight = "30%";
   }
