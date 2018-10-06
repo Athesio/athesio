@@ -30,13 +30,13 @@ class LandingPage extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <div>Loading...</div>
+        <div className="loading" >Loading...</div>
       );
     } else if (!this.state.loading && localStorage.getItem('authenticated') === 'true') {
       return (<ProtectedRoute component={SelectRoom} />);
     } else {
       return (
-        <div className="container" id="Landing">
+        <div id="Landing">
           {/*  JUMPING UP TITLE */}
           <div className="row" id="titleBox" >
             <div className="col-xs-12 col-lg-12 text-center" >
@@ -47,7 +47,7 @@ class LandingPage extends Component {
               <a style={{ color: '#ffffff' }}>____________________________________________________________________________</a>
             </div>
           </div>
-          
+
           <div className="row" >
             <div className="col-xs-12 col-lg-12 text-center" >
               {/* , color: 'rgb(49, 102, 218)' */}
@@ -55,7 +55,8 @@ class LandingPage extends Component {
             </div>
           </div>
           <div className="text-center" id="getStarted" >
-            <Link to='/login'>Get started</Link>
+            {/* <Link to='/login'> <button type="button" className="btn" > Get started </button> </Link> */}
+            <Link to='/login'>Get started </Link>
           </div>
 
           <div className="row" id="LandingTech" >
@@ -83,16 +84,71 @@ class LandingPage extends Component {
             <div className="col-xs-6 col-md-6 col-lg-3" >
               <p className="text-center"  >
                 <a> <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IgogICAgIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIKICAgICB2aWV3Qm94PSIwIDAgNDggNDgiCiAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjsiPjxnIGlkPSJzdXJmYWNlMSI+PHBhdGggc3R5bGU9IiBmaWxsOiNGRkIzMDA7IiBkPSJNIDMxLjE5OTIxOSAxMC42MDE1NjMgTCAyNC42MDE1NjMgMTIuODk4NDM4IEwgMjMuMTk5MjE5IDguNjAxNTYzIEMgMjIuNjAxNTYzIDYuODAwNzgxIDIzLjUgNC44MDA3ODEgMjUuMzk4NDM4IDQuMTk5MjE5IEMgMjcuMTk5MjE5IDMuNjAxNTYzIDI5LjE5OTIxOSA0LjUgMjkuODAwNzgxIDYuMzk4NDM4IFogTSAyOS4xOTkyMTkgMjYuNjAxNTYzIEwgMzUuODAwNzgxIDI0LjMwMDc4MSBMIDMzLjUgMTcuMTk5MjE5IEwgMjYuODk4NDM4IDE5LjUgWiBNIDMyLjYwMTU2MyAzNi44MDA3ODEgQyAzMy4xMDE1NjMgMzguMTk5MjE5IDM0LjUgMzkuMTk5MjE5IDM1Ljg5ODQzOCAzOS4xOTkyMTkgQyAzNi4zMDA3ODEgMzkuMTk5MjE5IDM2LjY5OTIxOSAzOS4xMDE1NjMgMzcgMzkgQyAzOC44MDA3ODEgMzguMzk4NDM4IDM5LjgwMDc4MSAzNi4zOTg0MzggMzkuMTk5MjE5IDM0LjYwMTU2MyBMIDM4IDMxIEwgMzEuMzk4NDM4IDMzLjMwMDc4MSBaICI+PC9wYXRoPjxwYXRoIHN0eWxlPSIgZmlsbDojMDBCRkE1OyIgZD0iTSAxNy4xOTkyMTkgMTUuNSBMIDEwLjYwMTU2MyAxNy44MDA3ODEgTCA5LjE5OTIxOSAxMy42MDE1NjMgQyA4LjYwMTU2MyAxMS44MDA3ODEgOS41IDkuODAwNzgxIDExLjM5ODQzOCA5LjE5OTIxOSBDIDEzLjE5OTIxOSA4LjYwMTU2MyAxNS4xOTkyMTkgOS41IDE1LjgwMDc4MSAxMS4zOTg0MzggWiBNIDE4LjYwMTU2MyA0MS44MDA3ODEgQyAxOS4xMDE1NjMgNDMuMTk5MjE5IDIwLjUgNDQuMTk5MjE5IDIxLjg5ODQzOCA0NC4xOTkyMTkgQyAyMi4zMDA3ODEgNDQuMTk5MjE5IDIyLjY5OTIxOSA0NC4xMDE1NjMgMjMgNDQgQyAyNC44MDA3ODEgNDMuMzk4NDM4IDI1LjgwMDc4MSA0MS4zOTg0MzggMjUuMTk5MjE5IDM5LjYwMTU2MyBMIDI0IDM1Ljg5ODQzOCBMIDE3LjM5ODQzOCAzOC4xOTkyMTkgWiBNIDE5LjM5ODQzOCAyMi4xOTkyMTkgTCAxMi44MDA3ODEgMjQuNSBMIDE1LjEwMTU2MyAzMS42MDE1NjMgTCAyMS42OTkyMTkgMjkuMzAwNzgxIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiMwMEJDRDQ7IiBkPSJNIDMzLjM5ODQzOCAxNy4zMDA3ODEgTCAzMS4xOTkyMTkgMTAuNjk5MjE5IEwgMzUuMzAwNzgxIDkuMzAwNzgxIEMgMzcuMTAxNTYzIDguNjk5MjE5IDM5LjEwMTU2MyA5LjYwMTU2MyAzOS42OTkyMTkgMTEuNSBDIDQwLjMwMDc4MSAxMy4zMDA3ODEgMzkuMzk4NDM4IDE1LjMwMDc4MSAzNy41IDE1Ljg5ODQzOCBaIE0gMjYuODAwNzgxIDE5LjYwMTU2MyBMIDI0LjYwMTU2MyAxMyBMIDE3LjE5OTIxOSAxNS42MDE1NjMgTCAxOS4zOTg0MzggMjIuMTk5MjE5IFogTSA2LjM5ODQzOCAxOS4zMDA3ODEgQyA0LjYwMTU2MyAxOS44OTg0MzggMy42MDE1NjMgMjEuODk4NDM4IDQuMTk5MjE5IDIzLjY5OTIxOSBDIDQuNjk5MjE5IDI1LjE5OTIxOSA2LjEwMTU2MyAyNi4xMDE1NjMgNy41IDI2LjEwMTU2MyBDIDcuODk4NDM4IDI2LjEwMTU2MyA4LjMwMDc4MSAyNiA4LjYwMTU2MyAyNS44OTg0MzggTCAxMi42OTkyMTkgMjQuNSBMIDEwLjUgMTcuODk4NDM4IFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiNFOTFFNjM7IiBkPSJNIDE1LjEwMTU2MyAzMS41IEwgMTcuMzAwNzgxIDM4LjEwMTU2MyBMIDEyLjYwMTU2MyAzOS42OTkyMTkgQyAxMi4xOTkyMTkgMzkuODAwNzgxIDExLjgwMDc4MSAzOS44OTg0MzggMTEuNSAzOS44OTg0MzggQyAxMCAzOS44OTg0MzggOC42OTkyMTkgMzkgOC4xOTkyMTkgMzcuNSBDIDcuNjAxNTYzIDM1LjY5OTIxOSA4LjUgMzMuNjk5MjE5IDEwLjM5ODQzOCAzMy4xMDE1NjMgWiBNIDQzLjY5OTIxOSAyNS4zMDA3ODEgQyA0My4xMDE1NjMgMjMuNSA0MS4xMDE1NjMgMjIuNSAzOS4zMDA3ODEgMjMuMTAxNTYzIEwgMzUuODAwNzgxIDI0LjMwMDc4MSBMIDM4IDMxIEwgNDEuNjAxNTYzIDI5LjgwMDc4MSBDIDQzLjM5ODQzOCAyOS4xMDE1NjMgNDQuMzk4NDM4IDI3LjEwMTU2MyA0My42OTkyMTkgMjUuMzAwNzgxIFogTSAyMS42OTkyMTkgMjkuMTk5MjE5IEwgMjMuODk4NDM4IDM1LjgwMDc4MSBMIDMxLjMwMDc4MSAzMy4xOTkyMTkgTCAyOS4xMDE1NjMgMjYuNjAxNTYzIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiMzODhFM0M7IiBkPSJNIDMzLjM5ODQzOCAxNy4zMDA3ODEgTCAzMS4xOTkyMTkgMTAuNjAxNTYzIEwgMjQuNjAxNTYzIDEyLjg5ODQzOCBMIDI2LjgwMDc4MSAxOS42MDE1NjMgWiAiPjwvcGF0aD48cGF0aCBzdHlsZT0iIGZpbGw6IzAwODk3QjsiIGQ9Ik0gMTcuMTk5MjE5IDE1LjUgTCAxMC42MDE1NjMgMTcuODAwNzgxIEwgMTIuODAwNzgxIDI0LjUgTCAxOS4zOTg0MzggMjIuMTk5MjE5IFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiNCRjM2MEM7IiBkPSJNIDI5LjE5OTIxOSAyNi42MDE1NjMgTCAzMS4zOTg0MzggMzMuMzAwNzgxIEwgMzggMzEgTCAzNS44MDA3ODEgMjQuMzAwNzgxIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiM0RTM0MkU7IiBkPSJNIDE1LjEwMTU2MyAzMS41IEwgMTcuMzAwNzgxIDM4LjE5OTIxOSBMIDIzLjg5ODQzOCAzNS44OTg0MzggTCAyMS42OTkyMTkgMjkuMTk5MjE5IFogIj48L3BhdGg+PC9nPjwvc3ZnPg=="></img> </a>
-                <br/>
+                <br />
                 <a>Slack</a>
               </p>
             </div>
             <div className="col-xs-6 col-md-6 col-lg-3" >
               <p className="text-center"  >
-                <a><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOgSURBVGhD7Zk5aBRxGMVjPGIuNSKCeKAYFAvFRjxiYQQbGwmoBBGDR6GFwRQiCoohiJX3EQRboxiPQkHSBEQbiYUXHhER0niAwSRNxCTr75t9u7Iku5mZ/W9gYB48v5n3/96b+cjs7OxYFCNGjBjRRCKRKIZVEWKFTj0JhLKRkZFW2M92pMA5f4F13iBsXJL4F/ZGiH2p86astkF+SFjmTRYhcM7ndO4tdml50FqkwACH7Nyp1ws6CLFTYBUHKpXkFAUdhNAN8AbshsOKt4PZB7MFVqo1b5DlfhDCZsMHiksD7SdM3xHZfgv3szlL1tAgx+0g2CsIe2U51O/wJFwOS9RiB62G6UHZ7oP1Wg4F/G4HIeiaZVBfw/mSR4G1ctgA29U/BDdrOTDwuhsE60yC/sDk/dwn6D/jHTiReCkpMFwPssP8hHVK8gX6S2GvvFn/irmAz90ghDQr4rQk38DbYUbqVkmB4HqQK+anHpTkG3huybtLUiDgczrIZfNT90nyDTy35Q1198LndJBT5qcel+QbeJ7KWyspEPA5HWSP+amtknwBSzGeX/LOlRwI+JwOstL81C5JvkD/Kvk+SQoMvO4GwTrH/ITZd4nvh0N6j8j3WFJg4HX6F2kyP7UDlkseF/TWwH5oX6ShnrvwOh3krPmpTZJ8A89HeZdKCgR8TgfZbX5qJ1woOSdon0ZvLRyG9mQ8WUuBgNfpIJXwm2VQ30nOCfpqvIMCti9KDgy87gYxYF8MfxNoLzDG/ZzQ02jHpLZRpkoODPxuBzEQ9shyqA2SsoKe5+pNvsoJCfwFGWS75VC7KWWSR4H1LeqzL8PpkkOBDPeDEGHf1F2WRX0oOQPoS+CAeholhwYZ7gcxELjesqjPJGUAvVrrnymTJIcGOYUZhJiNlpVtEJYWaf2rpLwwEYM8kZQB9Hla75GUFwo2CIHnLYvaLikD6PbywW7R9tJhreTQIMPtIAStgPcth2pYp6VRYC31i3IAnmAz878HAgC/m0GwbSLkDvTeKFIHYc6frayX0HrX+g3s2wu8ZrhALb6B5/8g/DPkJfq8i9Bnz0kH4PukzQuyy6UNVqttXNBbB98owjLscrsHfV9y9KYGuWo7XhjVnmLt1U5W0rMX2q0zDfZ74FE2x/TkIr6d8CYcZD8N9u23/JieFOmphy/Ytv7DNsg2aL8JIgnO/QMl+TljZw28gGDXbiTI+dqlfAzO8IaIESNGjBgTj6KifxEFvzU5pO4HAAAAAElFTkSuQmCC"/></a>
-                <br/>
+                <a><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOgSURBVGhD7Zk5aBRxGMVjPGIuNSKCeKAYFAvFRjxiYQQbGwmoBBGDR6GFwRQiCoohiJX3EQRboxiPQkHSBEQbiYUXHhER0niAwSRNxCTr75t9u7Iku5mZ/W9gYB48v5n3/96b+cjs7OxYFCNGjBjRRCKRKIZVEWKFTj0JhLKRkZFW2M92pMA5f4F13iBsXJL4F/ZGiH2p86astkF+SFjmTRYhcM7ndO4tdml50FqkwACH7Nyp1ws6CLFTYBUHKpXkFAUdhNAN8AbshsOKt4PZB7MFVqo1b5DlfhDCZsMHiksD7SdM3xHZfgv3szlL1tAgx+0g2CsIe2U51O/wJFwOS9RiB62G6UHZ7oP1Wg4F/G4HIeiaZVBfw/mSR4G1ctgA29U/BDdrOTDwuhsE60yC/sDk/dwn6D/jHTiReCkpMFwPssP8hHVK8gX6S2GvvFn/irmAz90ghDQr4rQk38DbYUbqVkmB4HqQK+anHpTkG3huybtLUiDgczrIZfNT90nyDTy35Q1198LndJBT5qcel+QbeJ7KWyspEPA5HWSP+amtknwBSzGeX/LOlRwI+JwOstL81C5JvkD/Kvk+SQoMvO4GwTrH/ITZd4nvh0N6j8j3WFJg4HX6F2kyP7UDlkseF/TWwH5oX6ShnrvwOh3krPmpTZJ8A89HeZdKCgR8TgfZbX5qJ1woOSdon0ZvLRyG9mQ8WUuBgNfpIJXwm2VQ30nOCfpqvIMCti9KDgy87gYxYF8MfxNoLzDG/ZzQ02jHpLZRpkoODPxuBzEQ9shyqA2SsoKe5+pNvsoJCfwFGWS75VC7KWWSR4H1LeqzL8PpkkOBDPeDEGHf1F2WRX0oOQPoS+CAeholhwYZ7gcxELjesqjPJGUAvVrrnymTJIcGOYUZhJiNlpVtEJYWaf2rpLwwEYM8kZQB9Hla75GUFwo2CIHnLYvaLikD6PbywW7R9tJhreTQIMPtIAStgPcth2pYp6VRYC31i3IAnmAz878HAgC/m0GwbSLkDvTeKFIHYc6frayX0HrX+g3s2wu8ZrhALb6B5/8g/DPkJfq8i9Bnz0kH4PukzQuyy6UNVqttXNBbB98owjLscrsHfV9y9KYGuWo7XhjVnmLt1U5W0rMX2q0zDfZ74FE2x/TkIr6d8CYcZD8N9u23/JieFOmphy/Ytv7DNsg2aL8JIgnO/QMl+TljZw28gGDXbiTI+dqlfAzO8IaIESNGjBgTj6KifxEFvzU5pO4HAAAAAElFTkSuQmCC" /></a>
+                <br />
                 <a>Video Chatting</a>
               </p>
+            </div>
+          </div>
+
+          {/* Second Row */}
+          <div className="row" id="LandingTech2" >
+            <div className="col-xs-6 col-md-6 col-lg-3" >
+              <p className="text-center"  >
+                <a>
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMNSURBVGhD7ZmxaxRBFMYvESVooUZMYSEi2okIAbEQFKwExSIRAkEtjI2ihYISRNBCNE0EQSSNCKKIpZWVifoH2ChaiIWiomDUSAoTvfP3hm+D593N7iW7O0vYH3zMzvfezMvL7t7t3VVKSnKmVqstr1arN9A3jlOFPd+iIZXKFgqNqegfNJmifrhugON9KpcN1OikyBT6zfFG2anBvifVyD1Z2UCNlVYIvstKFfbdaZvTyDNZ2UAN1wiF7DJYnbbYdy9jfo1kTZ5nxGh2wy5UU7k2AovjHoGyER/sm6gR4j3otKbtQ43gjRC297LnlgcXZbcHC4tyRgZRRJ/s5FCjMPcIOWeV+xX1yE4G64I0Yn8o2qrpHHgPlX9LVjJYk3sjHK9BL9EXtFm2g9QNeL/QLNokOx4W5t4I02XMo//8C4alCjnwoqfxEVnxkB/k0sLqwnul2BnZDqxe+e9lxUN+sJsdb49iHxk6ZTvw3im2RZYfcoM1YuC/tjjsluXAv2sm42FZfsgN3cgVxc/LcjAfln9Zlh9yQzcypPhNWQ7mx5r5LSE3dCP9itd9FGY+aD7cluWHxNCNnFJ8VJaD+Qn512X5ITd0I3cUPy7LgXVV/jlZfsgN1gi2fZ82aXFYL9uBP24m435ZfsgN1gjeBYvBhCwHfjeaQfY9W7dsP2wSpBHm29E0MnbIdjA/pDVPZcVDfqhGoveJa7IcWHMfshiPyo6H/JCX1hFCSzR14EVn4wNDl+x4SA7WyP+QsxZFz1jJz4bBmkI0Qoo92j+xXJhAHQolgwWFaIT4gPI+o3Wyk8PaIl1al0jdpml7sLAwjSwIaiyuRig0zXAwbbGve/fO84xkSp5nZIbhQdpi38eMuZ4R7z1C3L7ZaHbp9KOWL5fkFOdmJ7aKP8R+LG1F3dPrvxDLpxEKrFChn7IaINxB3F7jm10699EBpTZAbBd5tv+4rOygyBsVs280Gi6f+Yr9BtAjjm3vuo+ymUCRPjRrBbOAvT+h9h875gP1eik2gsZS1jBq7yeCkpIQVCp/AXAQPn5FCELWAAAAAElFTkSuQmCC" />
+                </a>
+                <br />
+                <a> Mobile Development </a>
+              </p>
+            </div>
+            <div className="col-xs-6 col-md-6 col-lg-3" >
+              <p className="text-center"  >
+                <a>
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAL0SURBVGhD7ZpNiE1xGMYv+YghYygLTMyCNNRMIgsrY2PJsLnJUrKQjSRbKTXsxCxmI7JiZ6Gx8LEgnyUK42NLiTE3RcPl9x7POR333NM5Z5r/vedwnnp673nf93n/79OcW3fOvRVXqNfrm+Ao/ALfwSG4UOVigIW3wK+/GkDuFmGO2vIPFr6rxb2/AlwHnym3T22tAWfO59Cz8LMtkBXo3hNmaJyZ2/mnkg3oDC/goEZlA8JhDfoJP8WRlnH1/WiondYoD1wvga9C9QnpJkO5ZqyF5m/WuHRANxPRhIl53aN0U1Dv1kFPlUoFJFulu6NULOg5od4zSqUDmkUmBONKxYIe38hzwuK0pH8HMa2RqnovKZUOaDIbmSpY7rZGxaIlRhg+D96Hze7vJH6ERzQqFvS4N9IKlEbQlEZcoDSCpjTiAoUzwqLL4VxdBiiUEZbcBu2D4UWlAhTGCOcsYMm3diDxmNIBnBlh4DJqPSn513+EaCO3D9fn6LNFHxFmKx2A/PQbYdhaOKl6Iui9Kqlp15gWPqDUqdwANHyHG7zGBpB3YqQLjlJ7mIb0HpLU5nZy/YZosNpK6N9Sx9UWAbX8vUeY2R1a3ntAQbS/0Cy1RJBLIwbmhs18g70qNUVujRiYbWbsFt2vVCxybSQLSiNoSiMuUDgjLNoPu3QZoFBGWHIQGq4oFYBcMYxwzlKW/GAHEg8oHcCZEfJ9cHsSOXiA6H2m8kEucvtwfZk+w00YPPj2QX36jTCsF9ZVTwSt1yQ17XrlxuAK5XYrV4OrvcYGkHdipMMGQvs2KonXYVVS09pTycc2mDhG6CP6t9RBtUVALX/vEZaxrxee2HCiPe23eIMQuaV8UM/nm52Fwmbse5JVKjVFbo0YZGYEJn4TlWsjWVAaQVMacYHSCJp/wwiCDglrSrUV7LFX+1xQKj0QvZb4FGFPu8j5VXiP17bLUa2XHoh2wdRPFF2DXV7Cqf26CP1GxCfhcBt5Hh6GxfqJ1H+OSuU3BeOJgEllFsMAAAAASUVORK5CYII=" />
+                </a>
+                <br />
+                <a> Unit Testing</a>
+              </p>
+            </div>
+            <div className="col-xs-6 col-md-6 col-lg-3" >
+              <p className="text-center"  >
+                <a>
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJoSURBVGhD7ZixS1ZRGMY/CUoskECJME3DSfgWB/sHgmiMaBFcGlwSW5sCh3DJxqC/QHETqiUix7bASRIjSTAc3KxB+/T3Xh8vEsd7O+DnfY/cHzy85577Hn0e9J7vnq/RarU+H0TCmoWGN+QtCoJsaLkf5O1Al4XQNmC9yQbB+C00QVu6QbjVjfEV66G+UPUbBDow+BIN6Zbd6+L6k92krqCmxn6DYG5K9RcaY3iJuqS5NXSDYeG/FvNZ0POG3/vmZJCr6Nj4Lvqg8TYaNqNclgUZQTsV6FUexIxQ7K/w+mgmD3Q3cwlMpfWwY/Qp+oPuayqDtvR2Lcz2a5hDm/8gcL1MBPC/a8XgMgim5tF6pOa0vKbmwsOzew3diVSnlvuBB3cVY7Esa7kfZMy21NDu9K821JvOJ3sI2tJ7RTkJxptoBt223iSDYNqOuT+thzqr6voV5TIGF1D+2s64F32zm9T3aFjjYBD7GSi0y7VbPXkQzD1T/Y0eMbRj7hfNWe1CZQer6k+IkB+qqH/R8RcOdsztNaNclgUZQh8r0HQeRF7MzBTatznqFsqOuQZTae1aGH2ANlFTUxm0pbf9YvaKhjm0+Q8C98pEgHGqzyCYapm5GFjyQ8v9gCn7djG0ExRpWstrai48PLuDKLhLnSaekZta7gdMbWMuCtZ81XI/yJuxWCYCvKOm9ckegrb0XlFC0FYHaTtmzNBlIbQVBuFWN3p83sLP6JkGYb76E6K8FEJbWZA+9LYCjZ9pkEoxY4YuC6GtDtJ2zJiY/A89Rz6DYGrPzMXAmu9a7gdMPUGhnaBID7XcCY3GIfNVEZCIRI83AAAAAElFTkSuQmCC" />
+                </a>
+                <br />
+                <a> Scrum Board</a>
+              </p>
+            </div>
+            <div className="col-xs-6 col-md-6 col-lg-3" >
+              <p className="text-center"  >
+                <a>
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASTSURBVGhD7ZltiFRVGMdXTRFsW9/BIikoUMIvGikqgpqEWdIHw7fIlIVdDVFBUUj8YLIbfdLQFRX2S2xknwqEkMIQKV+pXLINdMWXpLAURY3wZbfff+c/V6eZce89M7NecP/w49znOc/znHNmd+65505Vr8qkjo6OZ+ENWAr18CaMcne61dnZ+QSTXUZ7graDNk+4j8G7XPZ1WrrE5F6CXzzZNtgEMzDH0I6F2bAFLjjmOLzo9DBR5zl4C94uB0yojvYa7d+wmOs+HipP9OmvtgpuwhV4xV3JRGIt3KFgWUXN0/C8h+lWpEwg/rKJnReJpD/gZ3iNYq+WAjVmwZ9wHV7wELFFzkT4F762K54YfDRIG+wqSUxgvorR1tuVWORucY2ZdnUvguc4aY5dQaJEX2pMh1PwO/YAdyUWuYOpoe/LXru6F0kbQBptV2Ix4GT40XX0oWx1V7C0CLhKuXi3ZIJbCL5mM7HI1+Z2G/S92O2FzHd3sKixxrXi3Y4JbIVDNhOJPO0Dd+EHGAFzPfg0hwSLGgtda5JdxUVcfwL1aTbZFVvkVMNFaKdOjX0joQF7YFdQCaKOdnppgl3FRfA4RdIutyu2yFnh3NftKpuo+QF07Wu0+o/RWMW/KwQsUjCaaldskXsQzpJbdMcOFXVnwE5zXhOkPQojHJIrOhoVhLr+NZKI3BvQbLNiYm66rdeBvgJHsPu7677o2AfnbcaWimv15DbaVXExVr3HXGLXfWkRsM9mbGkh5P0Du+yquBizH+Pp2e2IXRnRUeMVBn2q5P0kbPaIGK8ZbtrMiDVM9UIW2ZVI5G10/st2VVxeyA2bGeFY7omMsyuRyBsFesI9TJng56q4Yow+jHUGcjdvHE1wm4D8u0BMkf++P4y9NCVvgg/TA2PV2pURjkPQajNY1PjQA+g8M8vusonSOj2uBj0KHcTu566McOgY2mKzJFHnHfjLC7pI8wXtNtqPQiH/Y/gUsuf5AzDMQ2aEv6yHKYlaTzLQStgPl6DkozM1dH7/BvQAmf+IQkdZDlOVEvOKdyMipuTDVCXFvOJtDQSUdJiqtJhbvM2agODDVE+J+enx6Sub+WKhwYepnhTz0wPtWZv5ojN7mKqzK5Vifo0gVduVKzqyZ2E99OnWllbaPM/CZ3Y6sre2VpoTaYX5/UareRbeIrILQam89WbF/LK34Md4IfiCn4TLLeaSfCH4hsK3cA9Owlh3xRY5gyB6+079GuzopwGu9QLvaZuy9TNc9BCoWHjKZvBCtmLraXgN/AoH7H8G1sF6o9yCr3/oa4Do9Mb1LmizKVv7QrQJc30YPrcpWy/7dtgMXsiX8L2vt8M5Xy+G6Hc/Lm/RDFff/0Vfk2Jsym6B6A0N1znnH11D9OKD1JxjBXbQQhbIQdsOUoO71FdN1xBT9BRI3Fz4zKYm8h72dpvqXwubbcrWhrfSpuw9sNBm2EIkJcAnsJS+R/7rKnMIW0jaxPwen4XMc4Be/xf8QTMNML9mWqnwzwp0DCDou0xMusU8H/5yhBi9R51CW/DH/jTA/MZ7ur3qVa8SqarqP6fmK/ZUpY11AAAAAElFTkSuQmCC" />
+                </a>
+                <br />
+                <a> Something...</a>
+              </p>
+            </div>
+          </div>
+          <div className="text-center" >
+            <a style={{ color: '#ffffff' }}>____________________________________________________________________________</a>
+          </div>
+          <div className="row" >
+            <div className="col-xs-12 col-md-12 col-lg-12" >
+            <p className="text-center" >
+              <h3>Our Team</h3>
+            </p>
+            </div>
+            <div className="row" > 
+            <div className="col-xs-12 col-md-12 col-lg-12" >
+              
+            </div>
             </div>
           </div>
         </div>

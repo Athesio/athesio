@@ -9,7 +9,7 @@ a.powered-by-firepad {
 
 body, html {
   height: 100vh;
-  width: 100%;
+  /* width: 100%; */
   background-color: #25282d;
 }
 
@@ -113,7 +113,7 @@ body, html {
 .sidenav {padding-top: 15px;}
 .sidenav a {font-size: 18px;}
 }
-@media (max-heigh:100%) {
+@media (max-height:100%) {
   .container {
     max-width: 100%;
   }
@@ -226,8 +226,8 @@ iframe {
 
 /* LOGIN */
 .hovereffect {
-  width: 80%;
-  height: 100%;
+  /* width: 80%; */
+  /* height: 100%; */
   /* float: center; */
   overflow: hidden;
   position: relative;
@@ -240,7 +240,7 @@ iframe {
   overflow: hidden;
   width: 80%;
   height: 80%;
-  /* left: 10%; */
+  left: 10%;
   top: 10%;
   border-bottom: 1px solid #FFF;
   border-top: 1px solid #FFF;
@@ -308,10 +308,13 @@ iframe {
   transform: translate3d(0,0,0);
 }
 
-#Login div {
+/* #Login div {
   width: 100%;
+} */
+.loading {
+  width: 100%;
+  height: 100vh;
 }
-
 
 #img {
   width: 100%;
@@ -333,7 +336,6 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
 }
 #imgHolder {
   padding: 0px;
-  margin-left: 15px;
 }
 #Login a {
   padding-left: 12px;
@@ -347,9 +349,9 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
 #Landing {
   background-color: #1e1f21;
   height: 100%;
-  /* width: 150%; */
+  width: 100%;
   padding: 0;
-  margin: 60px;
+  margin: 0px;
   color: #e9e6e6;
 
 }
@@ -369,14 +371,25 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
   padding-top: 15px;
 }
 
-.text-pop-up-top{animation:text-pop-up-top .5s cubic-bezier(.25,.46,.45,.94) both}
+/* animations by animista */
+.text-pop-up-top{animation:text-pop-up-top 3s cubic-bezier(.25,.46,.45,.94) both}
  @keyframes text-pop-up-top{0%
   {transform:translateY(0);transform-origin:50% 50%;text-shadow:none}
   100%{transform:translateY(-50px);transform-origin:50% 50%;text-shadow:0 1px 0 #ccc,0 2px 0 #ccc,0 3px 0 #ccc,0 4px 0 #ccc,0 5px 0 #ccc,0 6px 0 #ccc,0 7px 0 #ccc,0 8px 0 #ccc,0 9px 0 #ccc,0 50px 30px 
-    rgba(145, 145, 145, 0.418)}}
-
+    rgba(145, 145, 145, 0.418)
+  }
+}
   
 #LandingTech {
-  padding-left: 10%;
+  padding-left: 5%;
   padding-top: 50px;
+}
+
+#LandingTech2 {
+  padding-left: 5%;
+  padding-top: 50px;
+}
+
+.btn-lg.round {
+	border-radius: 30px;
 }

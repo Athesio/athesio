@@ -54,7 +54,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div id="application" >
         <Switch>
           <Route exact path='/logout' component={Logout} />
           <Route exact path='/login' component={Login} />

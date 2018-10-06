@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 const Login = (props) => (
-  <div className="contrainer" id="Login" >
+  <div id="Login" >
     <div className="row" >
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="imgHolder">
         <div className="hovereffect">
