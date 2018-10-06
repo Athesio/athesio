@@ -36,9 +36,16 @@ class LandingPage extends Component {
       return (<ProtectedRoute component={SelectRoom} />);
     } else {
       return (
-        <div>
+        <div className="container">
+          <div className="row" >
+            <div className="col-xs-10 col-lg-10" >
+              Athesio
+            </div>
+            <div className="col-xs-2 col-lg-2" >
+              <Link to='/login'>Get started</Link>
+            </div>
+          </div>
           <h2> Welcome to the best collaborative coding environment EVER </h2>
-          <Link to='/login'>Get started</Link>
         </div>
       );
     }
