@@ -33,7 +33,6 @@ class App extends Component {
     });
 
     this.onCodeUpdate = this.onCodeUpdate.bind(this);
-    this.passRoomId = this.passRoomId.bind(this);
     this.changeScreens = this.changeScreens.bind(this);
   }
 
@@ -45,11 +44,6 @@ class App extends Component {
   }
   changeScreens() {
     this.state.currScreen === 'SelectRoom' ? this.setState({currScreen: 'Room'}) : this.setState({currScreen: 'SelectRoom'})
-  }
-
-  passRoomId(roomId) {
-    console.log('roomId in passRoomId: ', roomId);
-    this.setState({roomId: roomId})
   }
 
   render() {
