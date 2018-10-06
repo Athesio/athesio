@@ -139,7 +139,7 @@ class LandingPage extends Component {
           </div>
           <div className="text-center" >
             <a style={{ color: '#ffffff' }}>____________________________________________________________________________</a>
-          </div>
+          {/* </div>
           <div className="row" >
             <div className="col-xs-12 col-md-12 col-lg-12" >
               <div className="text-center" >
@@ -184,6 +184,23 @@ class LandingPage extends Component {
                   <a href="https://github.com/shawnxa">Github</a>
                 </div>
               </div>
+            </div>
+            <div className="row" >
+              <div className="col-xs-1 col-md-1 col-lg-1" ><a>1</a></div>
+
+              <div className="col-xs-10 col-md-10 col-lg-10" >
+                <div  >
+                  <a>
+                    <img src="https://avatars1.githubusercontent.com/u/20894704?s=460&v=4" alt="img" style={{ height: '60px', width: '60px' }}  />
+                  </a>
+                  <a>Jacob Hood</a>
+                  <p  >
+                    blah blah blah...
+              </p>
+                </div>
+              </div>
+              <div className="col-xs-1 col-md-1 col-lg-1" ></div> */}
+
             </div>
           </div>
           {/* Second row of our team */}
