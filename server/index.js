@@ -43,7 +43,7 @@ const persistGithubUser = (accessToken, profile, done) => {
 };
 
 const removeFromFirebase = (ref, cb) => {
-
+  // WILL COMPLETE L8R
 };
 
 passport.use(new GitHubStrategy({
@@ -92,26 +92,22 @@ app.get('/', isAuthenticated, (req, res) => {
 
 app.post('/api/logout', (req, res) => {
   // remove from users
-  
   let { user, roomId } = req.body;
   roomInfo[roomId].userCount -= 1;
   
-  if (roomInfo[roomId].userCount <= 0) {
-    // delete from firebase and send cb to redirect to login once done
-    removeFromFirebase(roomInfo[roomId].ref, (err, result) => {
-      req.logout();
-      res.redirect('/login');
-    });
-  }
-
+  // if (roomInfo[roomId].userCount <= 0) {
+  //   // delete from firebase and send cb to redirect to login once done
+  //   removeFromFirebase(roomInfo[roomId].ref, (err, result) => {
+  //     req.logout();
+  //     res.redirect('/login');
+  //   });
+  // }
   req.logout();
-  res.redirect('/login');
+  res.redirect('/');
 });
 
 app.get('/api/retrieveRoomInfo', (req, res) => {
   //sendup roomID, get curr user data req.session.... , all other users in the room 
-  console.log('req.body: ', req.query);
-  console.log('room info: ', roomInfo);
   let { id, login } = JSON.parse(req.session.passport.user._raw);
   res.send( { currentUser: { id, login }, roomInfo: roomInfo[req.query.roomId] } );
 })
@@ -161,6 +157,10 @@ app.post('/api/enterroom', (req, res) => {
 
   })
   .catch(console.log);
+});
+
+app.get('/api/validateRoomId', (req, res) => {
+  roomInfo[req.query.roomId] ? res.send({ isValid: true }) : res.send({ isValid: false });
 });
 
 app.get('/api/authstatus', (req, res) => {
