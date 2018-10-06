@@ -49,7 +49,6 @@ class LandingPage extends Component {
               <a style={{ color: '#ffffff' }}>____________________________________________________________________________</a>
             </div>
           </div>
-
           <div className="row" >
             <div className="col-xs-12 col-lg-12 text-center" >
               {/* , color: 'rgb(49, 102, 218)' */}
