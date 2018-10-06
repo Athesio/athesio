@@ -18,7 +18,7 @@ body, html {
   background-color: #1e1f21;
 =======
 body, html {
-  height: 100%;
+  height: 100vh;
   width: 100%;
   background-color: #25282d;
 >>>>>>> Add styling and an overlay to Login Page
