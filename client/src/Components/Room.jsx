@@ -20,9 +20,7 @@ class Room extends React.Component {
 
     console.log('in Room constructor');
 
-    this.closeNav = this.closeNav.bind(this);
     this.closeRightNav = this.closeRightNav.bind(this);
-    this.openNav = this.openNav.bind(this);
     this.openRightNav = this.openRightNav.bind(this);
   }
 
@@ -30,15 +28,15 @@ class Room extends React.Component {
     console.log('rendering room');
   }
 
-  openNav() {
-    document.getElementById("userNav").style.width = "30%";
-    document.getElementById("Editor").style.marginLeft = "30%";   
-  }
+  // openNav() {
+  //   document.getElementById("userNav").style.width = "20%";
+  //   document.getElementById("Editor").style.marginLeft = "20%";   
+  // }
 
-  closeNav() {
-    document.getElementById("userNav").style.width = "0";
-    document.getElementById("Editor").style.marginLeft = "0";
-  }
+  // closeNav() {
+  //   document.getElementById("userNav").style.width = "0";
+  //   document.getElementById("Editor").style.marginLeft = "0";
+  // }
 
   openRightNav(e) {
     let tab = e.target.className.split("Span")[0];
@@ -63,21 +61,23 @@ class Room extends React.Component {
       return (
         <div className="wrapper">
           {/* USER NAVIGATION BAR */}
+
           <nav id="userNav" className="sidenav">
-            {/* <UserNav close={this.closeNav} user={this.props.user}/> */}
+            <UserNav />
           </nav>
-          <span className="userSpan" onClick={this.openNav}>&#9776;</span>
+
 
           {/* MIDDLE SECTION OF DASHBOARD */}
-          <div id="Editor" className="container" >
+          <div id="Editor" >
+          <span className="userSpan">&#9776;</span>
 
             {/* NAME OF THE APPLICATION */}
             <div className="row" >
               <div className="col-md-6" >
-                <h2 style={{ fontSize: '60px' }} >ATHESIO</h2>
+                <h2 style={{ fontSize: '30px' }} >ATHESIO</h2>
               </div>
               <div className="col-md-6">
-                <h2>Share room: {this.state.roomId}</h2>
+                <h3>Share room: {this.state.roomId}</h3>
               </div>
             </div>
 
@@ -110,10 +110,10 @@ class Room extends React.Component {
               </div>
             </div>
 
-            <span className="githubSpan" name="Github" onClick={this.openRightNav}>GitHub</span>
+            {/* <span className="githubSpan" name="Github" onClick={this.openRightNav}>GitHub</span>
             <span className="chatSpan" name="Chat" onClick={this.openRightNav}>Slack</span>
             <span className="chatSpan" name="Testing" onClick={this.openRightNav} style={{ top: '100px', right: '15px' }} >Testing</span>
-            <span className="chatSpan" name="Tasks" onClick={this.openRightNav} style={{ top: '140px', right: '15px' }} >Tasks</span>
+            <span className="chatSpan" name="Tasks" onClick={this.openRightNav} style={{ top: '140px', right: '15px' }} >Tasks</span> */}
           </div>
 
           {/* RIGHT NAVIGATION BAR */}
