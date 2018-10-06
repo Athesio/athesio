@@ -8,9 +8,9 @@ a.powered-by-firepad {
 }
 
 body, html {
-  height: 100vh;
+  /* height: 100vh; */
   /* width: 100%; */
-  background-color: #25282d;
+  background-color: #1e1f21;
 }
 
 #SelectRoom {
@@ -46,14 +46,14 @@ body, html {
 .wrapper {
   /* background-color: #111; */
   background-color: #131313;
-  height: 940px;
   display: flex;
   flex-direction: row;
+  height: 100vh;
 }
 
 
 .sidenav {
-  height: 100%;
+  height: 100vh;
   width: 20%;
   position: fixed;
   z-index: 1;

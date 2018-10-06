@@ -19,6 +19,8 @@ class LandingPage extends Component {
         localStorage.setItem('authenticated', authStatus.data);
         this.setState({
           loading: false
+        }, () => {
+          if (localStorage.getItem('authenticated') === 'true') this.props.history.push('/selectroom');
         })
       });
   };

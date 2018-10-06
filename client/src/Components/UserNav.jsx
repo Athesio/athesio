@@ -8,7 +8,7 @@ const UserNav = (props) => {
       <h3 className="text-center" id="currUsername" ></h3>
       {/* <h3 className="text-center" id="currUsername" >{props.user.username}</h3> */}
       <div className="text-center" >
-        <button type="button" id="LogoutBtn" > LOG OUT</button>
+        <button type="button" id="LogoutBtn" onClick={props.logout} > LOG OUT</button>
 
       </div>
 
