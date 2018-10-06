@@ -69,51 +69,52 @@ class Room extends React.Component {
 
           {/* MIDDLE SECTION OF DASHBOARD */}
           <div id="Editor" >
-          <span className="userSpan">&#9776;</span>
-
-            {/* NAME OF THE APPLICATION */}
             <div className="row" >
-              <div className="col-md-6" >
-                <h2 style={{ fontSize: '30px' }} >ATHESIO</h2>
+              <div  id="iconBar" >
+                <div className="text-center" >
+                  <span className="userSpan text-center" style={{ padding: '2px' }} >&#9776;</span>
+                </div>
               </div>
-              <div className="col-md-6">
-                <h3>Share room: {this.state.roomId}</h3>
-              </div>
-            </div>
 
-            {/* SHOWS USERS IN THE SESSION */}
-            <div className="row">
-              <div className="col-xs-12 col-md-12" id="userDiv" >
-                {otherUsers.map((user, i) => {
-                  return (
-                    <a key={i} style={{ color: '#f1f1f1', padding: '10px', fontSize: '12px', float: 'right' }} className="joinedUsers" >
-                      {/* <img className="img-circle text-right" id="userImg" src={user.img} /> {user.username} */}
-                    </a>
-                  )
-                })
-                }
-              </div>
-            </div>
+              <div className="col-xs-11 col-md-11 col-lg-11" id="main" >
+                {/* NAME OF THE APPLICATION */}
+                <div className="row" >
 
-            {/* HOLDS BOTH THE FIREPAD AND THE IFRAME */}
-            <div className="row" >
-              <div className="col-xs-12s col-sm-12 col-md-12" >
-                <EditorHolder roomId={this.state.roomId} />
-              </div>
-            </div>
-            <div className="row" >
-              <div className="col-md-11 col-lg-11" >
-                {/* <button type="button" >Save</button>  */}
-              </div>
-              <div className="col-md-1 col-lg-1" >
-                <button type="button"  >Run</button>
-              </div>
-            </div>
+                  <div className="col-xs-12 col-md-12 col-lg-12" style={{ padding: '0px' }} >
+                    <p className="text-center" >
+                      <a style={{ fontSize: '40px', color: '#ffffff' }} >ATHESIO</a>
+                      <a >Share room: {this.state.roomId}</a>
+                    </p>
+                  </div>
+                </div>
 
-            {/* <span className="githubSpan" name="Github" onClick={this.openRightNav}>GitHub</span>
+
+                {/* SHOWS USERS IN THE SESSION */}
+                <div className="row">
+                  <div className="col-xs-11 col-md-11" id="userDiv" >
+                    {otherUsers.map((user, i) => {
+                      return (
+                        <a key={i} style={{ color: '#f1f1f1', padding: '10px', fontSize: '12px', float: 'right' }} className="joinedUsers" >
+                          {/* <img className="img-circle text-right" id="userImg" src={user.img} /> {user.username} */}
+                        </a>
+                      )
+                    })
+                    }
+                  </div>
+                </div>
+
+                {/* HOLDS BOTH THE FIREPAD AND THE IFRAME */}
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12" style={{ paddingLeft: '0px' }} >
+                  <EditorHolder roomId={this.state.roomId} />
+                </div>
+
+
+                {/* <span className="githubSpan" name="Github" onClick={this.openRightNav}>GitHub</span>
             <span className="chatSpan" name="Chat" onClick={this.openRightNav}>Slack</span>
             <span className="chatSpan" name="Testing" onClick={this.openRightNav} style={{ top: '100px', right: '15px' }} >Testing</span>
             <span className="chatSpan" name="Tasks" onClick={this.openRightNav} style={{ top: '140px', right: '15px' }} >Tasks</span> */}
+              </div>
+            </div>
           </div>
 
           {/* RIGHT NAVIGATION BAR */}
