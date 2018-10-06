@@ -8,7 +8,7 @@ a.powered-by-firepad {
 }
 
 body, html {
-  height: 100%;
+  height: 100vh;
   width: 100%;
   background-color: #25282d;
 }
@@ -344,4 +344,32 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
 }
 
 /* LANDING PAGE */
+#Landing {
+  background-color: #1e1f21;
+  height: 100vh;
+  /* width: 150%; */
+  padding: 0;
+  margin: 60px;
+  color: #e9e6e6;
 
+}
+#Landing div {
+  width: 100%;
+}
+
+#title {
+  color: #e9e6e6;
+}
+
+
+
+.text-pop-up-top{animation:text-pop-up-top .5s cubic-bezier(.25,.46,.45,.94) both}
+ @keyframes text-pop-up-top{0%
+  {transform:translateY(0);transform-origin:50% 50%;text-shadow:none}
+  100%{transform:translateY(-50px);transform-origin:50% 50%;text-shadow:0 1px 0 #ccc,0 2px 0 #ccc,0 3px 0 #ccc,0 4px 0 #ccc,0 5px 0 #ccc,0 6px 0 #ccc,0 7px 0 #ccc,0 8px 0 #ccc,0 9px 0 #ccc,0 50px 30px 
+    rgba(145, 145, 145, 0.418)}}
+
+  
+#LandingTech {
+  padding-left: 10%;
+}
