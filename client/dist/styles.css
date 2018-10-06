@@ -46,13 +46,15 @@ body, html {
 .wrapper {
   /* background-color: #111; */
   background-color: #131313;
-  height: 940px;   
+  height: 940px;
+  display: flex;
+  flex-direction: row;
 }
 
 
 .sidenav {
   height: 100%;
-  width: 0;
+  width: 20%;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -62,6 +64,9 @@ body, html {
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  width: 20%
 }
 
 .sidenav a {
@@ -99,8 +104,13 @@ body, html {
   padding-top: 0px;
   margin-left: 20px;
   margin-right: 0px;
+  width: 80%;
   top: -1px;
   /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 20%;
 }
 
 #Editor h2 {
@@ -393,3 +403,11 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
 .btn-lg.round {
 	border-radius: 30px;
 }
+<<<<<<< HEAD
+=======
+
+
+#LogoutBtn {
+  bottom: 0;
+}
+>>>>>>> a27369e2cfcf1d638ff8f9de76d3745b3385a306
