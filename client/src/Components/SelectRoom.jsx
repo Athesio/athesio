@@ -11,6 +11,7 @@ class SelectRoom extends Component {
 
     this.createRoomId = this.createRoomId.bind(this);
     this.createNewRoom = this.createNewRoom.bind(this);
+    this.joinRoomIfValid = this.joinRoomIfValid.bind(this);
   }
 
   createRoomId(cb) {
@@ -25,6 +26,19 @@ class SelectRoom extends Component {
   createNewRoom() {
     this.createRoomId(() => {
       this.props.history.push(`/room/${this.state.value}`);
+    });
+  }
+
+  joinRoomIfValid() {
+    axios.get('/api/validateRoomId', { params: { roomId: this.state.value } })
+    .then(( { data } ) => {
+      if (data.isValid) {
+        this.props.history.push(`/room/${this.state.value}`);
+      } else {
+        this.setState({
+          value: ''
+        });
+      }
     });
   }
 
@@ -51,9 +65,7 @@ class SelectRoom extends Component {
                         <button
                           className="btn"
                           type="button"
-                          onClick={() => {
-                            this.props.history.push(`/room/${this.state.value}`);
-                          }}
+                          onClick={ this.joinRoomIfValid }
                         >JOIN</button>
                       </span>
                     </div>

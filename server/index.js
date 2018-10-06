@@ -34,12 +34,16 @@ const persistGithubUser = (accessToken, profile, done) => {
   // save accessToken, login, and id in DB
   let { login, id } = profile._json;
 
-  users[id] = {
+  users[login] = {
     accessToken: accessToken,
-    username: login
+    githubId: id
   };
   
   done(null, profile);
+};
+
+const removeFromFirebase = (ref, cb) => {
+  // WILL COMPLETE L8R
 };
 
 passport.use(new GitHubStrategy({
@@ -86,11 +90,27 @@ app.get('/', isAuthenticated, (req, res) => {
   
 // });
 
-app.get('/logout', (req, res) => {
+app.post('/api/logout', (req, res) => {
+  // remove from users
+  let { user, roomId } = req.body;
+  roomInfo[roomId].userCount -= 1;
+  
+  // if (roomInfo[roomId].userCount <= 0) {
+  //   // delete from firebase and send cb to redirect to login once done
+  //   removeFromFirebase(roomInfo[roomId].ref, (err, result) => {
+  //     req.logout();
+  //     res.redirect('/login');
+  //   });
+  // }
   req.logout();
-  res.redirect('/login');
-  //res.sendFile(path.join(__dirname, '../client/dist/login.html'));
+  res.redirect('/');
 });
+
+app.get('/api/retrieveRoomInfo', (req, res) => {
+  //sendup roomID, get curr user data req.session.... , all other users in the room 
+  let { id, login } = JSON.parse(req.session.passport.user._raw);
+  res.send( { currentUser: { id, login }, roomInfo: roomInfo[req.query.roomId] } );
+})
 
 app.get('/auth/github', 
   passport.authenticate('github', {scope: ['user:email']}), (req, res) => {
@@ -121,22 +141,26 @@ app.post('/api/enterroom', (req, res) => {
     // existing room
     if (roomInfo[req.body.roomId]) {
       roomInfo[req.body.roomId].userCount += 1;
-      roomInfo[req.body.roomId].users[user.id] = user.username;
+      roomInfo[req.body.roomId].users[user.username] = user.id;
       res.send(roomInfo[req.body.roomId].ref);
     } else { // new room
       roomInfo[req.body.roomId] = {
         ref: response.data,
         userCount: 1,
         users: {
-          [`${id}`]: user.username
+          [`${login}`]: user.id
         }
       };
-
+      console.log('roomInfo: ', roomInfo);
       res.send(response.data);
     }
 
   })
   .catch(console.log);
+});
+
+app.get('/api/validateRoomId', (req, res) => {
+  roomInfo[req.query.roomId] ? res.send({ isValid: true }) : res.send({ isValid: false });
 });
 
 app.get('/api/authstatus', (req, res) => {
