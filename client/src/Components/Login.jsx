@@ -7,7 +7,7 @@ const Login = (props) => (
         <div className="hovereffect">
           <img className="img-responsive" id="img" alt="" />
           <div className="overlay">
-            <h2 style={{ fontSize: '70px'}} >ATHISIO </h2>
+            <h2 style={{ fontSize: '70px'}} >ATHESIO </h2>
             <em style={{ color: '#ffff' }} >Join your team in a collaborative editing experience.</em>
             <p>
               {/* SVG is for the Github icon */}
