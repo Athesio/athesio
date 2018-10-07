@@ -35,8 +35,10 @@ class Room extends React.Component {
               loading: false,
               user: data.currentUser,
             })
-          });
-      });
+          }
+        );
+      }
+    );
   }
 
   logout() {
@@ -45,14 +47,17 @@ class Room extends React.Component {
   }
 
   openRightNav(e) {
-    let tab = e.target.className.split("Span")[0];
-    if (tab === 'github') {
-      this.setState({ clickedTab: 'github' });
-    } else {
-      this.setState({ clickedTab: 'chat' });
-    }
-    document.getElementById("rightNav").style.width = "30%";
-    document.getElementById("Editor").style.marginRight = "30%";
+    console.log(e.target.name);
+    console.log(e.target.className);
+
+    // let tab = e.target.className.split("Span")[0];
+    // if (tab === 'github') {
+    //   this.setState({ clickedTab: 'github' });
+    // } else {
+    //   this.setState({ clickedTab: 'chat' });
+    // }
+    // document.getElementById("rightNav").style.width = "30%";
+    // document.getElementById("Editor").style.marginRight = "30%";
   }
 
   closeRightNav() {
@@ -69,7 +74,6 @@ class Room extends React.Component {
         return (
           <div className="wrapper">
             {/* USER NAVIGATION BAR */}
-
             <nav id="userNav" className="sidenav">
               <UserNav user={this.state.user} logout={this.logout} />
             </nav>
@@ -80,11 +84,13 @@ class Room extends React.Component {
               <div className="row" >
                 <div id="iconBar" >
                   <div className="text-center" >
-                    <span className="userSpan text-center icon" style={{ padding: '0px' }} >&#9776;</span>
+                    <span name="Home" onClick={this.openRightNav} className="userSpan text-center icon" style={{ padding: '0px' }} >&#9776;</span>
 
                     {/* SVG is for the Github icon */}
                     <svg
-                      className='icon' 
+                      value="github"
+                      onClick={this.openRightNav}
+                      className='icon github' 
                       xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                       width="30" height="30"
                       viewBox="0 0 50 50"
@@ -93,10 +99,10 @@ class Room extends React.Component {
                     </svg>
 
                     {/* Slack icon */}
-                    <img className='icon' src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IgogICAgIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIKICAgICB2aWV3Qm94PSIwIDAgNDggNDgiCiAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjsiPjxnIGlkPSJzdXJmYWNlMSI+PHBhdGggc3R5bGU9IiBmaWxsOiNGRkIzMDA7IiBkPSJNIDMxLjE5OTIxOSAxMC42MDE1NjMgTCAyNC42MDE1NjMgMTIuODk4NDM4IEwgMjMuMTk5MjE5IDguNjAxNTYzIEMgMjIuNjAxNTYzIDYuODAwNzgxIDIzLjUgNC44MDA3ODEgMjUuMzk4NDM4IDQuMTk5MjE5IEMgMjcuMTk5MjE5IDMuNjAxNTYzIDI5LjE5OTIxOSA0LjUgMjkuODAwNzgxIDYuMzk4NDM4IFogTSAyOS4xOTkyMTkgMjYuNjAxNTYzIEwgMzUuODAwNzgxIDI0LjMwMDc4MSBMIDMzLjUgMTcuMTk5MjE5IEwgMjYuODk4NDM4IDE5LjUgWiBNIDMyLjYwMTU2MyAzNi44MDA3ODEgQyAzMy4xMDE1NjMgMzguMTk5MjE5IDM0LjUgMzkuMTk5MjE5IDM1Ljg5ODQzOCAzOS4xOTkyMTkgQyAzNi4zMDA3ODEgMzkuMTk5MjE5IDM2LjY5OTIxOSAzOS4xMDE1NjMgMzcgMzkgQyAzOC44MDA3ODEgMzguMzk4NDM4IDM5LjgwMDc4MSAzNi4zOTg0MzggMzkuMTk5MjE5IDM0LjYwMTU2MyBMIDM4IDMxIEwgMzEuMzk4NDM4IDMzLjMwMDc4MSBaICI+PC9wYXRoPjxwYXRoIHN0eWxlPSIgZmlsbDojMDBCRkE1OyIgZD0iTSAxNy4xOTkyMTkgMTUuNSBMIDEwLjYwMTU2MyAxNy44MDA3ODEgTCA5LjE5OTIxOSAxMy42MDE1NjMgQyA4LjYwMTU2MyAxMS44MDA3ODEgOS41IDkuODAwNzgxIDExLjM5ODQzOCA5LjE5OTIxOSBDIDEzLjE5OTIxOSA4LjYwMTU2MyAxNS4xOTkyMTkgOS41IDE1LjgwMDc4MSAxMS4zOTg0MzggWiBNIDE4LjYwMTU2MyA0MS44MDA3ODEgQyAxOS4xMDE1NjMgNDMuMTk5MjE5IDIwLjUgNDQuMTk5MjE5IDIxLjg5ODQzOCA0NC4xOTkyMTkgQyAyMi4zMDA3ODEgNDQuMTk5MjE5IDIyLjY5OTIxOSA0NC4xMDE1NjMgMjMgNDQgQyAyNC44MDA3ODEgNDMuMzk4NDM4IDI1LjgwMDc4MSA0MS4zOTg0MzggMjUuMTk5MjE5IDM5LjYwMTU2MyBMIDI0IDM1Ljg5ODQzOCBMIDE3LjM5ODQzOCAzOC4xOTkyMTkgWiBNIDE5LjM5ODQzOCAyMi4xOTkyMTkgTCAxMi44MDA3ODEgMjQuNSBMIDE1LjEwMTU2MyAzMS42MDE1NjMgTCAyMS42OTkyMTkgMjkuMzAwNzgxIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiMwMEJDRDQ7IiBkPSJNIDMzLjM5ODQzOCAxNy4zMDA3ODEgTCAzMS4xOTkyMTkgMTAuNjk5MjE5IEwgMzUuMzAwNzgxIDkuMzAwNzgxIEMgMzcuMTAxNTYzIDguNjk5MjE5IDM5LjEwMTU2MyA5LjYwMTU2MyAzOS42OTkyMTkgMTEuNSBDIDQwLjMwMDc4MSAxMy4zMDA3ODEgMzkuMzk4NDM4IDE1LjMwMDc4MSAzNy41IDE1Ljg5ODQzOCBaIE0gMjYuODAwNzgxIDE5LjYwMTU2MyBMIDI0LjYwMTU2MyAxMyBMIDE3LjE5OTIxOSAxNS42MDE1NjMgTCAxOS4zOTg0MzggMjIuMTk5MjE5IFogTSA2LjM5ODQzOCAxOS4zMDA3ODEgQyA0LjYwMTU2MyAxOS44OTg0MzggMy42MDE1NjMgMjEuODk4NDM4IDQuMTk5MjE5IDIzLjY5OTIxOSBDIDQuNjk5MjE5IDI1LjE5OTIxOSA2LjEwMTU2MyAyNi4xMDE1NjMgNy41IDI2LjEwMTU2MyBDIDcuODk4NDM4IDI2LjEwMTU2MyA4LjMwMDc4MSAyNiA4LjYwMTU2MyAyNS44OTg0MzggTCAxMi42OTkyMTkgMjQuNSBMIDEwLjUgMTcuODk4NDM4IFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiNFOTFFNjM7IiBkPSJNIDE1LjEwMTU2MyAzMS41IEwgMTcuMzAwNzgxIDM4LjEwMTU2MyBMIDEyLjYwMTU2MyAzOS42OTkyMTkgQyAxMi4xOTkyMTkgMzkuODAwNzgxIDExLjgwMDc4MSAzOS44OTg0MzggMTEuNSAzOS44OTg0MzggQyAxMCAzOS44OTg0MzggOC42OTkyMTkgMzkgOC4xOTkyMTkgMzcuNSBDIDcuNjAxNTYzIDM1LjY5OTIxOSA4LjUgMzMuNjk5MjE5IDEwLjM5ODQzOCAzMy4xMDE1NjMgWiBNIDQzLjY5OTIxOSAyNS4zMDA3ODEgQyA0My4xMDE1NjMgMjMuNSA0MS4xMDE1NjMgMjIuNSAzOS4zMDA3ODEgMjMuMTAxNTYzIEwgMzUuODAwNzgxIDI0LjMwMDc4MSBMIDM4IDMxIEwgNDEuNjAxNTYzIDI5LjgwMDc4MSBDIDQzLjM5ODQzOCAyOS4xMDE1NjMgNDQuMzk4NDM4IDI3LjEwMTU2MyA0My42OTkyMTkgMjUuMzAwNzgxIFogTSAyMS42OTkyMTkgMjkuMTk5MjE5IEwgMjMuODk4NDM4IDM1LjgwMDc4MSBMIDMxLjMwMDc4MSAzMy4xOTkyMTkgTCAyOS4xMDE1NjMgMjYuNjAxNTYzIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiMzODhFM0M7IiBkPSJNIDMzLjM5ODQzOCAxNy4zMDA3ODEgTCAzMS4xOTkyMTkgMTAuNjAxNTYzIEwgMjQuNjAxNTYzIDEyLjg5ODQzOCBMIDI2LjgwMDc4MSAxOS42MDE1NjMgWiAiPjwvcGF0aD48cGF0aCBzdHlsZT0iIGZpbGw6IzAwODk3QjsiIGQ9Ik0gMTcuMTk5MjE5IDE1LjUgTCAxMC42MDE1NjMgMTcuODAwNzgxIEwgMTIuODAwNzgxIDI0LjUgTCAxOS4zOTg0MzggMjIuMTk5MjE5IFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiNCRjM2MEM7IiBkPSJNIDI5LjE5OTIxOSAyNi42MDE1NjMgTCAzMS4zOTg0MzggMzMuMzAwNzgxIEwgMzggMzEgTCAzNS44MDA3ODEgMjQuMzAwNzgxIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiM0RTM0MkU7IiBkPSJNIDE1LjEwMTU2MyAzMS41IEwgMTcuMzAwNzgxIDM4LjE5OTIxOSBMIDIzLjg5ODQzOCAzNS44OTg0MzggTCAyMS42OTkyMTkgMjkuMTk5MjE5IFogIj48L3BhdGg+PC9nPjwvc3ZnPg=="></img> 
+                    <img name="Slack" onClick={this.openRightNav} className='icon' src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IgogICAgIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIKICAgICB2aWV3Qm94PSIwIDAgNDggNDgiCiAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjsiPjxnIGlkPSJzdXJmYWNlMSI+PHBhdGggc3R5bGU9IiBmaWxsOiNGRkIzMDA7IiBkPSJNIDMxLjE5OTIxOSAxMC42MDE1NjMgTCAyNC42MDE1NjMgMTIuODk4NDM4IEwgMjMuMTk5MjE5IDguNjAxNTYzIEMgMjIuNjAxNTYzIDYuODAwNzgxIDIzLjUgNC44MDA3ODEgMjUuMzk4NDM4IDQuMTk5MjE5IEMgMjcuMTk5MjE5IDMuNjAxNTYzIDI5LjE5OTIxOSA0LjUgMjkuODAwNzgxIDYuMzk4NDM4IFogTSAyOS4xOTkyMTkgMjYuNjAxNTYzIEwgMzUuODAwNzgxIDI0LjMwMDc4MSBMIDMzLjUgMTcuMTk5MjE5IEwgMjYuODk4NDM4IDE5LjUgWiBNIDMyLjYwMTU2MyAzNi44MDA3ODEgQyAzMy4xMDE1NjMgMzguMTk5MjE5IDM0LjUgMzkuMTk5MjE5IDM1Ljg5ODQzOCAzOS4xOTkyMTkgQyAzNi4zMDA3ODEgMzkuMTk5MjE5IDM2LjY5OTIxOSAzOS4xMDE1NjMgMzcgMzkgQyAzOC44MDA3ODEgMzguMzk4NDM4IDM5LjgwMDc4MSAzNi4zOTg0MzggMzkuMTk5MjE5IDM0LjYwMTU2MyBMIDM4IDMxIEwgMzEuMzk4NDM4IDMzLjMwMDc4MSBaICI+PC9wYXRoPjxwYXRoIHN0eWxlPSIgZmlsbDojMDBCRkE1OyIgZD0iTSAxNy4xOTkyMTkgMTUuNSBMIDEwLjYwMTU2MyAxNy44MDA3ODEgTCA5LjE5OTIxOSAxMy42MDE1NjMgQyA4LjYwMTU2MyAxMS44MDA3ODEgOS41IDkuODAwNzgxIDExLjM5ODQzOCA5LjE5OTIxOSBDIDEzLjE5OTIxOSA4LjYwMTU2MyAxNS4xOTkyMTkgOS41IDE1LjgwMDc4MSAxMS4zOTg0MzggWiBNIDE4LjYwMTU2MyA0MS44MDA3ODEgQyAxOS4xMDE1NjMgNDMuMTk5MjE5IDIwLjUgNDQuMTk5MjE5IDIxLjg5ODQzOCA0NC4xOTkyMTkgQyAyMi4zMDA3ODEgNDQuMTk5MjE5IDIyLjY5OTIxOSA0NC4xMDE1NjMgMjMgNDQgQyAyNC44MDA3ODEgNDMuMzk4NDM4IDI1LjgwMDc4MSA0MS4zOTg0MzggMjUuMTk5MjE5IDM5LjYwMTU2MyBMIDI0IDM1Ljg5ODQzOCBMIDE3LjM5ODQzOCAzOC4xOTkyMTkgWiBNIDE5LjM5ODQzOCAyMi4xOTkyMTkgTCAxMi44MDA3ODEgMjQuNSBMIDE1LjEwMTU2MyAzMS42MDE1NjMgTCAyMS42OTkyMTkgMjkuMzAwNzgxIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiMwMEJDRDQ7IiBkPSJNIDMzLjM5ODQzOCAxNy4zMDA3ODEgTCAzMS4xOTkyMTkgMTAuNjk5MjE5IEwgMzUuMzAwNzgxIDkuMzAwNzgxIEMgMzcuMTAxNTYzIDguNjk5MjE5IDM5LjEwMTU2MyA5LjYwMTU2MyAzOS42OTkyMTkgMTEuNSBDIDQwLjMwMDc4MSAxMy4zMDA3ODEgMzkuMzk4NDM4IDE1LjMwMDc4MSAzNy41IDE1Ljg5ODQzOCBaIE0gMjYuODAwNzgxIDE5LjYwMTU2MyBMIDI0LjYwMTU2MyAxMyBMIDE3LjE5OTIxOSAxNS42MDE1NjMgTCAxOS4zOTg0MzggMjIuMTk5MjE5IFogTSA2LjM5ODQzOCAxOS4zMDA3ODEgQyA0LjYwMTU2MyAxOS44OTg0MzggMy42MDE1NjMgMjEuODk4NDM4IDQuMTk5MjE5IDIzLjY5OTIxOSBDIDQuNjk5MjE5IDI1LjE5OTIxOSA2LjEwMTU2MyAyNi4xMDE1NjMgNy41IDI2LjEwMTU2MyBDIDcuODk4NDM4IDI2LjEwMTU2MyA4LjMwMDc4MSAyNiA4LjYwMTU2MyAyNS44OTg0MzggTCAxMi42OTkyMTkgMjQuNSBMIDEwLjUgMTcuODk4NDM4IFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiNFOTFFNjM7IiBkPSJNIDE1LjEwMTU2MyAzMS41IEwgMTcuMzAwNzgxIDM4LjEwMTU2MyBMIDEyLjYwMTU2MyAzOS42OTkyMTkgQyAxMi4xOTkyMTkgMzkuODAwNzgxIDExLjgwMDc4MSAzOS44OTg0MzggMTEuNSAzOS44OTg0MzggQyAxMCAzOS44OTg0MzggOC42OTkyMTkgMzkgOC4xOTkyMTkgMzcuNSBDIDcuNjAxNTYzIDM1LjY5OTIxOSA4LjUgMzMuNjk5MjE5IDEwLjM5ODQzOCAzMy4xMDE1NjMgWiBNIDQzLjY5OTIxOSAyNS4zMDA3ODEgQyA0My4xMDE1NjMgMjMuNSA0MS4xMDE1NjMgMjIuNSAzOS4zMDA3ODEgMjMuMTAxNTYzIEwgMzUuODAwNzgxIDI0LjMwMDc4MSBMIDM4IDMxIEwgNDEuNjAxNTYzIDI5LjgwMDc4MSBDIDQzLjM5ODQzOCAyOS4xMDE1NjMgNDQuMzk4NDM4IDI3LjEwMTU2MyA0My42OTkyMTkgMjUuMzAwNzgxIFogTSAyMS42OTkyMTkgMjkuMTk5MjE5IEwgMjMuODk4NDM4IDM1LjgwMDc4MSBMIDMxLjMwMDc4MSAzMy4xOTkyMTkgTCAyOS4xMDE1NjMgMjYuNjAxNTYzIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiMzODhFM0M7IiBkPSJNIDMzLjM5ODQzOCAxNy4zMDA3ODEgTCAzMS4xOTkyMTkgMTAuNjAxNTYzIEwgMjQuNjAxNTYzIDEyLjg5ODQzOCBMIDI2LjgwMDc4MSAxOS42MDE1NjMgWiAiPjwvcGF0aD48cGF0aCBzdHlsZT0iIGZpbGw6IzAwODk3QjsiIGQ9Ik0gMTcuMTk5MjE5IDE1LjUgTCAxMC42MDE1NjMgMTcuODAwNzgxIEwgMTIuODAwNzgxIDI0LjUgTCAxOS4zOTg0MzggMjIuMTk5MjE5IFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiNCRjM2MEM7IiBkPSJNIDI5LjE5OTIxOSAyNi42MDE1NjMgTCAzMS4zOTg0MzggMzMuMzAwNzgxIEwgMzggMzEgTCAzNS44MDA3ODEgMjQuMzAwNzgxIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiM0RTM0MkU7IiBkPSJNIDE1LjEwMTU2MyAzMS41IEwgMTcuMzAwNzgxIDM4LjE5OTIxOSBMIDIzLjg5ODQzOCAzNS44OTg0MzggTCAyMS42OTkyMTkgMjkuMTk5MjE5IFogIj48L3BhdGg+PC9nPjwvc3ZnPg=="></img> 
                 
-                    {/* Unit Testin icon */}
-                    <img className='icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOgSURBVGhD7Zk5aBRxGMVjPGIuNSKCeKAYFAvFRjxiYQQbGwmoBBGDR6GFwRQiCoohiJX3EQRboxiPQkHSBEQbiYUXHhER0niAwSRNxCTr75t9u7Iku5mZ/W9gYB48v5n3/96b+cjs7OxYFCNGjBjRRCKRKIZVEWKFTj0JhLKRkZFW2M92pMA5f4F13iBsXJL4F/ZGiH2p86astkF+SFjmTRYhcM7ndO4tdml50FqkwACH7Nyp1ws6CLFTYBUHKpXkFAUdhNAN8AbshsOKt4PZB7MFVqo1b5DlfhDCZsMHiksD7SdM3xHZfgv3szlL1tAgx+0g2CsIe2U51O/wJFwOS9RiB62G6UHZ7oP1Wg4F/G4HIeiaZVBfw/mSR4G1ctgA29U/BDdrOTDwuhsE60yC/sDk/dwn6D/jHTiReCkpMFwPssP8hHVK8gX6S2GvvFn/irmAz90ghDQr4rQk38DbYUbqVkmB4HqQK+anHpTkG3huybtLUiDgczrIZfNT90nyDTy35Q1198LndJBT5qcel+QbeJ7KWyspEPA5HWSP+amtknwBSzGeX/LOlRwI+JwOstL81C5JvkD/Kvk+SQoMvO4GwTrH/ITZd4nvh0N6j8j3WFJg4HX6F2kyP7UDlkseF/TWwH5oX6ShnrvwOh3krPmpTZJ8A89HeZdKCgR8TgfZbX5qJ1woOSdon0ZvLRyG9mQ8WUuBgNfpIJXwm2VQ30nOCfpqvIMCti9KDgy87gYxYF8MfxNoLzDG/ZzQ02jHpLZRpkoODPxuBzEQ9shyqA2SsoKe5+pNvsoJCfwFGWS75VC7KWWSR4H1LeqzL8PpkkOBDPeDEGHf1F2WRX0oOQPoS+CAeholhwYZ7gcxELjesqjPJGUAvVrrnymTJIcGOYUZhJiNlpVtEJYWaf2rpLwwEYM8kZQB9Hla75GUFwo2CIHnLYvaLikD6PbywW7R9tJhreTQIMPtIAStgPcth2pYp6VRYC31i3IAnmAz878HAgC/m0GwbSLkDvTeKFIHYc6frayX0HrX+g3s2wu8ZrhALb6B5/8g/DPkJfq8i9Bnz0kH4PukzQuyy6UNVqttXNBbB98owjLscrsHfV9y9KYGuWo7XhjVnmLt1U5W0rMX2q0zDfZ74FE2x/TkIr6d8CYcZD8N9u23/JieFOmphy/Ytv7DNsg2aL8JIgnO/QMl+TljZw28gGDXbiTI+dqlfAzO8IaIESNGjBgTj6KifxEFvzU5pO4HAAAAAElFTkSuQmCC" />
+                    {/* Unit Testing icon */}
+                    <img name="Test" onClick={this.openRightNav} className='icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOgSURBVGhD7Zk5aBRxGMVjPGIuNSKCeKAYFAvFRjxiYQQbGwmoBBGDR6GFwRQiCoohiJX3EQRboxiPQkHSBEQbiYUXHhER0niAwSRNxCTr75t9u7Iku5mZ/W9gYB48v5n3/96b+cjs7OxYFCNGjBjRRCKRKIZVEWKFTj0JhLKRkZFW2M92pMA5f4F13iBsXJL4F/ZGiH2p86astkF+SFjmTRYhcM7ndO4tdml50FqkwACH7Nyp1ws6CLFTYBUHKpXkFAUdhNAN8AbshsOKt4PZB7MFVqo1b5DlfhDCZsMHiksD7SdM3xHZfgv3szlL1tAgx+0g2CsIe2U51O/wJFwOS9RiB62G6UHZ7oP1Wg4F/G4HIeiaZVBfw/mSR4G1ctgA29U/BDdrOTDwuhsE60yC/sDk/dwn6D/jHTiReCkpMFwPssP8hHVK8gX6S2GvvFn/irmAz90ghDQr4rQk38DbYUbqVkmB4HqQK+anHpTkG3huybtLUiDgczrIZfNT90nyDTy35Q1198LndJBT5qcel+QbeJ7KWyspEPA5HWSP+amtknwBSzGeX/LOlRwI+JwOstL81C5JvkD/Kvk+SQoMvO4GwTrH/ITZd4nvh0N6j8j3WFJg4HX6F2kyP7UDlkseF/TWwH5oX6ShnrvwOh3krPmpTZJ8A89HeZdKCgR8TgfZbX5qJ1woOSdon0ZvLRyG9mQ8WUuBgNfpIJXwm2VQ30nOCfpqvIMCti9KDgy87gYxYF8MfxNoLzDG/ZzQ02jHpLZRpkoODPxuBzEQ9shyqA2SsoKe5+pNvsoJCfwFGWS75VC7KWWSR4H1LeqzL8PpkkOBDPeDEGHf1F2WRX0oOQPoS+CAeholhwYZ7gcxELjesqjPJGUAvVrrnymTJIcGOYUZhJiNlpVtEJYWaf2rpLwwEYM8kZQB9Hla75GUFwo2CIHnLYvaLikD6PbywW7R9tJhreTQIMPtIAStgPcth2pYp6VRYC31i3IAnmAz878HAgC/m0GwbSLkDvTeKFIHYc6frayX0HrX+g3s2wu8ZrhALb6B5/8g/DPkJfq8i9Bnz0kH4PukzQuyy6UNVqttXNBbB98owjLscrsHfV9y9KYGuWo7XhjVnmLt1U5W0rMX2q0zDfZ74FE2x/TkIr6d8CYcZD8N9u23/JieFOmphy/Ytv7DNsg2aL8JIgnO/QMl+TljZw28gGDXbiTI+dqlfAzO8IaIESNGjBgTj6KifxEFvzU5pO4HAAAAAElFTkSuQmCC" />
                     
                    
                   </div>
@@ -105,25 +111,23 @@ class Room extends React.Component {
                 <div className="col-xs-11 col-md-11 col-lg-11" id="main" >
                   {/* NAME OF THE APPLICATION */}
                   <div className="row" >
-
-                    <div className="col-xs-12 col-md-12 col-lg-12" >
+                    <div className="col-xs-3 col-md-3 col-lg-3" style={{ paddingTop: '5px', marginBottom: '4px' }} >
                       <p className="text-center" >
-                        <a style={{ fontSize: '30px', color: '#ffffff' }} >ATHESIO</a>
-                        <a >Share room: {this.state.roomId}</a>
-                      </p>
+                        <a style={{ fontSize: '20px', color: '#ffffff' }} >ATHESIO</a>
+                      </p>                    
                     </div>
+                    <div className="col-xs-3 col-md-3 col-lg-3" >
+                      <a >Share room: {this.state.roomId}</a>
+                    </div>
+                    <div className="col-xs-3 col-md-3 col-lg-3" >3</div>
+                    <div className="col-xs-3 col-md-3 col-lg-3" >4</div>
+                      
                   </div>
 
                   {/* HOLDS BOTH THE FIREPAD AND THE IFRAME */}
                   <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12" style={{ paddingLeft: '0px' }} >
                     <EditorHolder roomId={this.state.roomId} refId={this.state.refId} />
                   </div>
-
-
-                  {/* <span className="githubSpan" name="Github" onClick={this.openRightNav}>GitHub</span>
-            <span className="chatSpan" name="Chat" onClick={this.openRightNav}>Slack</span>
-            <span className="chatSpan" name="Testing" onClick={this.openRightNav} style={{ top: '100px', right: '15px' }} >Testing</span>
-            <span className="chatSpan" name="Tasks" onClick={this.openRightNav} style={{ top: '140px', right: '15px' }} >Tasks</span> */}
                 </div>
               </div>
             </div>
