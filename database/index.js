@@ -1,7 +1,7 @@
 // DATABASE
 const mysql = require('mysql');
 const moment = require('moment-timezone');
-
+require('dotenv').config();
 let db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -92,12 +92,24 @@ module.exports.saveRoomInfoForUser = (roomInfo, cb) => {
   });
 };
 
-module.exports.getPreviousRoomsForUser = (user, cb) => {
-  db.query('select * from users', (err, results) => {
+module.exports.getPreviousRoomsForUser = (userGithubId, cb) => {
+  let selectUserHistoryQuery = `SELECT u.github_id, u.github_username, r.room_uuid, firebase_ref, r.create_date, r.last_modified_date FROM users u JOIN users_rooms ur ON u.id=ur.user_id JOIN rooms r ON ur.room_id=r.id WHERE u.github_id=?`;
+  
+  db.query(selectUserHistoryQuery, [userGithubId], (err, results) => {
     if (err) {
       console.log('error retrieving room info for user: ', err);
+      cb(err);
     } else {
-      console.log('results retrieving previous rooms for user: ', results);
+      let resultArr = results.map((record) => {
+        let currRecordObj = {
+          roomId: record.room_uuid,
+          ref: record.firebase_ref,
+          createDate: record.create_date,
+          lastModifiedDate: record.last_modified_date
+        };
+        return currRecordObj;
+      });
+      cb(null, resultArr);
     }
   });
 };
