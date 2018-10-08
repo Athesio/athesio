@@ -160,7 +160,7 @@ class LandingPage extends Component {
                 </p>
               </div>
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
-                <a>Full Stack Engineer</a>
+                <em>Full Stack Engineer</em>
                 <p></p>
                 <a href="https://github.com/jacobwhood">Github</a>
               </div>
@@ -178,7 +178,7 @@ class LandingPage extends Component {
                 </p>
                 </div>
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
-                  <a>Full Stack Engineer</a>
+                  <em>Full Stack Engineer</em>
                   <p></p>
                   <a href="https://github.com/shawnxa">Github</a>
                 </div>
@@ -200,7 +200,7 @@ class LandingPage extends Component {
                 </p>
               </div>
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
-              <a>Full Stack Engineer</a>
+              <em>Full Stack Engineer</em>
                   <p></p>
                   <a href="https://github.com/siehj">Github</a>
               </div>
@@ -218,7 +218,7 @@ class LandingPage extends Component {
                 </p>
                 </div>
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
-                <a>Full Stack Engineer</a>
+                <em>Full Stack Engineer</em>
                   <p></p>
                   <a href="https://github.com/taroyamashita">Github</a>
                 </div>
