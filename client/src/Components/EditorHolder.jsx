@@ -20,7 +20,14 @@ const EditorHolder = (props) => {
         </div>
       </div>
       <div className="row" >
+<<<<<<< HEAD
       <div className="col-md-1 col-lg-1" id='runBtn' >
+=======
+        <div className="col-md-11 col-lg-11" >
+          <button type="button" onClick={props.handleSaveClick}>Save</button> 
+        </div>
+        <div className="col-md-1 col-lg-1" >
+>>>>>>> Add save button to EditorHolder
           <button type="button">Run</button>
         </div>
         <div className="col-xs-11 col-md-11 col-lg-11" id="userDiv" >
