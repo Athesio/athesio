@@ -33,12 +33,12 @@ class SelectRoom extends Component {
   getPreviousSessions() {
     axios.get('/api/getPreviousRoomsForUser')
       .then(({ data }) => {
-        this.setState({ 
+        this.setState({
           previousSessions: data,
           loading: false
         });
       }
-    )
+      )
   }
 
   createNewRoom() {
@@ -63,7 +63,10 @@ class SelectRoom extends Component {
 
   render() {
     if (this.state.loading) {
-      return (<div>Loading...</div>);
+      return (
+        <div style={{ backgroundColor: '#1e1f21' }} >
+          <img src="https://i2.wp.com/merakidezain.com/wp-content/themes/snskanta/assets/img/prod_loading.gif?w=660" alt=""/>
+        </div>);
     } else {
       if (localStorage.getItem('authenticated') === 'true') {
         return (
@@ -101,13 +104,25 @@ class SelectRoom extends Component {
                   <div className="row" >
                     <div className="col-md-3" ></div>
                     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
-                      <div className="text-center" >
+                      <div className="text-center" id="sessionTable" >
                         <a > PREVIOUS SESSIONS</a>
                       </div>
                       <div className="table-responsive" >
-                        {
-                          this.state.previousSessions.map(sessionInfo => <Session info={sessionInfo} key={sessionInfo.ref} />)
-                        }
+                        <table id="session" className="table col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                          <thead  >
+                            <tr>
+                              <th align="left" className="text-center" >Title</th>
+                              <th className="text-center" ></th>
+                              <th align="right" className="text-center" >Last Modified</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {
+                              this.state.previousSessions.map(sessionInfo => <Session info={sessionInfo} key={sessionInfo.ref} />)
+                            }
+                          </tbody>
+
+                        </table>
                       </div>
                     </div>
                     <div className="col-md-3" ></div>

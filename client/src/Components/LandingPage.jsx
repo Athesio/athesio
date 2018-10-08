@@ -32,7 +32,9 @@ class LandingPage extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <div className="loading" >Loading...</div>
+        <div style={{ backgroundColor: '#1e1f21' }} >
+          <img src="https://i2.wp.com/merakidezain.com/wp-content/themes/snskanta/assets/img/prod_loading.gif?w=660" alt=""/>
+        </div>
       );
     } else if (!this.state.loading && localStorage.getItem('authenticated') === 'true') {
       return (<ProtectedRoute component={SelectRoom} />);

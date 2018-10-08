@@ -10,7 +10,7 @@ class Room extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      clickedTab: 'Home',
+      clickedTab: 'Github',
       roomId: window.location.pathname.split('/')[2],
       user: {},
       otherUsers: [],
@@ -21,6 +21,7 @@ class Room extends React.Component {
     this.closeRightNav = this.closeRightNav.bind(this);
     this.openRightNav = this.openRightNav.bind(this);
     this.logout = this.logout.bind(this);
+    this.changeTabs = this.changeTabs.bind(this);
     this.handleSaveClick = this.handleSaveClick.bind(this);
   }
 
@@ -68,7 +69,10 @@ class Room extends React.Component {
 
   render() {
     if (this.state.loading) {
-      return <div>Loading...</div>
+      return (
+        <div style={{ backgroundColor: '#1e1f21' }} >
+          <img src="https://i2.wp.com/merakidezain.com/wp-content/themes/snskanta/assets/img/prod_loading.gif?w=660" alt=""/>
+        </div>)
     } else {
       if (localStorage.getItem('authenticated')) {
         return (
@@ -127,7 +131,7 @@ class Room extends React.Component {
                   </div>
 
                   {/* HOLDS BOTH THE FIREPAD AND THE IFRAME */}
-                  <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12" style={{ paddingLeft: '0px' }} >
+                  <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="navBtm" style={{ paddingLeft: '0px' }} >
                     <EditorHolder roomId={this.state.roomId} refId={this.state.refId} handleSaveClick={this.handleSaveClick}/>
                   </div>
                 </div>
