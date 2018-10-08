@@ -23,6 +23,7 @@ class Room extends React.Component {
     this.closeRightNav = this.closeRightNav.bind(this);
     this.openRightNav = this.openRightNav.bind(this);
     this.logout = this.logout.bind(this);
+    this.handleSaveClick = this.handleSaveClick.bind(this);
   }
 
   componentDidMount() {
@@ -68,6 +69,10 @@ class Room extends React.Component {
     document.getElementById("Editor").style.marginRight = "0";
   }
 
+  handleSaveClick() {
+    axios.post('/api/saveroom', { user: this.state.user, roomId: this.state.roomId, ref: this.state.refId })
+      .then(result => console.log(result));
+  }
 
   render() {
     if (this.state.loading) {
@@ -131,7 +136,7 @@ class Room extends React.Component {
 
                   {/* HOLDS BOTH THE FIREPAD AND THE IFRAME */}
                   <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12" style={{ paddingLeft: '0px' }} >
-                    <EditorHolder roomId={this.state.roomId} refId={this.state.refId} />
+                    <EditorHolder roomId={this.state.roomId} refId={this.state.refId} handleSaveClick={this.handleSaveClick}/>
                   </div>
                 </div>
               </div>
