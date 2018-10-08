@@ -133,14 +133,12 @@ body, html {
   }
 }
 
-.rightNav {
-  /* height: 100%; */
+/* .rightNav {
   width: 0;
   position: fixed;
   z-index: 1;
   top: 0;
   right: 0;
-  /* background-color: #111; */
   background-color: #1e1f21;
   overflow-x: hidden;
   transition: 0.5s;
@@ -166,7 +164,7 @@ body, html {
   right: 25px;
   font-size: 36px;
   margin-right: 50px;
-}
+} */
 
 .githubSpan {
   color:#f1f1f1;
@@ -624,4 +622,13 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
 
 #runBtn {
   padding: 0px;
+}
+
+#githubComponent a {
+  color: #f1f1f1;
+  font-size: 15px;
+}
+
+#navBtm {
+  bottom: 0px;
 }

@@ -1,4 +1,6 @@
 import React from 'react';
+import GithubNav from './GithubNav.jsx';
+
 
 const UserNav = (props) => {
   return (
@@ -7,7 +9,13 @@ const UserNav = (props) => {
       {/* <em style={{ color: '#f1f1f1', paddingLeft: '10px'}} >Welcome back, </em> */}
       {/* <h3 className="text-center" id="currUsername" ></h3> */}
       {/* <h3 className="text-center" id="currUsername" >{props.user.username}</h3> */}
-      
+      {props.tab === 'Home' ? 
+        <div>
+          HOME
+        </div>
+        : 
+        <GithubNav/>
+      }
 
       <div className="row" >
         <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3" >
