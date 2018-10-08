@@ -13,13 +13,15 @@ const session = require('express-session');
 const axios = require('axios');
 const bodyParser = require('body-parser');
 const uuidv1 = require('uuid/v1');
+const db = require('../database/index.js');
+const moment = require('moment');
 
 const roomInfo = {
   
 };
 
 const users = {
-
+  
 };
 
 passport.serializeUser((user, done) => {
@@ -45,6 +47,8 @@ const persistGithubUser = (accessToken, profile, done) => {
 const removeFromFirebase = (ref, cb) => {
   // WILL COMPLETE L8R
 };
+
+
 
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
@@ -107,9 +111,8 @@ app.post('/api/logout', (req, res) => {
 });
 
 app.get('/api/retrieveRoomInfo', (req, res) => {
-  //sendup roomID, get curr user data req.session.... , all other users in the room 
-  let { id, login } = JSON.parse(req.session.passport.user._raw);
-  res.send( { currentUser: { id, login }, roomInfo: roomInfo[req.query.roomId] } );
+  let { id, login, avatar_url } = JSON.parse(req.session.passport.user._raw);
+  res.send( { currentUser: { id, login, avatar_url }, roomInfo: roomInfo[req.query.roomId] } );
 })
 
 app.get('/auth/github', 
@@ -131,17 +134,19 @@ app.get('/api/roomId', (req, res) => {
 app.post('/api/enterroom', (req, res) => {
   axios.get(process.env.RANDOM_ID_URL)
   .then((response) => {
-    let { login, id } = JSON.parse(req.session.passport.user._raw);
+    let { login, id, avatar_url } = JSON.parse(req.session.passport.user._raw);
 
     let user = {
       username: login,
-      id: id
+      id: id,
+      profile_pic: avatar_url
     };
 
     // existing room
     if (roomInfo[req.body.roomId]) {
       roomInfo[req.body.roomId].userCount += 1;
       roomInfo[req.body.roomId].users[user.username] = user.id;
+      roomInfo[req.body.roomId].users[user.username] = user.profile_pic;
       res.send(roomInfo[req.body.roomId].ref);
     } else { // new room
       roomInfo[req.body.roomId] = {
@@ -171,8 +176,36 @@ app.get('/api/authstatus', (req, res) => {
   }
 });
 
+app.post('/api/saveroom', (req, res) => {
+  db.saveRoomInfoForUser(req.body, (err, results) => {
+    if (err) {
+      console.log('Error saving room info to DB: ', err);
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(200);
+    }
+  });
+});
+
 app.get('/room/*', (req, res) => {
   res.redirect('/login');
+});
+
+app.get('/api/getPreviousRoomsForUser', (req, res) => {
+  let { id } = JSON.parse(req.session.passport.user._raw);
+  db.getPreviousRoomsForUser(id, (err, history) => {
+    if (err) {
+      console.log('error retrieving previous rooms for user: ', err);
+      res.sendStatus(500);
+    } else {
+      history = history.map((obj) => {
+        obj.lastModifiedDate = moment(obj.lastModifiedDate).calendar();
+        return obj;
+      })
+      res.send(history);
+    }
+  })
+  
 });
 
 app.get('*', (req, res) => {
@@ -192,6 +225,8 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => console.log('Client disconnected'));
 });
+
+
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => console.log(`Listening on port ${port}`));
