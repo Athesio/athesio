@@ -138,30 +138,94 @@ class LandingPage extends Component {
           </div>
           <div className="text-center" >
             <a style={{ color: '#ffffff' }}>____________________________________________________________________________</a>
-          {/* </div>
+          </div>
           <div className="row" >
             <div className="col-xs-12 col-md-12 col-lg-12" >
-              <p className="text-center" >
+              <div className="text-center" >
                 <h3>Our Team</h3>
-              </p>
+              </div>
             </div>
+            {/* First row of our team */}
             <div className="row" >
-              <div className="col-xs-1 col-md-1 col-lg-1" ><a>1</a></div>
+              <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6" >
+              <div className="row" >
 
-              <div className="col-xs-10 col-md-10 col-lg-10" >
-                <div  >
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                <p className="text-right" >
                   <a>
-                    <img src="https://avatars1.githubusercontent.com/u/20894704?s=460&v=4" alt="img" style={{ height: '60px', width: '60px' }}  />
+                  <img src="https://avatars1.githubusercontent.com/u/20894704?s=460&v=4" alt="img" style={{ height: '70px', width: '70px' }}  />
                   </a>
-                  <a>Jacob Hood</a>
-                  <p  >
-                    blah blah blah...
-              </p>
+                  <br/>
+                  <label>Jacob Hood</label>
+                </p>
+              </div>
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                <a>Full Stack Engineer</a>
+                <p></p>
+                <a href="https://github.com/jacobwhood">Github</a>
+              </div>
+                </div>
+            </div>
+            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6" >
+              <div className="row" >
+                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                <p className="text-right" >
+                  <a>
+                    <img src="https://avatars0.githubusercontent.com/u/40183724?s=96&v=4" alt="img" style={{ height: '70px', width: '70px' }}  />
+                  </a>
+                  <br/>
+                  <label>Shawn Acevedo</label>
+                </p>
+                </div>
+                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                  <a>Full Stack Engineer</a>
+                  <p></p>
+                  <a href="https://github.com/shawnxa">Github</a>
                 </div>
               </div>
-              <div className="col-xs-1 col-md-1 col-lg-1" ></div> */}
+            </div>
+          </div>
+          {/* Second row of our team */}
+          <div className="row" >
+              <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6" >
+              <div className="row" >
 
-            {/* </div> */}
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                <p className="text-right" >
+                  <a>
+                    <img src="https://avatars2.githubusercontent.com/u/26049245?s=96&v=4" alt="img" style={{ height: '70px', width: '70px' }}  />
+                  </a>
+                  <br/>
+                  <label>Sieh Johnson</label>
+                </p>
+              </div>
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+              <a>Full Stack Engineer</a>
+                  <p></p>
+                  <a href="https://github.com/siehj">Github</a>
+              </div>
+                </div>
+            </div>
+            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6" >
+              <div className="row" >
+                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                <p className="text-right" >
+                  <a>
+                    <img src="https://avatars1.githubusercontent.com/u/31697282?s=460&v=4" alt="img" style={{ height: '70px', width: '70px' }}  />
+                  </a>
+                  <br/>
+                  <label>Taro Yamashita</label>
+                </p>
+                </div>
+                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                <a>Full Stack Engineer</a>
+                  <p></p>
+                  <a href="https://github.com/taroyamashita">Github</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           </div>
         </div>
       );
