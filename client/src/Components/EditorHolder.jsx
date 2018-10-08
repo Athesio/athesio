@@ -16,7 +16,7 @@ const EditorHolder = (props) => {
         {/* IFRAME FOR CODE EXECUTION */}
         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-6" id='res' >
           <div className="resultBox">
-            <p>{props.code}</p>
+            {props.code.split('\n').map((item, i)=> (<p> {item} </p>))}
           </div>
         </div>
       </div>

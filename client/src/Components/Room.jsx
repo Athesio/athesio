@@ -37,6 +37,11 @@ class Room extends React.Component {
       // this.setState({ code: newCode });
     });
 
+    this.socket.on('codeUpdated', (code)=>{
+      console.log('code updated');
+      this.setState({code: code});
+    })
+
     this.closeRightNav = this.closeRightNav.bind(this);
     this.openRightNav = this.openRightNav.bind(this);
     this.logout = this.logout.bind(this);
@@ -89,7 +94,10 @@ class Room extends React.Component {
       .then(result => console.log(result));
   }
   runCode(code){
-    this.setState({code: code});
+    // this.setState({code: code});
+    this.socket.emit('codeSent', code, ()=>{
+      console.log('sent code');
+    })
   }
 
 
