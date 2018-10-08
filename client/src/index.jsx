@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import io from "socket.io-client";
 import SelectRoom from './Components/SelectRoom.jsx';
 import Room from './Components/Room.jsx';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
@@ -16,21 +15,6 @@ class App extends Component {
       code: '',
       roomId: ''
     };
-
-    this.socket = io.connect();
-
-    this.socket.on('connect', () => {
-      console.log('connection made client side');
-    });
-
-    this.socket.on('newClientConnection', (code) => {
-      this.setState({ code: code });
-    });
-
-    this.socket.on('serverUpdateCode', (newCode) => {
-      console.log('im changing state: ', newCode);
-      this.setState({ code: newCode });
-    });
 
     this.onCodeUpdate = this.onCodeUpdate.bind(this);
     this.changeScreens = this.changeScreens.bind(this);
