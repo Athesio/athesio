@@ -47,6 +47,8 @@ const removeFromFirebase = (ref, cb) => {
   // WILL COMPLETE L8R
 };
 
+
+
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
@@ -204,6 +206,14 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => console.log('Client disconnected'));
+});
+
+app.get('/db/getPreviousRoomsForUser', (req, res) => {
+    let { id } = JSON.parse(req.session.passport.user._raw);
+    db.getPreviousRoomsForUser(id)
+    .then(history => {
+      res.send(history);
+    });
 });
 
 const port = process.env.PORT || 3000;

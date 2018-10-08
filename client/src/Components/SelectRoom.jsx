@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import Session from './Session.jsx';
 
 class SelectRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        value:''
+      value: '',
+      previousSessions: []
     }
 
     this.createRoomId = this.createRoomId.bind(this);
@@ -16,11 +18,18 @@ class SelectRoom extends Component {
 
   createRoomId(cb) {
     axios.get('/api/roomId')
-    .then((data) => {
-      this.setState({
-        value: data.data
-      }, cb);
-    });
+      .then((data) => {
+        this.setState({
+          value: data.data
+        }, cb);
+      });
+  }
+
+  componentDidMount() {
+    axios.get('/db/getPreviousRoomsForUser')
+      .then((history) => {
+        this.setState({ previousSessions: history });
+      })
   }
 
   createNewRoom() {
@@ -31,15 +40,15 @@ class SelectRoom extends Component {
 
   joinRoomIfValid() {
     axios.get('/api/validateRoomId', { params: { roomId: this.state.value } })
-    .then(( { data } ) => {
-      if (data.isValid) {
-        this.props.history.push(`/room/${this.state.value}`);
-      } else {
-        this.setState({
-          value: ''
-        });
-      }
-    });
+      .then(({ data }) => {
+        if (data.isValid) {
+          this.props.history.push(`/room/${this.state.value}`);
+        } else {
+          this.setState({
+            value: ''
+          });
+        }
+      });
   }
 
 
@@ -65,7 +74,7 @@ class SelectRoom extends Component {
                         <button
                           className="btn"
                           type="button"
-                          onClick={ this.joinRoomIfValid }
+                          onClick={this.joinRoomIfValid}
                         >JOIN</button>
                       </span>
                     </div>
@@ -74,13 +83,31 @@ class SelectRoom extends Component {
               </div>
               <div className="col-md-3" ></div>
             </div>
+            {/* PREVIOUS SESSIONS IF EXIST */}
+            {
+              this.state.previousSessions.length > 0 ?
+                <div className="row" >
+                  <div className="col-md-3" ></div>
+                  <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                    <div className="text-center" >
+                      <a > PREVIOUS SESSIONS</a>
+                      {
+                        this.state.previousSessions.map(sessionInfo => <Session info={sessionInfo} key={sessionInfo.ref} />)
+                      }
+                    </div>
+                  </div>
+                  <div className="col-md-3" ></div>
+                </div>
+                :
+                ('')
+            }
           </div>
         </div>
       )
     } else {
       <Redirect to='/login' />
     }
-    
+
   }
 }
 
