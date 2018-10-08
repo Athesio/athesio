@@ -14,6 +14,7 @@ const axios = require('axios');
 const bodyParser = require('body-parser');
 const uuidv1 = require('uuid/v1');
 const db = require('../database/index.js');
+const moment = require('moment');
 
 const roomInfo = {
   
@@ -190,6 +191,23 @@ app.get('/room/*', (req, res) => {
   res.redirect('/login');
 });
 
+app.get('/api/getPreviousRoomsForUser', (req, res) => {
+  let { id } = JSON.parse(req.session.passport.user._raw);
+  db.getPreviousRoomsForUser(id, (err, history) => {
+    if (err) {
+      console.log('error retrieving previous rooms for user: ', err);
+      res.sendStatus(500);
+    } else {
+      history = history.map((obj) => {
+        obj.lastModifiedDate = moment(obj.lastModifiedDate).calendar();
+        return obj;
+      })
+      res.send(history);
+    }
+  })
+  
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
@@ -208,13 +226,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => console.log('Client disconnected'));
 });
 
-app.get('/db/getPreviousRoomsForUser', (req, res) => {
-    let { id } = JSON.parse(req.session.passport.user._raw);
-    db.getPreviousRoomsForUser(id)
-    .then(history => {
-      res.send(history);
-    });
-});
+
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => console.log(`Listening on port ${port}`));

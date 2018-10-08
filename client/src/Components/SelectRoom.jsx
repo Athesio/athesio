@@ -8,12 +8,14 @@ class SelectRoom extends Component {
     super(props);
     this.state = {
       value: '',
+      loading: true,
       previousSessions: []
     }
 
     this.createRoomId = this.createRoomId.bind(this);
     this.createNewRoom = this.createNewRoom.bind(this);
     this.joinRoomIfValid = this.joinRoomIfValid.bind(this);
+    this.getPreviousSessions = this.getPreviousSessions.bind(this);
   }
 
   createRoomId(cb) {
@@ -26,10 +28,17 @@ class SelectRoom extends Component {
   }
 
   componentDidMount() {
-    axios.get('/db/getPreviousRoomsForUser')
-      .then((history) => {
-        this.setState({ previousSessions: history });
-      })
+    this.setState({ loading: true, previousSessions: [] }, () => { this.getPreviousSessions() })
+  }
+  getPreviousSessions() {
+    axios.get('/api/getPreviousRoomsForUser')
+      .then(({ data }) => {
+        this.setState({ 
+          previousSessions: data,
+          loading: false
+        });
+      }
+    )
   }
 
   createNewRoom() {
@@ -53,61 +62,67 @@ class SelectRoom extends Component {
 
 
   render() {
-    if (localStorage.getItem('authenticated') === 'true') {
-      return (
-        <div id="SelectRoom" >
-          <div className="container-fluid" id="SelectRoomBox" >
-            <div className="row" id="formBox" >
-              <div className="col-md-3"   ></div>
-              <div className="col-md-6"  >
-                <form role="form" >
-                  <div className="form-group" >
-                    <label htmlFor="NewEditor">Open New Editor</label><br />
-                    <button className="btn" onClick={() => this.createNewRoom()} type="button" >New Editor</button>
-                  </div>
-                  <div className="form-group" style={{ marginLeft: '10px', marginRight: '10px' }} >
-                    <a className="text-center" >Join a Room </a><br />
-                    <div className="input-group">
-                      <input type="text" className="form-control" placeholder="Room Key" value={this.state.value} onChange={(e) => { this.setState({ value: e.target.value }) }}></input>
-
-                      <span className="input-group-btn">
-                        <button
-                          className="btn"
-                          type="button"
-                          onClick={this.joinRoomIfValid}
-                        >JOIN</button>
-                      </span>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div className="col-md-3" ></div>
-            </div>
-            {/* PREVIOUS SESSIONS IF EXIST */}
-            {
-              this.state.previousSessions.length > 0 ?
-                <div className="row" >
-                  <div className="col-md-3" ></div>
-                  <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
-                    <div className="text-center" >
-                      <a > PREVIOUS SESSIONS</a>
-                      {
-                        this.state.previousSessions.map(sessionInfo => <Session info={sessionInfo} key={sessionInfo.ref} />)
-                      }
-                    </div>
-                  </div>
-                  <div className="col-md-3" ></div>
-                </div>
-                :
-                ('')
-            }
-          </div>
-        </div>
-      )
+    if (this.state.loading) {
+      return (<div>Loading...</div>);
     } else {
-      <Redirect to='/login' />
-    }
+      if (localStorage.getItem('authenticated') === 'true') {
+        return (
+          <div id="SelectRoom" >
+            <div className="container-fluid" id="SelectRoomBox" >
+              <div className="row" id="formBox" >
+                <div className="col-md-3"   ></div>
+                <div className="col-md-6"  >
+                  <form role="form" >
+                    <div className="form-group" >
+                      <label htmlFor="NewEditor">Open New Editor</label><br />
+                      <button className="btn" onClick={() => this.createNewRoom()} type="button" >New Editor</button>
+                    </div>
+                    <div className="form-group" style={{ marginLeft: '10px', marginRight: '10px' }} >
+                      <a className="text-center" >Join a Room </a><br />
+                      <div className="input-group">
+                        <input type="text" className="form-control" placeholder="Room Key" value={this.state.value} onChange={(e) => { this.setState({ value: e.target.value }) }}></input>
 
+                        <span className="input-group-btn">
+                          <button
+                            className="btn"
+                            type="button"
+                            onClick={this.joinRoomIfValid}
+                          >JOIN</button>
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div className="col-md-3" ></div>
+              </div>
+              {/* PREVIOUS SESSIONS IF EXIST */}
+              {
+                this.state.previousSessions.length > 0 ?
+                  <div className="row" >
+                    <div className="col-md-3" ></div>
+                    <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                      <div className="text-center" >
+                        <a > PREVIOUS SESSIONS</a>
+                      </div>
+                      <div className="table-responsive" >
+                        {
+                          this.state.previousSessions.map(sessionInfo => <Session info={sessionInfo} key={sessionInfo.ref} />)
+                        }
+                      </div>
+                    </div>
+                    <div className="col-md-3" ></div>
+                  </div>
+                  :
+                  null
+              }
+            </div>
+          </div>
+        )
+      } else {
+        <Redirect to='/login' />
+      }
+
+    }
   }
 }
 
