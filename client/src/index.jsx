@@ -33,7 +33,6 @@ class App extends Component {
     });
 
     this.onCodeUpdate = this.onCodeUpdate.bind(this);
-    this.passRoomId = this.passRoomId.bind(this);
     this.changeScreens = this.changeScreens.bind(this);
   }
 
@@ -47,11 +46,6 @@ class App extends Component {
     this.state.currScreen === 'SelectRoom' ? this.setState({currScreen: 'Room'}) : this.setState({currScreen: 'SelectRoom'})
   }
 
-  passRoomId(roomId) {
-    console.log('roomId in passRoomId: ', roomId);
-    this.setState({roomId: roomId})
-  }
-
   render() {
     return (
       <div id="application" >
@@ -63,7 +57,7 @@ class App extends Component {
           <ProtectedRoute path='/room/:id' component={Room} />
           <ProtectedRoute path='/room/*' component={Room} />
           <ProtectedRoute path='/selectroom' component={SelectRoom} />
-          <Route exact path='/' component={LandingPage} />
+          <Route path='/' component={LandingPage} />
           <Redirect to='/' />
         </Switch>
       </div>
