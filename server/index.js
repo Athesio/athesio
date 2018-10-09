@@ -101,7 +101,7 @@ app.get('/auth/github/callback',
 );
 
 app.get('/api/roomId', (req, res) => {
-  res.send(uuidv1());
+  res.send(uuidv1().slice(0,14).split('-').join(''));
 });
 
 app.post('/api/enterroom', (req, res) => {
