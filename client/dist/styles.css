@@ -668,3 +668,20 @@ tr:hover {
   height: 70vh;
   margin: 10px;
 }
+
+#floatingDiv {
+  position: absolute;
+  /* z-axis element(bringing it to the front/on-top of the DOM */
+  z-index: 9;
+  border-color: #f1f1f1;
+  border: 1px solid #536976;
+  text-align: center;
+}
+
+#floatingDivHeader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: #25282d;
+  color: #f1f1f1;
+}
