@@ -44,12 +44,6 @@ const persistGithubUser = (accessToken, profile, done) => {
   done(null, profile);
 };
 
-const removeFromFirebase = (ref, cb) => {
-  // WILL COMPLETE L8R
-};
-
-
-
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
@@ -67,13 +61,6 @@ app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-// const isAuthenticated = (req, res, next) => {
-//   if(req.isAuthenticated()) {
-//     return next();
-//   }
-//   res.redirect('/login');
-// };
-
 const isAuthenticated = (req, res, next) => {
   if (req.session.passport) {
     let { id } = JSON.parse(req.session.passport.user._raw);
@@ -90,22 +77,10 @@ app.get('/', isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-// app.get('/login', (req, res) => {
-  
-// });
-
 app.post('/api/logout', (req, res) => {
   // remove from users
   let { user, roomId } = req.body;
   roomInfo[roomId].userCount -= 1;
-  
-  // if (roomInfo[roomId].userCount <= 0) {
-  //   // delete from firebase and send cb to redirect to login once done
-  //   removeFromFirebase(roomInfo[roomId].ref, (err, result) => {
-  //     req.logout();
-  //     res.redirect('/login');
-  //   });
-  // }
   req.logout();
   res.redirect('/');
 });
@@ -116,9 +91,7 @@ app.get('/api/retrieveRoomInfo', (req, res) => {
 })
 
 app.get('/auth/github', 
-  passport.authenticate('github', {scope: ['user:email']}), (req, res) => {
-    // console.log('/auth/github res: ', res);
-  }
+  passport.authenticate('github', {scope: ['user:email']}), (req, res) => {}
 );
 
 app.get('/auth/github/callback', 
@@ -128,7 +101,7 @@ app.get('/auth/github/callback',
 );
 
 app.get('/api/roomId', (req, res) => {
-  res.send(uuidv1().substr(0, 8));
+  res.send(uuidv1());
 });
 
 app.post('/api/enterroom', (req, res) => {
@@ -156,7 +129,6 @@ app.post('/api/enterroom', (req, res) => {
           [`${login}`]: user.id
         }
       };
-      console.log('roomInfo: ', roomInfo);
       res.send(response.data);
     }
 
@@ -213,14 +185,14 @@ app.get('*', (req, res) => {
 });
 
 app.post('/api/run-code', (req, res)=>{
-  console.log(req.body.data);
-  axios.post('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069', req.body.data, {headers:{
-    'Content-Type': 'text/plain'}}).then((response)=>{
-    console.log('response from utility mother', response.data);
-    res.send(response.data);
-  }).catch((err)=>{
-    console.log('error from mother is', err);
-  })
+  axios.post('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069', req.body.data, 
+    { headers: { 'Content-Type': 'text/plain'} })
+    .then(response => {
+      console.log('response from utility mother', response.data);
+      res.send(response.data);
+    }).catch((err)=>{
+      console.log('error from mother is', err);
+    });
 })
 
 
