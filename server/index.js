@@ -82,7 +82,7 @@ const isAuthenticated = (req, res, next) => {
       return next();
     }
   }
-  res.redirect('/login');
+  res.redirect('/');
 };
 
 app.get('/', isAuthenticated, (req, res) => {
@@ -188,7 +188,7 @@ app.post('/api/saveroom', (req, res) => {
 });
 
 app.get('/room/*', (req, res) => {
-  res.redirect('/login');
+  res.redirect('/');
 });
 
 app.get('/api/getPreviousRoomsForUser', (req, res) => {
@@ -212,6 +212,17 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
 
+app.post('/api/run-code', (req, res)=>{
+  console.log(req.body.data);
+  axios.post('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069', req.body.data, {headers:{
+    'Content-Type': 'text/plain'}}).then((response)=>{
+    console.log('response from utility mother', response.data);
+    res.send(response.data);
+  }).catch((err)=>{
+    console.log('error from mother is', err);
+  })
+})
+
 
 let code = '';
 
@@ -224,6 +235,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => console.log('Client disconnected'));
+
+  socket.on('codeSent', (code)=>{
+    console.log('from socket', code);
+    io.emit('codeUpdated', code);
+  })
 });
 
 

@@ -10,21 +10,19 @@ const EditorHolder = (props) => {
       <div className="row">
         <div className="col-xs-12  col-sm-12 col-md-12 col-lg-6" id="Ace" >
           <div className='editor-container'>
-            <Firepad roomId={props.roomId} refId={props.refId} />
+            <Firepad roomId={props.roomId} refId={props.refId} runCode={props.runCode} />
           </div>
         </div>
         {/* IFRAME FOR CODE EXECUTION */}
         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-6" id='res' >
-          <iframe className="resultBox"  >
-          </iframe>
+          <div className="resultBox">
+            {props.code.split('\n').map((item, i)=> (<p> {item} </p>))}
+          </div>
         </div>
       </div>
       <div className="row" >
         <div className="col-md-11 col-lg-11" >
           <button type="button" onClick={props.handleSaveClick}>Save</button> 
-        </div>
-        <div className="col-md-1 col-lg-1" >
-          <button type="button">Run</button>
         </div>
         <div className="col-xs-11 col-md-11 col-lg-11" id="userDiv" >
           {otherUsers.map((user, i) => {
