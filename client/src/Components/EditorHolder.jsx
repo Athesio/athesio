@@ -24,9 +24,6 @@ const EditorHolder = (props) => {
         <div className="col-md-11 col-lg-11" >
           <button type="button" onClick={props.handleSaveClick}>Save</button> 
         </div>
-        <div className="col-md-1 col-lg-1" >
-          <button type="button">Run</button>
-        </div>
         <div className="col-xs-11 col-md-11 col-lg-11" id="userDiv" >
           {otherUsers.map((user, i) => {
             return (

@@ -82,7 +82,7 @@ const isAuthenticated = (req, res, next) => {
       return next();
     }
   }
-  res.redirect('/login');
+  res.redirect('/');
 };
 
 app.get('/', isAuthenticated, (req, res) => {
@@ -188,7 +188,7 @@ app.post('/api/saveroom', (req, res) => {
 });
 
 app.get('/room/*', (req, res) => {
-  res.redirect('/login');
+  res.redirect('/');
 });
 
 app.get('/api/getPreviousRoomsForUser', (req, res) => {

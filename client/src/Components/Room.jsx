@@ -2,7 +2,7 @@ import React from 'react';
 import EditorHolder from './EditorHolder.jsx';
 import UserNav from './UserNav.jsx';
 import io from "socket.io-client";
-import GithubNav from './DashGithubNav.jsx';
+import GithubNav from './GithubNav.jsx';
 import ChatNav from './ChatNav.jsx';
 import otherUsers from '../../fakeOtherUsers.js';
 import axios from 'axios';
@@ -18,7 +18,7 @@ class Room extends React.Component {
       otherUsers: [],
       loading: true,
       refId: null,
-      code: "Generic code \n output"
+      code: "hello world"
     }
 
 
