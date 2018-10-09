@@ -1,8 +1,6 @@
 import React from 'react';
 import EditorHolder from './EditorHolder.jsx';
 import UserNav from './UserNav.jsx';
-import ChatNav from './ChatNav.jsx';
-import otherUsers from '../../fakeOtherUsers.js';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
@@ -10,7 +8,7 @@ class Room extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      clickedTab: 'Github',
+      clickedTab: 'Home',
       roomId: window.location.pathname.split('/')[2],
       user: {},
       otherUsers: [],

@@ -63,6 +63,7 @@ body, html {
   z-index: 1;
   top: 0;
   left: 0;
+  color: #f1f1f1;
   /* background-color: #111; */
   background-color: #1e1f21;
   overflow-x: hidden;
@@ -629,8 +630,11 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
   font-size: 15px;
 }
 
-#navBtm {
-  bottom: 0px;
+#navBottom {
+  bottom: 10px;
+  position: fixed;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #sessionTable {
@@ -650,4 +654,13 @@ table, tr, tbody {
 tr:hover {
   cursor: pointer;
   background-color: rgb(31, 36, 58);
+}
+
+#HomeNav {
+  padding-top: 20px;
+}
+
+.fileBox {
+  height: 70vh;
+  margin: 10px;
 }
