@@ -2,8 +2,6 @@ import React from 'react';
 import EditorHolder from './EditorHolder.jsx';
 import UserNav from './UserNav.jsx';
 import io from "socket.io-client";
-import GithubNav from './GithubNav.jsx';
-import ChatNav from './ChatNav.jsx';
 import otherUsers from '../../fakeOtherUsers.js';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
@@ -57,6 +55,7 @@ class Room extends React.Component {
       .then(data => {
         axios.get('/api/retrieveRoomInfo', { params: { roomId: this.state.roomId } })
           .then(({ data }) => {
+            console.log(data);
             this.setState({
               refId: data.roomInfo.ref,
               loading: false,
@@ -125,9 +124,8 @@ class Room extends React.Component {
 
                     {/* SVG is for the Github icon */}
                     <svg
-                      value="github"
                       onClick={this.changeTabs}
-                      id="github"
+                      id="Github"
                       className='icon github'
                       xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                       width="30" height="30"
