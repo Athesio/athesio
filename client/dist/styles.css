@@ -47,6 +47,10 @@ body, html {
   padding-top: 5%;
 }
 
+.resultBox{
+  color: white;
+}
+
 .wrapper {
   /* background-color: #111; */
   background-color: #131313;

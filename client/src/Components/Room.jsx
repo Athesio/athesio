@@ -1,6 +1,8 @@
 import React from 'react';
 import EditorHolder from './EditorHolder.jsx';
 import UserNav from './UserNav.jsx';
+import io from "socket.io-client";
+import GithubNav from './GithubNav.jsx';
 import ChatNav from './ChatNav.jsx';
 import otherUsers from '../../fakeOtherUsers.js';
 import axios from 'axios';
@@ -15,14 +17,39 @@ class Room extends React.Component {
       user: {},
       otherUsers: [],
       loading: true,
-      refId: null
+      refId: null,
+      code: "hello world"
     }
+
+
+    this.socket = io.connect();
+
+    this.socket.on('connect', () => {
+      console.log('connection made client side');
+    });
+
+    this.socket.on('newClientConnection', (code) => {
+      // this.setState({ code: code });
+    });
+
+    this.socket.on('serverUpdateCode', (newCode) => {
+      // console.log('im changing state: ', newCode);
+      // this.setState({ code: newCode });
+    });
+
+    this.socket.on('codeUpdated', (code)=>{
+      console.log('code updated');
+      this.setState({code: code});
+    })
 
     this.closeRightNav = this.closeRightNav.bind(this);
     this.openRightNav = this.openRightNav.bind(this);
     this.logout = this.logout.bind(this);
     this.changeTabs = this.changeTabs.bind(this);
     this.handleSaveClick = this.handleSaveClick.bind(this);
+    this.runCode = this.runCode.bind(this);
+
+
   }
 
   componentDidMount() {
@@ -66,6 +93,13 @@ class Room extends React.Component {
     axios.post('/api/saveroom', { user: this.state.user, roomId: this.state.roomId, ref: this.state.refId })
       .then(result => console.log(result));
   }
+  runCode(code){
+    // this.setState({code: code});
+    this.socket.emit('codeSent', code, ()=>{
+      console.log('sent code');
+    })
+  }
+
 
   render() {
     if (this.state.loading) {
@@ -131,8 +165,8 @@ class Room extends React.Component {
                   </div>
 
                   {/* HOLDS BOTH THE FIREPAD AND THE IFRAME */}
-                  <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="navBtm" style={{ paddingLeft: '0px' }} >
-                    <EditorHolder roomId={this.state.roomId} refId={this.state.refId} handleSaveClick={this.handleSaveClick}/>
+                  <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12"  id="navBtm" style={{ paddingLeft: '0px' }} >
+                    <EditorHolder roomId={this.state.roomId} refId={this.state.refId} code={this.state.code} runCode = {this.runCode} handleSaveClick={this.handleSaveClick}/>
                   </div>
                 </div>
               </div>
