@@ -117,13 +117,14 @@ class Room extends React.Component {
       if (localStorage.getItem('authenticated')) {
         return (
           <div className="wrapper">
+          {this.state.showVidDiv === true ? <FloatingVideoDiv moved={this.movedFloatingDiv.bind(this)} deleted={this.deletedFloatingDiv.bind(this)} /> : null }
             {/* USER NAVIGATION BAR */}
             <nav id="userNav" className="sidenav">
               <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} />
             </nav>
 
             {/* MIDDLE SECTION OF DASHBOARD */}
-            {this.state.showVidDiv === true ? <FloatingVideoDiv moved={this.movedFloatingDiv.bind(this)} deleted={this.deletedFloatingDiv.bind(this)} /> : '' }
+            {/* <div id="TEST">  </div> */}
             <div id="Editor" >
               <div className="row" >
                 <div id="iconBar" >

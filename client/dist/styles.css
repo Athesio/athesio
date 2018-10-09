@@ -676,6 +676,7 @@ tr:hover {
   border-color: #f1f1f1;
   border: 1px solid #536976;
   text-align: center;
+  -ms-scroll-limit-x-max: 100%;
 }
 
 #floatingDivHeader {
