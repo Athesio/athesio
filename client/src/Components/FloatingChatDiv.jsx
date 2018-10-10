@@ -1,21 +1,16 @@
 import React from 'react';
 import Draggable from 'react-draggable';
+import Message from './Message.jsx';
 
-
-class FloatingVideoDiv extends React.Component {
+class FloatingChatDiv extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentMessage: '',
-      messages: this.props.messages
+      currentMessage: ''
     };
 
     this.updateMessageText = this.updateMessageText.bind(this);
     this.clearInputBox = this.clearInputBox.bind(this);
-  }
-
-  componentWillReceiveProps(newMessages) {
-    this.setState({ messages: newMessages });
   }
 
   updateMessageText(newText) {
@@ -52,7 +47,11 @@ class FloatingVideoDiv extends React.Component {
               <div>
                 <div id="fdh" > <div id="floatingDivHeader" className="handle" >Drag from here</div> <div className="exitChat" onClick={this.props.minimize} >X</div> </div>
                 <div className="floatingDivContent" >
-                  {/* map over messages and render message component */}
+                  {
+                    this.props.messages.map((message, i) => {
+                      return (<Message  message={message} key={i} user={this.props.user} />);
+                    })
+                  }
                 </div>
                 <div className="row" style={{ padding: '2px' }} >
                   <div className="text-center" style={{ padding: '0px', width: '100%' }} >
@@ -76,4 +75,4 @@ class FloatingVideoDiv extends React.Component {
   }
 }
 
-export default FloatingVideoDiv;
+export default FloatingChatDiv;
