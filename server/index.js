@@ -199,22 +199,37 @@ app.get('*', (req, res) => {
 
 let code = '';
 
-io.on('connection', (socket) => {
-  io.emit('newClientConnection', code);
-
-  socket.on('clientUpdateCode', (newCode) => {
-    code = newCode;
-    io.emit('serverUpdateCode', code);
+let nsp = io.of('/athesio');
+nsp.on('connection', (socket) => {
+  console.log('someone connected to /athesio namespicey');
+  socket.on('room', (room) => {
+    socket.join(room);
+    console.log('you\'ve joined room: ', room);
   });
 
-  socket.on('disconnect', () => console.log('Client disconnected'));
+  socket.on('sendmessage', (message) => {
 
-  socket.on('codeSent', (code) => {
-    console.log('from socket', code);
-    io.emit('codeUpdated', code);
   });
-  
+
+  socket.on('disconnect', () => console.log('disconnecting client'));
 });
+
+// io.on('connection', (socket) => {
+//   io.emit('newClientConnection', code);
+
+//   socket.on('clientUpdateCode', (newCode) => {
+//     code = newCode;
+//     io.emit('serverUpdateCode', code);
+//   });
+
+//   socket.on('disconnect', () => console.log('Client disconnected'));
+
+//   socket.on('codeSent', (code) => {
+//     console.log('from socket', code);
+//     io.emit('codeUpdated', code);
+//   });
+
+// });
 
 
 
