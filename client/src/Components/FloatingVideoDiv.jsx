@@ -23,7 +23,6 @@ class FloatingVideoDiv extends React.Component {
   }
 
   clearInputBox() {
-    console.log('calling clearInputBox');
     this.updateMessageText('');
   }
 

@@ -27,13 +27,13 @@ class Room extends Component {
 
     this.socket.on('connect', () => {
       this.socket.emit('room', this.state.roomId);
-      console.log('connection made client side');
     });
 
     // assumes incoming message can only be from ANOTHER USER
-    this.socket.on('newMessage', (newMessage) => {
-      console.log('incoming message: ', newMessage);
-      this.setState({ messages: this.state.messages.push(newMessage) });
+    this.socket.on('newMessageFromServer', (newMessage) => {
+      let updatedMessageList = this.state.messages;
+      updatedMessageList.push(newMessage);
+      this.setState({ messages: updatedMessageList });
     });
 
     this.socket.on('serverUpdateCode', (newCode) => {
@@ -71,13 +71,12 @@ class Room extends Component {
       });
   }
 
-  sendNewMessage(newMessage, clearInputBoxFn) {
-    // emit new message to clients in this room
-    //   server will handle this and will broadcast to other users
-    // after emit, call cb to clear inputbox
-    // add to messages object
-    this.setState({ messages: this.messages.push(newMessage) }, () => {
-      this.socket.emit('newMessage', { newMessage: newMessage, user: this.state.user, roomId: this.state.roomId });
+  sendNewMessage(newMessageText, clearInputBoxFn) {
+    let newMessageObj = { text: newMessageText, user: this.state.user, roomId: this.state.roomId, createTime: new Date() };
+    let updatedMessageList = this.state.messages;
+    updatedMessageList.push(newMessageObj);
+    this.setState({ messages: updatedMessageList }, () => {
+      this.socket.emit('newMessage', newMessageObj);
       clearInputBoxFn();
     });
   }
