@@ -34,10 +34,10 @@ class Firepad extends Component {
       defaultText: 'console.log("hello world");'
     });
 
-    firepad.on('synced', ()=>{
+    firepad.on('synced', () => {
       this.setState({code: firepad.getText()});
       //console.log(firepad.getText());
-    })
+    });
   }
 
   render() {
@@ -47,11 +47,16 @@ class Firepad extends Component {
         </div>
         <div className="row" >
         <div className="col-md-1 col-lg-1" id='runBtn' >
-          <button type="button" onClick={()=>{axios.post('/api/run-code', {data: this.state.code}).then((response)=>{
-            console.log(response);
-            console.log(typeof response);
-            this.props.runCode(response.data);
-          })}}>Run</button>
+          <button type="button" 
+            onClick={() => {
+              axios.post('/api/run-code', { data: this.state.code })
+                .then((response) => {
+                  console.log(response);
+                  console.log(typeof response);
+                  this.props.runCode(response.data);
+                }
+              )}
+            }>Run</button>
         </div>
       </div>
       </div>
