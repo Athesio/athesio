@@ -153,16 +153,15 @@ app.get('/api/authstatus', (req, res) => {
 });
 
 app.post('/api/saveroom', (req, res) => {
-  console.log(req.body);
-  console.log(roomInfo[req.body.roomId]);
-  // db.saveRoomInfoForUser(req.body, (err, results) => {
-  //   if (err) {
-  //     console.log('Error saving room info to DB: ', err);
-  //     res.sendStatus(500);
-  //   } else {
-  //     res.sendStatus(200);
-  //   }
-  // });
+
+  db.saveRoomInfoForUser(req.body, (err, results) => {
+    if (err) {
+      console.log('Error saving room info to DB: ', err);
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(200);
+    }
+  });
 });
 
 app.get('/room/*', (req, res) => {

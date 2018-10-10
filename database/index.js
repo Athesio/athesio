@@ -32,7 +32,7 @@ module.exports.saveUser = (user, cb) => {
 };
 
 module.exports.saveRoomInfoForUser = (roomInfo, cb) => {
-  console.log('in saveRoomInfoForUser roomInfo: ', roomInfo);
+  // console.log('in saveRoomInfoForUser roomInfo: ', roomInfo);
   this.saveUser(roomInfo.user, (err, _) => {
     if (err) {
       console.log('error saving user to DB: ', err);
@@ -53,7 +53,7 @@ module.exports.saveRoomInfoForUser = (roomInfo, cb) => {
             db.query(updateModifiedDateQuery, [newModifiedDate, roomInfo.roomId], (err, result) => {
               if (err) {
                 console.log('error updating last modified date in rooms table: ', err);
-                //cb(err);
+                cb(err);
               }
               else {
                 console.log('successfully updated modified date: ', result);
@@ -68,18 +68,18 @@ module.exports.saveRoomInfoForUser = (roomInfo, cb) => {
             db.query(insertRoomQuery, [roomInfo.roomId, roomInfo.ref, newDate, newDate], (err, results) => {
               if (err) {
                 console.log('error saving room info to DB: ', err);
-                // cb(err, null);
+                cb(err, null);
               } else {
                 let insertUserRoomQuery = `INSERT INTO users_rooms (user_id, room_id) VALUES ((SELECT id FROM users WHERE github_id=${roomInfo.user.id}), (SELECT id FROM rooms WHERE room_uuid='${roomInfo.roomId}'))`;
 
                 db.query(insertUserRoomQuery, (err, result) => {
                   if (err) {
                     console.log('error inserting new users_rooms records: ', err);
-                    //cb(err);
+                    cb(err);
                   }
                   else {
                     console.log('successfully created new users_rooms record: ', result);
-                    // cb(null, result);
+                    cb(null, result);
                   }
                 });
               }
