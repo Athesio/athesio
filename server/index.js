@@ -209,10 +209,11 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => console.log('Client disconnected'));
 
-  socket.on('codeSent', (code)=>{
+  socket.on('codeSent', (code) => {
     console.log('from socket', code);
     io.emit('codeUpdated', code);
-  })
+  });
+  
 });
 
 
