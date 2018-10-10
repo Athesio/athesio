@@ -102,7 +102,7 @@ class Room extends React.Component {
   }
 
   minimizeFloatingDiv() {
-    this.setState({ minimizeDiv: true });
+    this.setState({ minimizeDiv: !(this.state.minimizeDiv) });
   }
 
   render() {

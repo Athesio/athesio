@@ -15,7 +15,7 @@ class FloatingVideoDiv extends React.Component {
       <Draggable
         axis="both"
         handle=".handle"
-        defaultPosition={{ x: 0, y: 0 }}
+        defaultPosition={{ x: 5, y: 5 }}
         position={null}
         grid={[10, 10]}
         bounds="parent"
@@ -23,18 +23,21 @@ class FloatingVideoDiv extends React.Component {
         onDrag={this.handleDrag}
         onStop={this.handleStop}>
 
-        <div id="floatingDiv" style={{ backgroundColor: 'white' }} >
+        <div id="floatingDiv"  >
           {this.props.miniStatus === true ?
             (
-              <img onClick={this.props.minimize} className="handle" id="bubble" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAO5SURBVGhD7VlLaBNRFB3/0ibvJYVSi4IifvG30oXoUkEFURD/uLM7RSmIWz/7Lv0suhAXKogotCIUYjMziZR0Ywsqgi5URKrJTFKhrdLxvOmtpJnXZiaZTxY5cGjKu7n33Jn77vtEaaKJJqKFofKkNaosp38bH6Vsa4epJi4YKus1VT5kqsw0NW7NEglNge9NjT3FeHdeTeyir0YPy1IWmWr8EAT2GRr/Wy7cDZH0CP5e/f6qo5Vcho+imtwHEblyYbUSD2HM1OOXrZSylNwHj2+5zhYEv4u3MF0pqH6y4aIe20KhgkNeT6xFObyVi/CLrFRU+XEK6T+K2dhWJPFVHnyGlOQtTOZHlWNeKOZbQeMXKbR/+PmmbQ260BdZ0BmyAdT4XjK3ATH9clt3FKVraOwcuasfYk7MW04q/2Xo7DSZzgHGHzvsPRLJTBoZtodc1geIvSMNovEPCLSezP4DgduQ+PVa2rGUKvuMimDkvjYUtcR+aXdS+cdiOtZOZjbGB1s6UWL3kMCEw75OosR6KIx32IudbJ0Q5ZRhG8jMRkHnJ5BE3mHrE/Fw/pjp+CYK5w2mFj8sd8pOkYkNsZAFs6bMJcq1l0J6A8T1OR2yARq2Aecnw0hCUJSsmH8U2h3GUy2r7NdZ6bCsxf7OtK0OspxkxEProvDuIHaxTidshIZtoJvcr7QJmijrFxTeHUQ9Ohyp/DYNU4vlkw6bwMkKaEKLSUZ1QPSQwwm2HTSMtsyvOcZDotjvkYzqqDwUlfElEnoonT8hEdVygGQuDFo/pE4agUaanSGpCyOfS3KZg0ah68413a+skDloHMbPk9TqQNZTcieNwMRRklkdSOSd3En0LGUSO0hmdWDheSZzEjVFt7RSykqSWR1osd0yR1ETlZIhie6QTyd2yhxFTpXfIInugfIalTqLkOIChOS5B7K/InMWFTE/NJLmDT9S7TF8eUzmNBLq8SMkzTvE6U/qNGRifzUotk4kyzusJ8oSbJ2HZc7DojgulPTkdpJUO7Al2IxkSrIgYRBN5xJJqR9iW4D54s89lRfiyFBXSckgdp1gKBcNgojVF9gvXZh0Z0XNygL7Sbz9B1ZOWUZhg4Ghs92YM59kAuolEpgQndL3cpoP4i4Wk7AHgX078ooWW1KT2yhEuDBfxzeKGxf7SUrEuSFKNSMWu9DewkIQ10Pihxkk9dxUmSETPEvxFsEsPt8M5We2WoEnu7iQ5etQegeRmLhS7RLH02KaHxOHInGUJtMmmmiiCa9QlH+Vc04+XvxQtAAAAABJRU5ErkJggg==" />
+              <a>
+                <img className="handle" id="bubble" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP1SURBVGhD7VpdiIxRGP78/845u4uk5L9cyAWSSz9ZkdyIC6KkSMrFKmWlKJS4kqVc+EloQxIlUSZzZhbtkuSCZNvFrmjtfN8uIex43m9f+83OvsPMmJk9F/PU0zft9/4855z3/M2sU0IJJRQeXbecYXGjF7lGVXtGXfGi6rEb1R/BH15UJ7qpPoPNYBg85Rm92YuGZnKI/kMi4Qz0YqGVEFQL8R2B4OzoGv0CMQ7F7+upHLo4SDx3hroRtR292igJy5Vo0C+M4E00aC6nKhw8E1qB3nslCckX0aAuPC92Phg1ntPmDx/C40aj/s+mJi0k0aC2eEyvYQn/DzeqpqMRz6RkhSaNDvIfTVx2BrGc3NBpymehbt9LSYrMS4mwM5hlZQe3Ts2gJVQI2j80+gJWygEsLzNgSMsLPalzotEHWWJmgEOtGKifSXMmHtWLWebfAeO1UhB7qJpbGiaMZLky6KgBw9dyAHuIVXQvS5aBYdsiOdpHFae9jWX3BQyeyo72EfvLNpbdG511ZbMlB1uJhhiW3huou92Sg63EHvcTe10Fyw+AFl6THGwmOr+S5QdAC19KxukI+1bcQzzpXTKR7B3mXqf0rjfVG8T7Ir9LyyqWHwBBXMFQJEZvD/l01U0cAaHXJRsirYJk1/awQiH+PcnG3+SMXk12HeHRY9Ggx5KdROQ+Qn69IBmKRK/R7ZDdHDem5qexa2ITH/5dRrZ7wiY+vEhoo2gn0eiT7BYApfJNNE4hTbLkSw/1pmQHgR3Jaz16fqtkh15toVsnm9GiUy3ZpeFxdgsAgRkf12H70O9h9B4JkWy6qe6iDJf5G63Rn2QbiqeuIU4lnjsym089PMDyA/jiZGObuYnlB8AfT6QYWU+U6zyWHwBDu14ytpYoVfEKTEskyuur6GQhofU8S+8LGFxOdbCVHZGyhSy7L6jmJCfrmLL3iMASeEN0tojo8KUsNz3aTfmkLNfy4tKoqyz137D1pogJ3uo9Co1hmZmBzjFSsH4jnYwjoQUsL3PQGk3DKAYtMjEnvnumbBVLyx7UGEz+c1LwYtHf22KhlSwpd9DXlAi40+8VIVFhqRrjMT2HpeQHdIqVkxWGODKdQeeVc/r8wY2o5VLCvNPoeozCEk6bf6B3jomJ80DEpl+p7tCEzvob92yQCDvD/TVcEJEraRKjfCL4vAsNmcapCouMNkijb8cf6ClUFt0/lurD4Ak6pWJ+ncbnGjz3edHQBrrnJxqcIRy+OKB7N/aTtz2CU8hlUZN877YSGP4jqeJ7aFQT3bXZ1F5QCaA0kv574U8DdD1GYqv1o/AHEF2FTekUnjUQvx+1v649VjaZX5dQQlo4zm8qYCSPs2JQPQAAAABJRU5ErkJggg=="/>
+                <br /><em onClick={this.props.minimize} style={{ color: "#f1f1f1", cursor: "pointer" }} >Chat</em>
+              </a>
             )
             :
             (
               <div>
-                <div className="handle" id="floatingDivHeader" >Drag from here</div>
+                <div id="fdh" > <div id="floatingDivHeader" className="handle" >Drag from here</div> <div className="exitChat" onClick={this.props.minimize} >X</div> </div>
                 <div className="floatingDivContent" ></div>
                 <div className="row" style={{ padding: '2px' }} >
-                  <div className="text-center " style={{ padding: '0px', width: '100%' }} > <input type="text" name="chatInput" /><button>Send</button> <div onClick={this.props.minimize} >X</div></div>
+                  <div className="text-center " style={{ padding: '0px', width: '100%' }} > <input type="text" name="chatInput" /><button>Send</button> </div>
                 </div>
               </div>
             )
