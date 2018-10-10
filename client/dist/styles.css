@@ -553,10 +553,8 @@ background: linear-gradient(to right, #292E49, #536976, #BBD2C5);
 /* background: #0F2027;  
 background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  
 background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
-
-
-
 }
+
 #imgHolder {
   padding: 0px;
 }
@@ -676,7 +674,6 @@ tr:hover {
   border-color: #f1f1f1;
   border: 1px solid #536976;
   text-align: center;
-  -ms-scroll-limit-x-max: 100%;
 }
 
 #floatingDivHeader {

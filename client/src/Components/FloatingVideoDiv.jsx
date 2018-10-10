@@ -25,6 +25,7 @@ class FloatingVideoDiv extends React.Component {
         defaultPosition={{x: 0, y: 0}}
         position={null}
         grid={[10, 10]}
+        bounds="parent"
         onStart={this.handleStart}
         onDrag={this.handleDrag}
         onStop={this.handleStop}>
