@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import EditorHolder from './EditorHolder.jsx';
 import UserNav from './UserNav.jsx';
 import io from "socket.io-client";
@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import FloatingVideoDiv from './FloatingVideoDiv.jsx';
 
-class Room extends React.Component {
+class Room extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,9 +19,9 @@ class Room extends React.Component {
       refId: null,
       code: "hello world",
       showVidDiv: false, 
-      minimizeDiv: false
+      minimizeDiv: false,
+      messages: []
     }
-
 
     this.socket = io.connect();
 
@@ -94,7 +94,7 @@ class Room extends React.Component {
   runCode(code) {
     this.socket.emit('codeSent', code, () => {
       console.log('sent code');
-    })
+    });
   }
 
   createFloatingVideo() {
@@ -184,7 +184,7 @@ class Room extends React.Component {
           </div>
         )
       } else {
-        return (<Redirect to='/login' />)
+        return ( <Redirect to='/login' /> )
       }
     }
   }
