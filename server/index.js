@@ -24,6 +24,10 @@ const users = {
   
 };
 
+const chatHistory = {
+
+}
+
 passport.serializeUser((user, done) => {
   done(null, user);
 });
@@ -201,14 +205,16 @@ let code = '';
 
 let nsp = io.of('/athesio');
 nsp.on('connection', (socket) => {
-  console.log('someone connected to /athesio namespicey');
   socket.on('room', (room) => {
     socket.join(room);
-    console.log('you\'ve joined room: ', room);
+  });
+
+  socket.on('retrieveChatHistory', (room) => {
+    socket.emit('receivedChatHistoryFromServer', chatHistory[room] ? chatHistory[room] : []);
   });
 
   socket.on('newMessage', (messageObj) => {
-    console.log('new message from server: ', messageObj);
+    chatHistory[messageObj.roomId] ? chatHistory[messageObj.roomId].push(messageObj) : chatHistory[messageObj.roomId] = [messageObj];
     socket.broadcast.to(messageObj.roomId).emit('newMessageFromServer', messageObj);
   });
 
