@@ -24,6 +24,10 @@ const users = {
   
 };
 
+const chatHistory = {
+
+}
+
 passport.serializeUser((user, done) => {
   done(null, user);
 });
@@ -176,43 +180,63 @@ app.get('/api/getPreviousRoomsForUser', (req, res) => {
       })
       res.send(history);
     }
-  })
-  
+  });
+});
+
+app.post('/api/run-code', (req, res) => {
+  axios.post('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069', req.body.data, {
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    })
+    .then(response => {
+      console.log('response from utility mother', response.data);
+      res.send(response.data);
+    }).catch((err) => {
+      console.log('error from mother is', err);
+    });
 });
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
 
-app.post('/api/run-code', (req, res)=>{
-  axios.post('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069', req.body.data, 
-    { headers: { 'Content-Type': 'text/plain'} })
-    .then(response => {
-      console.log('response from utility mother', response.data);
-      res.send(response.data);
-    }).catch((err)=>{
-      console.log('error from mother is', err);
-    });
-})
-
-
 let code = '';
 
-io.on('connection', (socket) => {
-  io.emit('newClientConnection', code);
-
-  socket.on('clientUpdateCode', (newCode) => {
-    code = newCode;
-    io.emit('serverUpdateCode', code);
+let nsp = io.of('/athesio');
+nsp.on('connection', (socket) => {
+  socket.on('room', (room) => {
+    socket.join(room);
   });
 
-  socket.on('disconnect', () => console.log('Client disconnected'));
+  socket.on('retrieveChatHistory', (room) => {
+    socket.emit('receivedChatHistoryFromServer', chatHistory[room] ? chatHistory[room] : []);
+  });
 
-  socket.on('codeSent', (code)=>{
-    console.log('from socket', code);
-    io.emit('codeUpdated', code);
-  })
+  socket.on('newMessage', (messageObj) => {
+    chatHistory[messageObj.roomId] ? chatHistory[messageObj.roomId].push(messageObj) : chatHistory[messageObj.roomId] = [messageObj];
+    socket.broadcast.to(messageObj.roomId).emit('newMessageFromServer', messageObj);
+  });
+
+  socket.on('disconnect', () => console.log('disconnecting client'));
 });
+
+// io.on('connection', (socket) => {
+//   io.emit('newClientConnection', code);
+
+//   socket.on('clientUpdateCode', (newCode) => {
+//     code = newCode;
+//     io.emit('serverUpdateCode', code);
+//   });
+
+//   socket.on('disconnect', () => console.log('Client disconnected'));
+
+//   socket.on('codeSent', (code) => {
+//     console.log('from socket', code);
+//     io.emit('codeUpdated', code);
+//   });
+
+// });
 
 
 

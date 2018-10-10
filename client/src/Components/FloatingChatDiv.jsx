@@ -1,13 +1,24 @@
 import React from 'react';
 import Draggable from 'react-draggable';
+import Message from './Message.jsx';
 
-
-class FloatingVideoDiv extends React.Component {
+class FloatingChatDiv extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      currentMessage: ''
     };
+
+    this.updateMessageText = this.updateMessageText.bind(this);
+    this.clearInputBox = this.clearInputBox.bind(this);
+  }
+
+  updateMessageText(newText) {
+    this.setState({ currentMessage: newText });
+  }
+
+  clearInputBox() {
+    this.updateMessageText('');
   }
 
   render() {
@@ -35,9 +46,25 @@ class FloatingVideoDiv extends React.Component {
             (
               <div>
                 <div id="fdh" > <div id="floatingDivHeader" className="handle" >Drag from here</div> <div className="exitChat" onClick={this.props.minimize} >X</div> </div>
-                <div className="floatingDivContent" ></div>
+                <div className="floatingDivContent" >
+                  {
+                    this.props.messages.map((message, i) => {
+                      return (<Message  message={message} key={i} user={this.props.user} />);
+                    })
+                  }
+                </div>
                 <div className="row" style={{ padding: '2px' }} >
-                  <div className="text-center " style={{ padding: '0px', width: '100%' }} > <input type="text" name="chatInput" /><button>Send</button> </div>
+                  <div className="text-center" style={{ padding: '0px', width: '100%' }} >
+                    <input 
+                      type="text" 
+                      name="chatInput"
+                      value={this.state.currentMessage}
+                      onChange={(e) => this.updateMessageText(e.target.value)}
+                    />
+                      <button 
+                        onClick={() => this.props.sendNewMessage(this.state.currentMessage, this.clearInputBox)}
+                      > Send </button>
+                  </div>
                 </div>
               </div>
             )
@@ -48,4 +75,4 @@ class FloatingVideoDiv extends React.Component {
   }
 }
 
-export default FloatingVideoDiv;
+export default FloatingChatDiv;
