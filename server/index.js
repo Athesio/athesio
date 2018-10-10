@@ -207,9 +207,9 @@ nsp.on('connection', (socket) => {
     console.log('you\'ve joined room: ', room);
   });
 
-  socket.on('newMessage', (messageInfo) => {
-    console.log('new message from server: ', messageInfo);
-    socket.broadcast.to(messageInfo.roomId).emit('newMessage', messageInfo.newMessage);
+  socket.on('newMessage', (messageObj) => {
+    console.log('new message from server: ', messageObj);
+    socket.broadcast.to(messageObj.roomId).emit('newMessageFromServer', messageObj);
   });
 
   socket.on('disconnect', () => console.log('disconnecting client'));
