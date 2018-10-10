@@ -34,7 +34,7 @@ class FloatingChatDiv extends React.Component {
         onDrag={this.handleDrag}
         onStop={this.handleStop}>
 
-        <div id="floatingDiv"  >
+        <div id="floatingDiv">
           {this.props.miniStatus === true ?
             (
               <a>
@@ -44,16 +44,23 @@ class FloatingChatDiv extends React.Component {
             )
             :
             (
-              <div>
-                <div id="fdh" > <div id="floatingDivHeader" className="handle" >Drag from here</div> <div className="exitChat" onClick={this.props.minimize} >X</div> </div>
-                <div className="floatingDivContent" >
+              <div className="floating-div-container">
+                <div id="fdh" >
+                  <div id="floatingDivHeader" className="handle" >
+                    Drag from here
+                  </div>
+                <div className="exitChat" onClick={this.props.minimize}>
+                  X
+                </div>
+              </div>
+                <div className="floatingDivContent" style={{ overflow: 'scroll'}}>
                   {
                     this.props.messages.map((message, i) => {
                       return (<Message  message={message} key={i} user={this.props.user} />);
                     })
                   }
                 </div>
-                <div className="row" style={{ padding: '2px' }} >
+                <div className="row" >
                   <div className="text-center" style={{ padding: '0px', width: '100%' }} >
                     <input 
                       type="text" 
