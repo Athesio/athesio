@@ -144,7 +144,6 @@ class Room extends Component {
             </nav>
 
             {/* MIDDLE SECTION OF DASHBOARD */}
-            {/* <div id="TEST">  </div> */}
             <div id="Editor" >
               <div className="row" >
                 <div id="iconBar" >

@@ -116,21 +116,21 @@ app.post('/api/enterroom', (req, res) => {
     let user = {
       username: login,
       id: id,
-      profile_pic: avatar_url
+      avatar_url: avatar_url
     };
 
     // existing room
     if (roomInfo[req.body.roomId]) {
       roomInfo[req.body.roomId].userCount += 1;
-      roomInfo[req.body.roomId].users[user.username] = user.id;
-      roomInfo[req.body.roomId].users[user.username] = user.profile_pic;
+      roomInfo[req.body.roomId].users[user.username] = user;
+      console.log(roomInfo);
       res.send(roomInfo[req.body.roomId].ref);
     } else { // new room
       roomInfo[req.body.roomId] = {
         ref: response.data,
         userCount: 1,
         users: {
-          [`${login}`]: user.id
+          [`${user.username}`] : user
         }
       };
       res.send(response.data);
@@ -153,14 +153,16 @@ app.get('/api/authstatus', (req, res) => {
 });
 
 app.post('/api/saveroom', (req, res) => {
-  db.saveRoomInfoForUser(req.body, (err, results) => {
-    if (err) {
-      console.log('Error saving room info to DB: ', err);
-      res.sendStatus(500);
-    } else {
-      res.sendStatus(200);
-    }
-  });
+  console.log(req.body);
+  console.log(roomInfo[req.body.roomId]);
+  // db.saveRoomInfoForUser(req.body, (err, results) => {
+  //   if (err) {
+  //     console.log('Error saving room info to DB: ', err);
+  //     res.sendStatus(500);
+  //   } else {
+  //     res.sendStatus(200);
+  //   }
+  // });
 });
 
 app.get('/room/*', (req, res) => {
