@@ -23,14 +23,16 @@ class Room extends Component {
       messages: []
     }
 
-    this.socket = io.connect();
+    this.socket = io('/athesio').connect();
 
     this.socket.on('connect', () => {
+      this.socket.emit('room', this.state.roomId);
       console.log('connection made client side');
     });
 
-    this.socket.on('newClientConnection', (code) => {
-      // this.setState({ code: code });
+    // assumes incoming message can only be from ANOTHER USER
+    this.socket.on('newMessage', (newMessage) => {
+      this.setState({ messages: this.state.messages.push(newMessage) });
     });
 
     this.socket.on('serverUpdateCode', (newCode) => {
@@ -67,6 +69,12 @@ class Room extends Component {
           );
         }
       );
+  }
+
+  sendNewMessage(newMessage) {
+    // store newMessage in state
+    // emit new message to clients in this room
+    //   server will handle this and will broadcast to other users
   }
 
   logout() {
