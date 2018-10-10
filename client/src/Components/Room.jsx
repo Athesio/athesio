@@ -18,8 +18,8 @@ class Room extends React.Component {
       loading: true,
       refId: null,
       code: "hello world",
-      showVidDiv: false,
-      moved: true
+      showVidDiv: false, 
+      minimizeDiv: false
     }
 
 
@@ -98,13 +98,11 @@ class Room extends React.Component {
   }
 
   createFloatingVideo() {
-    this.setState({ showVidDiv: true });
+    this.setState({showVidDiv: !(this.state.showVidDiv)});
   }
-  movedFloatingDiv() {
-    this.setState({ moved: true });
-  }
-  deletedFloatingDiv() {
-    this.setState({ moved: false });
+
+  minimizeFloatingDiv() {
+    this.setState({ minimizeDiv: true });
   }
 
   render() {
@@ -117,7 +115,7 @@ class Room extends React.Component {
       if (localStorage.getItem('authenticated')) {
         return (
           <div className="wrapper">
-          {this.state.showVidDiv === true ? <FloatingVideoDiv moved={this.movedFloatingDiv.bind(this)} deleted={this.deletedFloatingDiv.bind(this)} /> : null }
+          {this.state.showVidDiv === true ? <FloatingVideoDiv minimize={this.createFloatingVideo.bind(this)} miniStatus={this.state.minimizeDiv} /> : null }
             {/* USER NAVIGATION BAR */}
             <nav id="userNav" className="sidenav">
               <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} />

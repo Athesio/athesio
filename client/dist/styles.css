@@ -677,9 +677,14 @@ tr:hover {
 }
 
 #floatingDivHeader {
-  padding: 10px;
+  padding: 7px;
   cursor: move;
   z-index: 10;
   background-color: #25282d;
   color: #f1f1f1;
+}
+
+.floatingDivContent {
+  height: 200px;
+  width: 250px;
 }
