@@ -675,10 +675,11 @@ tr:hover {
   /* border: 1px solid #536976; */
   text-align: center;
 }
+
 #fdh {
   padding: 7px;
   z-index: 10;
-  background-color: black;
+  background-color: #536976;
   color: #f1f1f1;
   display: flex;
   flex-direction: row;
@@ -690,12 +691,12 @@ tr:hover {
   flex-direction: column;
   width: 90%;
 }
+
 .exitChat {
   cursor: pointer;
   display: flex;
   flex-direction: column;
   width: 10%;
-
 }
 
 #bubble {
@@ -709,4 +710,40 @@ tr:hover {
   height: 200px;
   width: 250px;
   background: white;
+}
+
+.message-container {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 100%;
+  border-bottom: 2px #25282d solid;
+}
+
+.user-message {
+  width: 100%;
+  text-align: right;
+}
+
+.other-user-message {
+  width: 100%;
+  text-align: left;
+}
+
+.timestamp-user-text-container {
+  width: 100%;
+  font-size: medium;
+}
+
+.name-div {
+  font-size: small;
+}
+
+.message-text-div {
+  width: 100%;
+  overflow: wrap;
+}
+
+.timestamp-div {
+  width: 100%;
+  font-size: small;
 }
