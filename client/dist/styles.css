@@ -700,7 +700,7 @@ tr:hover {
 }
 
 #bubble {
-  background-color: rgba(255, 219, 14, 0.041);
+  background-color: rgba(255, 219, 14, 0);
   cursor: move;
   height: 20px; 
   width: 20px;
