@@ -32,7 +32,8 @@ class Room extends Component {
 
     // assumes incoming message can only be from ANOTHER USER
     this.socket.on('newMessage', (newMessage) => {
-      this.setState({ messages: this.state.messages.push(newMessage) });
+      console.log('incoming message: ', newMessage);
+      //this.setState({ messages: this.state.messages.push(newMessage) });
     });
 
     this.socket.on('serverUpdateCode', (newCode) => {
@@ -43,7 +44,7 @@ class Room extends Component {
     this.socket.on('codeUpdated', (code) => {
       console.log('code updated');
       this.setState({ code: code });
-    })
+    });
 
     // this.closeRightNav = this.closeRightNav.bind(this);
     // this.openRightNav = this.openRightNav.bind(this);
@@ -52,6 +53,7 @@ class Room extends Component {
     this.handleSaveClick = this.handleSaveClick.bind(this);
     this.runCode = this.runCode.bind(this);
     this.createFloatingVideo = this.createFloatingVideo.bind(this);
+    this.sendNewMessage = this.sendNewMessage.bind(this);
   }
 
   componentDidMount() {
@@ -64,22 +66,22 @@ class Room extends Component {
               refId: data.roomInfo.ref,
               loading: false,
               user: data.currentUser,
-            })
-          }
-          );
-        }
-      );
+            });
+          });
+      });
   }
 
-  sendNewMessage(newMessage) {
-    // store newMessage in state
+  sendNewMessage(newMessage, clearInputBoxFn) {
     // emit new message to clients in this room
     //   server will handle this and will broadcast to other users
+    // after emit, call cb to clear inputbox
+    this.socket.emit('newMessage', { newMessage: newMessage, user: this.state.user, roomId: this.state.roomId });
+    clearInputBoxFn();
   }
 
   logout() {
     axios.post('/api/logout', { roomId: this.state.roomId, user: this.state.user })
-      .then(result => window.location.assign('/'));
+      .then(() => window.location.assign('/'));
   }
 
   changeTabs(e) {
@@ -99,6 +101,7 @@ class Room extends Component {
     axios.post('/api/saveroom', { user: this.state.user, roomId: this.state.roomId, ref: this.state.refId })
       .then(result => console.log(result));
   }
+
   runCode(code) {
     this.socket.emit('codeSent', code, () => {
       console.log('sent code');
@@ -123,7 +126,7 @@ class Room extends Component {
       if (localStorage.getItem('authenticated')) {
         return (
           <div className="wrapper">
-          {this.state.showVidDiv === true ? <FloatingVideoDiv minimize={this.minimizeFloatingDiv.bind(this)} miniStatus={this.state.minimizeDiv} /> : null }
+            {this.state.showVidDiv === true ? <FloatingVideoDiv messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv.bind(this)} miniStatus={this.state.minimizeDiv} /> : null }
             {/* USER NAVIGATION BAR */}
             <nav id="userNav" className="sidenav">
               <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} />
