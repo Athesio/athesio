@@ -6,8 +6,25 @@ class FloatingVideoDiv extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      currentMessage: '',
+      messages: this.props.messages
     };
+
+    this.updateMessageText = this.updateMessageText.bind(this);
+    this.clearInputBox = this.clearInputBox.bind(this);
+  }
+
+  componentWillReceiveProps(newMessages) {
+    this.setState({ messages: newMessages });
+  }
+
+  updateMessageText(newText) {
+    this.setState({ currentMessage: newText });
+  }
+
+  clearInputBox() {
+    console.log('calling clearInputBox');
+    this.updateMessageText('');
   }
 
   render() {
@@ -35,9 +52,21 @@ class FloatingVideoDiv extends React.Component {
             (
               <div>
                 <div id="fdh" > <div id="floatingDivHeader" className="handle" >Drag from here</div> <div className="exitChat" onClick={this.props.minimize} >X</div> </div>
-                <div className="floatingDivContent" ></div>
+                <div className="floatingDivContent" >
+                  {/* map over messages and render message component */}
+                </div>
                 <div className="row" style={{ padding: '2px' }} >
-                  <div className="text-center " style={{ padding: '0px', width: '100%' }} > <input type="text" name="chatInput" /><button>Send</button> </div>
+                  <div className="text-center" style={{ padding: '0px', width: '100%' }} >
+                    <input 
+                      type="text" 
+                      name="chatInput"
+                      value={this.state.currentMessage}
+                      onChange={(e) => this.updateMessageText(e.target.value)}
+                    />
+                      <button 
+                        onClick={() => this.props.sendNewMessage(this.state.currentMessage, this.clearInputBox)}
+                      > Send </button>
+                  </div>
                 </div>
               </div>
             )
