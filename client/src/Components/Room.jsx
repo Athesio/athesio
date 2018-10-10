@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import EditorHolder from './EditorHolder.jsx';
 import UserNav from './UserNav.jsx';
 import io from "socket.io-client";
-import otherUsers from '../../fakeOtherUsers.js';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import FloatingChatDiv from './FloatingChatDiv.jsx';
@@ -11,10 +10,10 @@ class Room extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      clickedTab: 'Github',
+      clickedTab: 'Home',
       roomId: window.location.pathname.split('/')[2],
       user: {},
-      otherUsers: [],
+      roomUsers: [],
       loading: true,
       refId: null,
       code: "hello world",
@@ -31,7 +30,6 @@ class Room extends Component {
     });
 
     this.socket.on('receivedChatHistoryFromServer', (chatHistory) => {
-      console.log('chat history for this room: ', chatHistory);
       this.setState({ messages: chatHistory });
     });
 
@@ -67,14 +65,18 @@ class Room extends Component {
       .then(data => {
         axios.get('/api/retrieveRoomInfo', { params: { roomId: this.state.roomId } })
           .then(({ data }) => {
+            
+            let allUsers = [];
+            for( let users in data.roomInfo.users ) {
+              allUsers.push(data.roomInfo.users[users]);
+            }
+            
             this.setState({
               refId: data.roomInfo.ref,
               loading: false,
               user: data.currentUser,
+              roomUsers: allUsers
             }
-            /*, () => {
-              this.socket.emit('retrieveChatHistory', this.state.roomId);
-            }*/
             );
           });
       });
@@ -193,7 +195,7 @@ class Room extends Component {
 
                   {/* HOLDS BOTH THE FIREPAD AND THE IFRAME */}
                   <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="navBtm" style={{ paddingLeft: '0px' }} >
-                    <EditorHolder roomId={this.state.roomId} refId={this.state.refId} code={this.state.code} runCode={this.runCode} handleSaveClick={this.handleSaveClick} />
+                    <EditorHolder roomId={this.state.roomId} user={this.state.user} allUsers={this.state.roomUsers} refId={this.state.refId} code={this.state.code} runCode={this.runCode} handleSaveClick={this.handleSaveClick} />
                   </div>
                 </div>
               </div>

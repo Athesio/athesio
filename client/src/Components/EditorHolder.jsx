@@ -25,16 +25,17 @@ const EditorHolder = (props) => {
           <button type="button" onClick={props.handleSaveClick}>Save</button> 
         </div>
         <div className="col-xs-11 col-md-11 col-lg-11" id="userDiv" >
-          {otherUsers.map((user, i) => {
-            return (
-              <a key={i} style={{ color: '#f1f1f1', paddingLeft: '10px', fontSize: '12px', float: 'right' }} className="joinedUsers" >
-                <img className="img-circle text-right" id="userImg" src={user.img} /> {user.username}
-              </a>
-            )
+          {props.allUsers.map((user, i) => {
+            if(props.user.login !== user.username){
+              return (
+                <a key={i} style={{ color: '#f1f1f1', paddingLeft: '10px', fontSize: '12px', float: 'right' }} className="joinedUsers" >
+                  <img className="img-circle text-right" id="userImg" src={user.avatar_url} /> {user.username}
+                </a>
+              )
+            }
           })
           }
-        </div>
-        
+        </div> 
       </div>
     </div>
   );
