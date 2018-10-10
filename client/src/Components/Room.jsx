@@ -33,7 +33,7 @@ class Room extends Component {
     // assumes incoming message can only be from ANOTHER USER
     this.socket.on('newMessage', (newMessage) => {
       console.log('incoming message: ', newMessage);
-      //this.setState({ messages: this.state.messages.push(newMessage) });
+      this.setState({ messages: this.state.messages.push(newMessage) });
     });
 
     this.socket.on('serverUpdateCode', (newCode) => {
@@ -75,8 +75,11 @@ class Room extends Component {
     // emit new message to clients in this room
     //   server will handle this and will broadcast to other users
     // after emit, call cb to clear inputbox
-    this.socket.emit('newMessage', { newMessage: newMessage, user: this.state.user, roomId: this.state.roomId });
-    clearInputBoxFn();
+    // add to messages object
+    this.setState({ messages: this.messages.push(newMessage) }, () => {
+      this.socket.emit('newMessage', { newMessage: newMessage, user: this.state.user, roomId: this.state.roomId });
+      clearInputBoxFn();
+    });
   }
 
   logout() {
