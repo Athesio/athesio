@@ -684,6 +684,10 @@ tr:hover {
   color: #f1f1f1;
 }
 
+.bubble {
+  background-color: #13131300;
+}
+
 .floatingDivContent {
   height: 200px;
   width: 250px;

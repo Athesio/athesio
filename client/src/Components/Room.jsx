@@ -115,7 +115,7 @@ class Room extends React.Component {
       if (localStorage.getItem('authenticated')) {
         return (
           <div className="wrapper">
-          {this.state.showVidDiv === true ? <FloatingVideoDiv minimize={this.createFloatingVideo.bind(this)} miniStatus={this.state.minimizeDiv} /> : null }
+          {this.state.showVidDiv === true ? <FloatingVideoDiv minimize={this.minimizeFloatingDiv.bind(this)} miniStatus={this.state.minimizeDiv} /> : null }
             {/* USER NAVIGATION BAR */}
             <nav id="userNav" className="sidenav">
               <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} />
@@ -127,7 +127,7 @@ class Room extends React.Component {
               <div className="row" >
                 <div id="iconBar" >
                   <div className="text-center" >
-                    <span id="Home" onClick={this.changeTabs} className="userSpan text-center icon" style={{ padding: '0px' }} >&#9776;</span>
+                    <span id="Home" data-toggle="tooltip" data-placement="right" title="Home" onClick={this.changeTabs} className="userSpan text-center icon" style={{ padding: '0px' }} >&#9776;</span>
 
                     {/* SVG is for the Github icon */}
                     <svg
