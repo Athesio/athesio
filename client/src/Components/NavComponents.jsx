@@ -7,7 +7,7 @@ const NavComponents = (props) => {
     return (
       <div id="HomeNav" >
           <h3 className="text-center" > Workspace </h3>
-          <div className="fileBox text-center" style={{ backgroundColor: 'black', paddingLeft: '0px' }} >placeholder for file stuff</div>
+          <div className="fileBox text-center"  >placeholder for file stuff</div>
       </div>
     )
   } else if (props.tab === 'Github') {
