@@ -4,7 +4,7 @@ a.powered-by-firepad {
 
 #firepad-container {
   width: 100%;
-  height: 500px;
+  height: 87vh;
 }
 
 .ace_scroller {
@@ -47,8 +47,13 @@ body, html {
   padding-top: 5%;
 }
 
-.resultBox{
+.resultBox p {
   color: white;
+  margin: 0;
+}
+.resultBox {
+  padding-left: 5px;
+
 }
 
 .wrapper {
@@ -204,15 +209,18 @@ iframe {
   min-width: 370px;
   padding-right:0px;
   padding-left: 0px;
+  height: 100%;
 }
 #res {
   padding-left: 0px;
   padding-right: 0px;
+  height: 87vh;
+  background-color: #0c0c0c;
 }
  
 #userDiv {
   padding-bottom: 0px;
-  padding-right: 0px;
+  padding-right: 35px;
 } 
 
 #userImg {
@@ -237,10 +245,11 @@ iframe {
 }
 
 #EditorBox {
-  margin-top: 55px;
+  margin-top:4%;
   margin-left: 0px;
   margin-right: 0px;
   width: 100%;
+  height: 90%;
 }
 
 #Login {
@@ -431,6 +440,7 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
   flex-direction: column;
   width: 32px;
   margin:5px;
+  /* background-color: #0c0c0c; */
 }
 
 .icon {
@@ -617,14 +627,16 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
 #main {
   display: flex;
   flex-direction: column;
-  /* position: absolute; */
-  /* width: 100%; */
+  flex: 0 0 95%;
+  max-width: 200vh;
   margin: 0;
   padding: 0;
 }
 
 #runBtn {
   padding: 0px;
+  margin-top: 2px;
+  margin-left: 16px;
 }
 
 #githubComponent a {
@@ -665,6 +677,7 @@ tr:hover {
 .fileBox {
   height: 70vh;
   margin: 10px;
+  background-color: #0c0c0c;
 }
 
 #floatingDiv {
@@ -679,7 +692,7 @@ tr:hover {
 #fdh {
   padding: 7px;
   z-index: 10;
-  background-color: #536976;
+  background-color: #0c0c0c;
   color: #f1f1f1;
   display: flex;
   flex-direction: row;

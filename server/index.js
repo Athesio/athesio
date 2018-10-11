@@ -218,6 +218,10 @@ nsp.on('connection', (socket) => {
     chatHistory[messageObj.roomId] ? chatHistory[messageObj.roomId].push(messageObj) : chatHistory[messageObj.roomId] = [messageObj];
     socket.broadcast.to(messageObj.roomId).emit('newMessageFromServer', messageObj);
   });
+  socket.on('codeSent', (code) => {
+    console.log('from socket', code);
+    socket.emit('codeUpdated', code);
+  });
 
   socket.on('disconnect', () => console.log('disconnecting client'));
 });
@@ -232,10 +236,6 @@ nsp.on('connection', (socket) => {
 
 //   socket.on('disconnect', () => console.log('Client disconnected'));
 
-//   socket.on('codeSent', (code) => {
-//     console.log('from socket', code);
-//     io.emit('codeUpdated', code);
-//   });
 
 // });
 
