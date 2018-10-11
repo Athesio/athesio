@@ -8,13 +8,13 @@ const EditorHolder = (props) => {
     <div id="EditorBox" className="container" style={{ paddingRight: '0px' }} >
       {/* LEFT SIDE FIREPAD */}
       <div className="row">
-        <div className="col-xs-12  col-sm-12 col-md-12 col-lg-6" id="Ace" >
+        <div className="col-xs-12  col-sm-12 col-md-6 col-lg-6" id="Ace" >
           <div className='editor-container'>
             <Firepad roomId={props.roomId} refId={props.refId} runCode={props.runCode} />
           </div>
         </div>
         {/* IFRAME FOR CODE EXECUTION */}
-        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-6" id='res' >
+        <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6" id='res' >
           <div className="resultBox">
             {props.code.split('\n').map((item, i)=> (<p key={i} > {item} </p>))}
           </div>
