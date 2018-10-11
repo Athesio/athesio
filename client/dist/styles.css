@@ -220,7 +220,7 @@ iframe {
  
 #userDiv {
   padding-bottom: 0px;
-  padding-right: 0px;
+  padding-right: 35px;
 } 
 
 #userImg {
@@ -245,7 +245,7 @@ iframe {
 }
 
 #EditorBox {
-  margin-top:5%;
+  margin-top:4%;
   margin-left: 0px;
   margin-right: 0px;
   width: 100%;
@@ -627,8 +627,8 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
 #main {
   display: flex;
   flex-direction: column;
-  /* position: absolute; */
-  /* width: 100%; */
+  flex: 0 0 95%;
+  max-width: 200vh;
   margin: 0;
   padding: 0;
 }
