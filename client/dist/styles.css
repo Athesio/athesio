@@ -760,3 +760,13 @@ tr:hover {
   width: 100%;
   font-size: small;
 }
+
+.repo-container {
+  width: 100%;
+  border: #536976 2px solid;
+}
+
+.repo-container:hover {
+  cursor: pointer;
+  background-color: #585b61;
+}
