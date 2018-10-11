@@ -46,7 +46,7 @@ class Firepad extends Component {
         <div id='firepad-container'>
         </div>
         <div className="row" >
-        <div className="col-md-1 col-lg-1" id='runBtn' >
+        <div className="col-md-10 col-lg-10" id='runBtn' >
           <button type="button" 
             onClick={() => {
               axios.post('/api/run-code', { data: this.state.code })
@@ -58,6 +58,8 @@ class Firepad extends Component {
               )}
             }>Run</button>
         </div>
+
+        <button type="button" onClick={this.props.handleSaveClick}>Save</button> 
       </div>
       </div>
     );

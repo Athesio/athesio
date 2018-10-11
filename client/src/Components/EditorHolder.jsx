@@ -10,7 +10,7 @@ const EditorHolder = (props) => {
       <div className="row">
         <div className="col-xs-12  col-sm-6 col-md-6 col-lg-6" id="Ace" >
           <div className='editor-container'>
-            <Firepad roomId={props.roomId} refId={props.refId} runCode={props.runCode} />
+            <Firepad roomId={props.roomId} refId={props.refId} runCode={props.runCode} handleSaveClick={props.handleSaveClick} />
           </div>
         </div>
         {/* IFRAME FOR CODE EXECUTION */}
@@ -22,9 +22,9 @@ const EditorHolder = (props) => {
         </div>
       </div>
       <div className="row" >
-        <div className="col-md-11 col-lg-11" >
+        {/* <div className="col-md-11 col-lg-11" >
           <button type="button" onClick={props.handleSaveClick}>Save</button> 
-        </div>
+        </div> */}
         <div className="col-xs-11 col-md-11 col-lg-11" id="userDiv" >
           {props.allUsers.map((user, i) => {
             if(props.user.login !== user.username){
