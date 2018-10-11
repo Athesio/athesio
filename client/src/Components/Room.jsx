@@ -5,6 +5,7 @@ import io from "socket.io-client";
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import FloatingChatDiv from './FloatingChatDiv.jsx';
+import querystring from 'querystring';
 
 class Room extends Component {
   constructor(props) {
@@ -58,6 +59,7 @@ class Room extends Component {
     this.runCode = this.runCode.bind(this);
     this.createFloatingChat = this.createFloatingChat.bind(this);
     this.sendNewMessage = this.sendNewMessage.bind(this);
+    this.retrieveUserGithubRepos = this.retrieveUserGithubRepos.bind(this);
   }
 
   componentDidMount() {
@@ -65,9 +67,8 @@ class Room extends Component {
       .then(data => {
         axios.get('/api/retrieveRoomInfo', { params: { roomId: this.state.roomId } })
           .then(({ data }) => {
-
             let allUsers = [];
-            for (let users in data.roomInfo.users) {
+            for ( let users in data.roomInfo.users ) {
               allUsers.push(data.roomInfo.users[users]);
             }
 
@@ -76,10 +77,14 @@ class Room extends Component {
               loading: false,
               user: data.currentUser,
               roomUsers: allUsers
-            }
-            );
+            }, this.retrieveUserGithubRepos);
           });
       });
+  }
+
+  retrieveUserGithubRepos() {
+    axios.get('/api/github/repos/', { params: { user: this.state.user } })
+    .then(result => console.log('result from /api/github/repos/: ', result));
   }
 
   sendNewMessage(newMessageText, clearInputBoxFn) {
