@@ -44,7 +44,7 @@ const persistGithubUser = (accessToken, profile, done) => {
     accessToken: accessToken,
     githubId: id
   };
-  
+
   done(null, profile);
 };
 
@@ -209,6 +209,14 @@ app.post('/api/run-code', (req, res) => {
     }).catch((err) => {
       console.log('error from mother is', err);
     });
+});
+
+app.get('/api/github/repos', (req, res) => {
+  console.log('req.params: ', JSON.parse(req.query.user));
+  let user = req.params;
+  console.log('incoming req.body: ', req.body);
+
+  res.sendStatus(200);
 });
 
 app.get('*', (req, res) => {
