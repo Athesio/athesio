@@ -1,4 +1,5 @@
 import React from 'react';
+import Repo from './Repo.jsx';
 
 const GithubNav = (props) => {
   return (
@@ -14,6 +15,10 @@ const GithubNav = (props) => {
       <br/>
       <label style={{ color: '#f1f1f1', fontSize: '30px'}} > Github </label>
       </a>
+      <div className='repo-list'>
+        {/* USER REPO LIST */}
+        { props.repos.map((repo, i) => <Repo repo={repo} key={i} />) }
+      </div>
       {/* <a href="https://developer.github.com/enterprise/2.14/v3/enterprise-admin/orgs/">Create an Organization</a>
       <a href="https://developer.github.com/v3/repos/">Manage Repos</a>
       <a href="https://developer.github.com/v3/repos/contents/">Add File</a> */}
