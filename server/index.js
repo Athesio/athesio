@@ -81,10 +81,18 @@ app.get('/', isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-app.post('/api/logout', (req, res) => {
+app.post('/api/logout', (req, res) => { 
   // remove from users
   let { user, roomId } = req.body;
-  roomInfo[roomId].userCount -= 1;
+  delete roomInfo[roomId].users[user.login];
+  roomInfo[roomId].userCount = Object.keys(roomInfo[roomId].users).length;
+  if(roomInfo[roomId].userCount < 1) {
+    // app.get('/api/killcontainers', (req, res) => {
+    axios.get('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069/killcontainers')
+    .then(response => console.log(response.status))
+    .catch(err => console.log(err));
+    // })
+  }
   req.logout();
   res.redirect('/');
 });
@@ -121,8 +129,8 @@ app.post('/api/enterroom', (req, res) => {
 
     // existing room
     if (roomInfo[req.body.roomId]) {
-      roomInfo[req.body.roomId].userCount += 1;
       roomInfo[req.body.roomId].users[user.username] = user;
+      roomInfo[req.body.roomId].userCount = Object.keys(roomInfo[req.body.roomId].users).length;
       console.log(roomInfo);
       res.send(roomInfo[req.body.roomId].ref);
     } else { // new room
@@ -131,14 +139,19 @@ app.post('/api/enterroom', (req, res) => {
         userCount: 1,
         users: {
           [`${user.username}`] : user
-        }
+        },
       };
+      axios.get('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069/makecontainers')
+        .then(response => console.log(response.status))
+        .catch(err => console.log(err));
       res.send(response.data);
     }
 
   })
   .catch(console.log);
 });
+
+
 
 app.get('/api/validateRoomId', (req, res) => {
   roomInfo[req.query.roomId] ? res.send({ isValid: true }) : res.send({ isValid: false });
@@ -223,7 +236,7 @@ nsp.on('connection', (socket) => {
     socket.emit('codeUpdated', code);
   });
 
-  socket.on('disconnect', () => console.log('disconnecting client'));
+  socket.on('disconnect', () => console.log('disconnecting client', roomInfo));
 });
 
 // io.on('connection', (socket) => {
