@@ -20,8 +20,7 @@ class Room extends Component {
       code: "hello world",
       showChatDiv: false,
       minimizeDiv: false,
-      messages: [],
-      repos: []
+      messages: []
     }
 
     this.socket = io('/athesio').connect();
@@ -83,10 +82,7 @@ class Room extends Component {
       });
   }
 
-  retrieveUserGithubRepos() {
-    axios.get('/api/github/repos/', { params: { user: this.state.user } })
-    .then( ({ data }) => this.setState({ repos: data }));
-  }
+  
 
   sendNewMessage(newMessageText, clearInputBoxFn) {
     let newMessageObj = { text: newMessageText, user: this.state.user, roomId: this.state.roomId, createTime: new Date() };
@@ -148,7 +144,7 @@ class Room extends Component {
             {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv.bind(this)} miniStatus={this.state.minimizeDiv} /> : null}
             {/* USER NAVIGATION BAR */}
             <nav id="userNav" className="sidenav">
-              <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} repos={this.state.repos} />
+              <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} />
             </nav>
 
             {/* MIDDLE SECTION OF DASHBOARD */}

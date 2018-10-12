@@ -97,7 +97,7 @@ app.post('/api/logout', (req, res) => {
   if(roomInfo[roomId].userCount < 1) {
     //app.get('/api/killcontainers', (req, res) => {
     axios.get('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069/killcontainers')
-    .then(response => console.log(response.status))
+    .then(response => console.log('attempt to kill containers'))
     .catch(err => console.log(err));
     //})
   }
@@ -149,7 +149,7 @@ app.post('/api/enterroom', (req, res) => {
         },
       };
       axios.get('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069/makecontainers')
-        .then(response => console.log(response.status))
+        .then(response => console.log('attempt to create container'))
         .catch(err => console.log(err));
       res.send(response.data);
     }
@@ -189,7 +189,7 @@ app.get('/room/*', (req, res) => {
 });
 
 app.get('/api/getPreviousRoomsForUser', (req, res) => {
-  let { id } = JSON.parse(req.session.passport.user._raw);
+  let { id, login } = JSON.parse(req.session.passport.user._raw);
   db.getPreviousRoomsForUser(id, (err, history) => {
     if (err) {
       console.log('error retrieving previous rooms for user: ', err);
@@ -199,7 +199,8 @@ app.get('/api/getPreviousRoomsForUser', (req, res) => {
         obj.lastModifiedDate = moment(obj.lastModifiedDate).calendar();
         return obj;
       })
-      res.send(history);
+      
+      res.send({history: history, user: login});
     }
   });
 });
@@ -218,8 +219,10 @@ app.post('/api/run-code', (req, res) => {
 });
 
 app.get('/api/github/repos', (req, res) => {
-  let user = JSON.parse(req.query.user);
-  let userGithubAccessToken = users[user.login].accessToken;
+  console.log(req.query);
+  let user = req.query.user;
+  console.log(user);
+  let userGithubAccessToken = users[user].accessToken;
   let url = 'https://api.github.com/user/repos';
 
   let query = { 

@@ -9,13 +9,19 @@ class SelectRoom extends Component {
     this.state = {
       value: '',
       loading: true,
-      previousSessions: []
+      previousSessions: [],
+      mode: '', //github mode or not
+      type: '', //repo or gist
+      repos: [],
+      gists: [],
+      username: ''
     }
 
     this.createRoomId = this.createRoomId.bind(this);
     this.createNewRoom = this.createNewRoom.bind(this);
     this.joinRoomIfValid = this.joinRoomIfValid.bind(this);
     this.getPreviousSessions = this.getPreviousSessions.bind(this);
+
   }
 
   createRoomId(cb) {
@@ -29,16 +35,20 @@ class SelectRoom extends Component {
 
   componentDidMount() {
     this.setState({ loading: true, previousSessions: [] }, () => { this.getPreviousSessions() })
+
   }
   getPreviousSessions() {
     axios.get('/api/getPreviousRoomsForUser')
       .then(({ data }) => {
         this.setState({
-          previousSessions: data,
-          loading: false
+          previousSessions: data.history,
+          loading: false,
+          username: data.user
         });
-      }
-      )
+      })
+      .then(() => {
+        this.retrieveUserGithubRepos();
+      })
   }
 
   createNewRoom() {
@@ -60,6 +70,12 @@ class SelectRoom extends Component {
       });
   }
 
+  retrieveUserGithubRepos() {
+    axios.get('/api/github/repos/', { params: { user: `${this.state.username}` } })
+    .then( ({ data }) => console.log(data));
+    // .then( ({ data }) => this.setState({ repos: data }));
+  }
+
 
   render() {
     if (this.state.loading) {
@@ -70,7 +86,11 @@ class SelectRoom extends Component {
     } else {
       if (localStorage.getItem('authenticated') === 'true') {
         return (
-          <div id="SelectRoom" >
+          <div id="Morpheus" >
+            <div id="GithubMode">
+
+            </div>
+            <div id="SelectRoom" >
             <div className="container-fluid" id="SelectRoomBox" >
               <div className="row" id="formBox" >
                 <div className="col-md-3"   ></div>
@@ -132,6 +152,7 @@ class SelectRoom extends Component {
               }
             </div>
           </div>
+          </div>          
         )
       } else {
         <Redirect to='/login' />
