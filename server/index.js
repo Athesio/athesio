@@ -95,11 +95,11 @@ app.post('/api/logout', (req, res) => {
   delete roomInfo[roomId].users[user.login];
   roomInfo[roomId].userCount = Object.keys(roomInfo[roomId].users).length;
   if(roomInfo[roomId].userCount < 1) {
-    app.get('/api/killcontainers', (req, res) => {
+    //app.get('/api/killcontainers', (req, res) => {
     axios.get('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069/killcontainers')
     .then(response => console.log(response.status))
     .catch(err => console.log(err));
-    })
+    //})
   }
   req.logout();
   res.redirect('/');
