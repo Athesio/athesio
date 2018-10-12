@@ -15,6 +15,8 @@ const bodyParser = require('body-parser');
 const uuidv1 = require('uuid/v1');
 const db = require('../database/index.js');
 const moment = require('moment');
+const request = require('request');
+const qs = require('querystring');
 
 const roomInfo = {
   
@@ -41,10 +43,11 @@ const persistGithubUser = (accessToken, profile, done) => {
   let { login, id } = profile._json;
 
   users[login] = {
+    username: login,
     accessToken: accessToken,
     githubId: id
   };
-  
+
   done(null, profile);
 };
 
@@ -64,6 +67,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+
+// import routes
+const githubRoutes = require('./routes/github.js');
+
+app.use('/api/github', githubRoutes);
 
 const isAuthenticated = (req, res, next) => {
   if (req.session.passport) {
@@ -209,6 +217,31 @@ app.post('/api/run-code', (req, res) => {
     }).catch((err) => {
       console.log('error from mother is', err);
     });
+});
+
+app.get('/api/github/repos', (req, res) => {
+  let user = JSON.parse(req.query.user);
+  let userGithubAccessToken = users[user.login].accessToken;
+  let url = 'https://api.github.com/user/repos';
+
+  let query = { 
+    access_token: userGithubAccessToken,
+    affiliation: 'owner',
+    sort: 'updated',
+    direction: 'desc'
+  };
+  let repos = [];
+
+  request.get( { url:  url, qs: query, json:true, headers: { 'User-Agent': 'athesio' } }, (err, _, body) => {
+    body.forEach(repo => {
+      let { name, html_url, description, language } = repo;
+      description = description === null ? '' : description;
+      let repoObj = { name: name, url: html_url, description: description, language: language };
+      if (repoObj.language.toLowerCase() === 'javascript') repos.push(repoObj);
+    });
+    
+    res.send(repos);
+  });
 });
 
 app.get('*', (req, res) => {

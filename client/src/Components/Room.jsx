@@ -5,6 +5,7 @@ import io from "socket.io-client";
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import FloatingChatDiv from './FloatingChatDiv.jsx';
+import querystring from 'querystring';
 
 class Room extends Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class Room extends Component {
       code: "hello world",
       showChatDiv: false,
       minimizeDiv: false,
-      messages: []
+      messages: [],
+      repos: []
     }
 
     this.socket = io('/athesio').connect();
@@ -58,6 +60,7 @@ class Room extends Component {
     this.runCode = this.runCode.bind(this);
     this.createFloatingChat = this.createFloatingChat.bind(this);
     this.sendNewMessage = this.sendNewMessage.bind(this);
+    this.retrieveUserGithubRepos = this.retrieveUserGithubRepos.bind(this);
   }
 
   componentDidMount() {
@@ -65,9 +68,8 @@ class Room extends Component {
       .then(data => {
         axios.get('/api/retrieveRoomInfo', { params: { roomId: this.state.roomId } })
           .then(({ data }) => {
-
             let allUsers = [];
-            for (let users in data.roomInfo.users) {
+            for ( let users in data.roomInfo.users ) {
               allUsers.push(data.roomInfo.users[users]);
             }
 
@@ -76,10 +78,14 @@ class Room extends Component {
               loading: false,
               user: data.currentUser,
               roomUsers: allUsers
-            }
-            );
+            }, this.retrieveUserGithubRepos);
           });
       });
+  }
+
+  retrieveUserGithubRepos() {
+    axios.get('/api/github/repos/', { params: { user: this.state.user } })
+    .then( ({ data }) => this.setState({ repos: data }));
   }
 
   sendNewMessage(newMessageText, clearInputBoxFn) {
@@ -142,7 +148,7 @@ class Room extends Component {
             {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv.bind(this)} miniStatus={this.state.minimizeDiv} /> : null}
             {/* USER NAVIGATION BAR */}
             <nav id="userNav" className="sidenav">
-              <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} />
+              <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} repos={this.state.repos} />
             </nav>
 
             {/* MIDDLE SECTION OF DASHBOARD */}
