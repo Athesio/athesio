@@ -95,11 +95,11 @@ app.post('/api/logout', (req, res) => {
   delete roomInfo[roomId].users[user.login];
   roomInfo[roomId].userCount = Object.keys(roomInfo[roomId].users).length;
   if(roomInfo[roomId].userCount < 1) {
-    // app.get('/api/killcontainers', (req, res) => {
+    app.get('/api/killcontainers', (req, res) => {
     axios.get('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069/killcontainers')
     .then(response => console.log(response.status))
     .catch(err => console.log(err));
-    // })
+    })
   }
   req.logout();
   res.redirect('/');
@@ -111,7 +111,7 @@ app.get('/api/retrieveRoomInfo', (req, res) => {
 })
 
 app.get('/auth/github', 
-  passport.authenticate('github', {scope: ['user:email']}), (req, res) => {}
+  passport.authenticate('github', {scope: ['user:email', 'gist', 'repo']}), (req, res) => {}
 );
 
 app.get('/auth/github/callback', 
@@ -139,7 +139,6 @@ app.post('/api/enterroom', (req, res) => {
     if (roomInfo[req.body.roomId]) {
       roomInfo[req.body.roomId].users[user.username] = user;
       roomInfo[req.body.roomId].userCount = Object.keys(roomInfo[req.body.roomId].users).length;
-      console.log(roomInfo);
       res.send(roomInfo[req.body.roomId].ref);
     } else { // new room
       roomInfo[req.body.roomId] = {
@@ -212,7 +211,6 @@ app.post('/api/run-code', (req, res) => {
       }
     })
     .then(response => {
-      console.log('response from utility mother', response.data);
       res.send(response.data);
     }).catch((err) => {
       console.log('error from mother is', err);
@@ -228,7 +226,8 @@ app.get('/api/github/repos', (req, res) => {
     access_token: userGithubAccessToken,
     affiliation: 'owner',
     sort: 'updated',
-    direction: 'desc'
+    direction: 'desc',
+    visibility: 'public'
   };
   let repos = [];
 
