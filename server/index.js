@@ -95,11 +95,9 @@ app.post('/api/logout', (req, res) => {
   delete roomInfo[roomId].users[user.login];
   roomInfo[roomId].userCount = Object.keys(roomInfo[roomId].users).length;
   if(roomInfo[roomId].userCount < 1) {
-    //app.get('/api/killcontainers', (req, res) => {
     axios.get('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069/killcontainers')
     .then(response => console.log('attempt to kill containers'))
     .catch(err => console.log(err));
-    //})
   }
   req.logout();
   res.redirect('/');
@@ -147,10 +145,13 @@ app.post('/api/enterroom', (req, res) => {
         users: {
           [`${user.username}`] : user
         },
+        workspace: {}
       };
-      axios.get('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069/makecontainers')
-        .then(response => console.log('attempt to create container'))
-        .catch(err => console.log(err));
+
+                                      // MAKE CONTAINERS
+      // axios.get('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069/makecontainers')
+      //   .then(response => console.log('attempt to create container'))
+      //   .catch(err => console.log(err));
       res.send(response.data);
     }
 
@@ -231,29 +232,42 @@ app.get('/api/github/repos', (req, res) => {
     visibility: 'public'
   };
   let repos = [];
+  users[user].repos = {};
 
   request.get( { url:  url, qs: query, json:true, headers: { 'User-Agent': 'athesio' } }, (err, _, body) => {
     body.forEach(repo => {
       let { name, html_url, git_url, description, language } = repo;
       description = description === null ? '' : description;
       let repoObj = { name: name, url: html_url, git_url: git_url, description: description, language: language };
+      users[user]['repos'][name] = repoObj;
       if (repoObj.language.toLowerCase() === 'javascript') repos.push(repoObj);
     });
-    
+
     res.send(repos);
   });
 });
 
 app.get('/api/openRepo', (req, res) => {
-  console.log(req.query);
-  axios.post('ec2-18-191-180-246.us-east-2.compute.amazonaws.com/api/clonerepo', req.query)
-    .then((fileStructure) => {
-      console.log(fileStructure)
-      // res.send(fileStructure);
+  let { username, repoName, roomId } = req.query;
+  let git_url = users[username]['repos'][repoName].git_url;
+
+  console.log(git_url);
+  axios.post('http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000/api/github/clonerepo/', {username: username, repoName: repoName, gitUrl: git_url })
+    .then(({ data }) => {
+      console.log(data);
+      // console.log(data.fileDirectory);
+      // console.log(data.fileDirectory.repos);
+      // console.log(data.fileDirectory.repos);
+      data.fileDirectory = JSON.parse(data.fileDirectory);
+      
+      roomInfo[roomId].workspace['fileStructure'] = data.fileDirectory['repos'][username];
+      roomInfo[roomId].workspace['fileArray'] = data.fileArray;
+      console.log(roomInfo[roomId]);
+      res.end();
     })
-    .catch(err => console.log);
+    .catch(console.log);
   
-  res.end('file structure');
+  
 });
 
 app.get('*', (req, res) => {

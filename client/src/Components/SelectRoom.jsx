@@ -10,18 +10,18 @@ class SelectRoom extends Component {
       value: '',
       loading: true,
       previousSessions: [],
-      mode: '', //github mode or not
+      githubMode: false, //github mode or not
       type: '', //repo or gist
       repos: [],
       gists: [],
-      username: ''
+      username: '',
+      selectedRepo: '',
     }
 
     this.createRoomId = this.createRoomId.bind(this);
     this.createNewRoom = this.createNewRoom.bind(this);
     this.joinRoomIfValid = this.joinRoomIfValid.bind(this);
     this.getPreviousSessions = this.getPreviousSessions.bind(this);
-    this.startGithubSession = this.startGithubSession.bind(this);
 
   }
 
@@ -53,9 +53,15 @@ class SelectRoom extends Component {
   }
 
   createNewRoom() {
-    this.createRoomId(() => {
-      this.props.history.push(`/room/${this.state.value}`);
-    });
+    if (this.state.selectedRepo.length > 0){
+      this.createRoomId(() => {
+        this.props.history.push(`/room/${this.state.selectedRepo}/${this.state.value}`);
+      });
+    } else {
+      this.createRoomId(() => {
+        this.props.history.push(`/room/${this.state.value}`);
+      });
+    }
   }
 
   joinRoomIfValid() {
@@ -73,15 +79,10 @@ class SelectRoom extends Component {
 
   retrieveUserGithubRepos() {
     axios.get('/api/github/repos/', { params: { user: `${this.state.username}` } })
-      .then(({ data }) => {console.log( data ) 
-        this.setState({repos : data})});
+    .then(({ data }) => { this.setState({repos : data}) });
   }
+  
 
-  startGithubSession(repoName, git_url) {
-    // event.preventDefault();
-    axios.get('/api/openRepo', { params: { user: `${this.state.username}`, repoName: repoName, git_url: git_url } })
-      .then(() => { this.createNewRoom() })
-  }
 
   render() {
     if (this.state.loading) {
@@ -108,7 +109,7 @@ class SelectRoom extends Component {
                 <ul>
                 {
                     this.state.repos.map((repo, i) => {
-                      return <li className="dropdown-item" key={i} onClick={()=>{this.startGithubSession(repo.name, repo.git_url)}} >{repo.name}</li>
+                      return <li className="dropdown-item" key={i} onClick={()=>{ this.setState({ selectedRepo: repo.name }, () => { this.createNewRoom() })}} >{repo.name}</li>
                     })
                   }
                 </ul> 

@@ -10,9 +10,12 @@ import querystring from 'querystring';
 class Room extends Component {
   constructor(props) {
     super(props);
+
+    let roomPath = window.location.pathname.split('/');
+
     this.state = {
       clickedTab: 'Home',
-      roomId: window.location.pathname.split('/')[2],
+      roomId: roomPath.length === 4 ? roomPath[3] : roomPath[2],
       user: {},
       roomUsers: [],
       loading: true,
@@ -20,7 +23,9 @@ class Room extends Component {
       code: "hello world",
       showChatDiv: false,
       minimizeDiv: false,
-      messages: []
+      messages: [],
+      repoName: roomPath.length === 4 ? roomPath[2] : '',
+      githubMode: false
     }
 
     this.socket = io('/athesio').connect();
@@ -60,6 +65,8 @@ class Room extends Component {
     this.createFloatingChat = this.createFloatingChat.bind(this);
     this.sendNewMessage = this.sendNewMessage.bind(this);
     this.minimizeFloatingDiv = this.minimizeFloatingDiv.bind(this);
+    this.startRepoContentLoading = this.startRepoContentLoading.bind(this);
+    this.openRepo = this.openRepo.bind(this);
   }
 
   componentDidMount() {
@@ -71,17 +78,27 @@ class Room extends Component {
             for ( let users in data.roomInfo.users ) {
               allUsers.push(data.roomInfo.users[users]);
             }
-
             this.setState({
               refId: data.roomInfo.ref,
               loading: false,
               user: data.currentUser,
               roomUsers: allUsers
-            });
+            }, this.openRepo);
+            
           });
       });
   }
 
+  openRepo() {
+    console.log(this.state.user); 
+    axios.get('/api/openRepo', { params: { repoName: this.state.repoName, username: this.state.user.login, roomId: this.state.roomId } })
+  }
+
+  startRepoContentLoading() {
+    if(this.state.repoName.length > 0) {
+      this.socket.emit('beginLoadingRepoContents', { repoName: this.state.repoName, user: this.state.user });
+    }
+  }
   
 
   sendNewMessage(newMessageText, clearInputBoxFn) {
