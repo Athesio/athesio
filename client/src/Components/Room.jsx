@@ -59,7 +59,7 @@ class Room extends Component {
     this.runCode = this.runCode.bind(this);
     this.createFloatingChat = this.createFloatingChat.bind(this);
     this.sendNewMessage = this.sendNewMessage.bind(this);
-    this.retrieveUserGithubRepos = this.retrieveUserGithubRepos.bind(this);
+    this.minimizeFloatingDiv = this.minimizeFloatingDiv.bind(this);
   }
 
   componentDidMount() {
@@ -77,7 +77,7 @@ class Room extends Component {
               loading: false,
               user: data.currentUser,
               roomUsers: allUsers
-            }, this.retrieveUserGithubRepos);
+            });
           });
       });
   }
@@ -141,7 +141,7 @@ class Room extends Component {
       if (localStorage.getItem('authenticated')) {
         return (
           <div className="wrapper">
-            {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv.bind(this)} miniStatus={this.state.minimizeDiv} /> : null}
+            {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv} miniStatus={this.state.minimizeDiv} /> : null}
             {/* USER NAVIGATION BAR */}
             <nav id="userNav" className="sidenav">
               <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} />
