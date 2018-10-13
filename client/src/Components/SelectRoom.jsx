@@ -21,6 +21,7 @@ class SelectRoom extends Component {
     this.createNewRoom = this.createNewRoom.bind(this);
     this.joinRoomIfValid = this.joinRoomIfValid.bind(this);
     this.getPreviousSessions = this.getPreviousSessions.bind(this);
+    this.startGithubSession = this.startGithubSession.bind(this);
 
   }
 
@@ -76,8 +77,10 @@ class SelectRoom extends Component {
         this.setState({repos : data})});
   }
 
-  startGithubSession() {
-
+  startGithubSession(repoName, git_url) {
+    // event.preventDefault();
+    axios.get('/api/openRepo', { params: { user: `${this.state.username}`, repoName: repoName, git_url: git_url } })
+      .then(() => { this.createNewRoom() })
   }
 
   render() {
@@ -91,18 +94,25 @@ class SelectRoom extends Component {
         return (
           <div id="Morpheus" >
             <div id="GithubMode">
-              <div className="dropdown"  >
+              {/* <div className="dropdown"  >
                 <button className="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                   Repos
                 </button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton" >
                   {
                     this.state.repos.map((repo, i) => {
-                      return <a className="dropdown-item" key={i} >{repo.name}</a>
+                      return <a className="dropdown-item" key={i} onClick={()=>{this.startGithubSession(repo.name, repo.git_url)}} >{repo.name}</a>
                     })
                   }
-                </div>
-              </div>
+                </div> */}
+                <ul>
+                {
+                    this.state.repos.map((repo, i) => {
+                      return <li className="dropdown-item" key={i} onClick={()=>{this.startGithubSession(repo.name, repo.git_url)}} >{repo.name}</li>
+                    })
+                  }
+                </ul> 
+              {/* </div> */}
             </div>
             <div id="SelectRoom" >
               <div className="container-fluid" id="SelectRoomBox" >

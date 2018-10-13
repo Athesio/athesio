@@ -233,7 +233,6 @@ app.get('/api/github/repos', (req, res) => {
   let repos = [];
 
   request.get( { url:  url, qs: query, json:true, headers: { 'User-Agent': 'athesio' } }, (err, _, body) => {
-    
     body.forEach(repo => {
       let { name, html_url, git_url, description, language } = repo;
       description = description === null ? '' : description;
@@ -243,6 +242,18 @@ app.get('/api/github/repos', (req, res) => {
     
     res.send(repos);
   });
+});
+
+app.get('/api/openRepo', (req, res) => {
+  console.log(req.query);
+  axios.post('ec2-18-191-180-246.us-east-2.compute.amazonaws.com/api/clonerepo', req.query)
+    .then((fileStructure) => {
+      console.log(fileStructure)
+      // res.send(fileStructure);
+    })
+    .catch(err => console.log);
+  
+  res.end('file structure');
 });
 
 app.get('*', (req, res) => {
