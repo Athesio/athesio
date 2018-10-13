@@ -72,9 +72,13 @@ class SelectRoom extends Component {
 
   retrieveUserGithubRepos() {
     axios.get('/api/github/repos/', { params: { user: `${this.state.username}` } })
-      .then(({ data }) => this.setState({repos : data}));
+      .then(({ data }) => {console.log( data ) 
+        this.setState({repos : data})});
   }
 
+  startGithubSession() {
+
+  }
 
   render() {
     if (this.state.loading) {

@@ -233,10 +233,11 @@ app.get('/api/github/repos', (req, res) => {
   let repos = [];
 
   request.get( { url:  url, qs: query, json:true, headers: { 'User-Agent': 'athesio' } }, (err, _, body) => {
+    
     body.forEach(repo => {
-      let { name, html_url, description, language } = repo;
+      let { name, html_url, git_url, description, language } = repo;
       description = description === null ? '' : description;
-      let repoObj = { name: name, url: html_url, description: description, language: language };
+      let repoObj = { name: name, url: html_url, git_url: git_url, description: description, language: language };
       if (repoObj.language.toLowerCase() === 'javascript') repos.push(repoObj);
     });
     
@@ -269,7 +270,7 @@ nsp.on('connection', (socket) => {
     socket.emit('codeUpdated', code);
   });
 
-  socket.on('disconnect', () => console.log('disconnecting client', roomInfo));
+  socket.on('disconnect', () => console.log('disconnecting client'));
 });
 
 // io.on('connection', (socket) => {
