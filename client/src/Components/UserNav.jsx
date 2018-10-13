@@ -29,6 +29,45 @@ const originalContent=[
 
 const newContent = [{"label":".gitignore","to":"#","icon":"fas fa-file"},{"label":"README.md","to":"#","icon":"fas fa-file"},{"label":"child-server","to":"#","icon":"fas fa-folder","content":[{"label":"Dockerfile","to":"#","icon":"fas fa-file"},{"label":"README.md","to":"#","icon":"fas fa-file"},{"label":"package-lock.json","to":"#","icon":"fas fa-file"},{"label":"package.json","to":"#","icon":"fas fa-file"},{"label":"server","to":"#","icon":"fas fa-folder","content":[{"label":"index.js","to":"#","icon":"fas fa-file"},{"label":"testFile.js","to":"#","icon":"fas fa-file"}]}]},{"label":"mother-server","to":"#","icon":"fas fa-folder","content":[{"label":"index.js","to":"#","icon":"fas fa-file"}]},{"label":"package-lock.json","to":"#","icon":"fas fa-file"},{"label":"package.json","to":"#","icon":"fas fa-file"}];
 
+function repoStructureTrimmer (obj){
+  let key1 =Object.keys(obj["repos"]); 
+  let actualData = obj["repos"][key1]
+  let key2 = Object.keys(actualData)
+  actualData = obj["repos"][key1][key2];
+  return actualData;
+}
+
+
+
+
+const dataFormatter = (repoStructure) =>{
+  let keys = Object.keys(repoStructureTrimmer(repoStructure));
+
+  let helper = function(obj){
+    const result = []; 
+    const keys = Object.keys(obj);
+    for(var i = 0; i < keys.length; i++){
+      const content = {}; 
+      content.label = keys[i];
+      content.to = "#";
+      
+    if(typeof obj[keys[i]] ==="string"){
+      content.icon = "fas fa-file"
+      result.push(content);
+    } else {
+      content.icon = "fas fa-folder"
+      content.content = helper(obj[keys[i]]); 
+      result.push(content);
+    }
+  }
+  return result; 
+  }
+
+  return JSON.stringify(helper(repoStructure))
+
+}
+
+
 
 const UserNav = (props) => {
   return (
