@@ -219,9 +219,7 @@ app.post('/api/run-code', (req, res) => {
 });
 
 app.get('/api/github/repos', (req, res) => {
-  console.log(req.query);
   let user = req.query.user;
-  console.log(user);
   let userGithubAccessToken = users[user].accessToken;
   let url = 'https://api.github.com/user/repos';
 

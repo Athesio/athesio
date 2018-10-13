@@ -88,13 +88,26 @@ class SelectRoom extends Component {
         return (
           <div id="Morpheus" >
             <div id="GithubMode">
+              <div className="btn-group"  >
+                <button className="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                  Repos
+                </button>
+                <div className="dropdown-menu" >
+                  {
+                    this.state.repos.length > 0 ? 
+                    this.state.repos.map((repo, i) => {
+                      return <a className="dropdown-item" key={i} >{repo}</a>
+                    }) : null
+                  }
+                </div>
 
+              </div>
             </div>
             <div id="SelectRoom" >
             <div className="container-fluid" id="SelectRoomBox" >
               <div className="row" id="formBox" >
-                <div className="col-md-3"   ></div>
-                <div className="col-md-6"  >
+                <div className="col-md-1"   ></div>
+                <div className="col-md-10"  >
                   <form role="form" >
                     <div className="form-group" >
                       <label htmlFor="NewEditor">Open New Editor</label><br />
@@ -116,14 +129,14 @@ class SelectRoom extends Component {
                     </div>
                   </form>
                 </div>
-                <div className="col-md-3" ></div>
+                <div className="col-md-1" ></div>
               </div>
               {/* PREVIOUS SESSIONS IF EXIST */}
               {
                 this.state.previousSessions.length > 0 ?
                   <div className="row" >
-                    <div className="col-md-3" ></div>
-                    <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                    <div className="col-md-1" ></div>
+                    <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10" >
                       <div className="text-center" id="sessionTable" >
                         <a > PREVIOUS SESSIONS</a>
                       </div>
@@ -145,7 +158,7 @@ class SelectRoom extends Component {
                         </table>
                       </div>
                     </div>
-                    <div className="col-md-3" ></div>
+                    <div className="col-md-1" ></div>
                   </div>
                   :
                   null
