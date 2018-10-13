@@ -255,15 +255,11 @@ app.get('/api/openRepo', (req, res) => {
   axios.post('http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000/api/github/clonerepo/', {username: username, repoName: repoName, gitUrl: git_url })
     .then(({ data }) => {
       console.log(data);
-      // console.log(data.fileDirectory);
-      // console.log(data.fileDirectory.repos);
-      // console.log(data.fileDirectory.repos);
       data.fileDirectory = JSON.parse(data.fileDirectory);
       
       roomInfo[roomId].workspace['fileStructure'] = data.fileDirectory['repos'][username];
       roomInfo[roomId].workspace['fileArray'] = data.fileArray;
-      console.log(roomInfo[roomId]);
-      res.end();
+      res.send(data.fileDirectory['repos'][username]);
     })
     .catch(console.log);
   

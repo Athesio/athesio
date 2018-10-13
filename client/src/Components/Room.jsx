@@ -25,7 +25,8 @@ class Room extends Component {
       minimizeDiv: false,
       messages: [],
       repoName: roomPath.length === 4 ? roomPath[2] : '',
-      githubMode: false
+      githubMode: false,
+      repoFileStructure: {}
     }
 
     this.socket = io('/athesio').connect();
@@ -92,6 +93,7 @@ class Room extends Component {
   openRepo() {
     console.log(this.state.user); 
     axios.get('/api/openRepo', { params: { repoName: this.state.repoName, username: this.state.user.login, roomId: this.state.roomId } })
+      .then(files => this.setState({ repoFileStructure: files.data }));
   }
 
   startRepoContentLoading() {
@@ -161,7 +163,7 @@ class Room extends Component {
             {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv} miniStatus={this.state.minimizeDiv} /> : null}
             {/* USER NAVIGATION BAR */}
             <nav id="userNav" className="sidenav">
-              <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} />
+              <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} />
             </nav>
 
             {/* MIDDLE SECTION OF DASHBOARD */}
