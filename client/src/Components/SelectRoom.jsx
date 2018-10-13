@@ -9,13 +9,20 @@ class SelectRoom extends Component {
     this.state = {
       value: '',
       loading: true,
-      previousSessions: []
+      previousSessions: [],
+      githubMode: false, //github mode or not
+      type: '', //repo or gist
+      repos: [],
+      gists: [],
+      username: '',
+      selectedRepo: '',
     }
 
     this.createRoomId = this.createRoomId.bind(this);
     this.createNewRoom = this.createNewRoom.bind(this);
     this.joinRoomIfValid = this.joinRoomIfValid.bind(this);
     this.getPreviousSessions = this.getPreviousSessions.bind(this);
+
   }
 
   createRoomId(cb) {
@@ -29,22 +36,32 @@ class SelectRoom extends Component {
 
   componentDidMount() {
     this.setState({ loading: true, previousSessions: [] }, () => { this.getPreviousSessions() })
+
   }
   getPreviousSessions() {
     axios.get('/api/getPreviousRoomsForUser')
       .then(({ data }) => {
         this.setState({
-          previousSessions: data,
-          loading: false
+          previousSessions: data.history,
+          loading: false,
+          username: data.user
         });
-      }
-      )
+      })
+      .then(() => {
+        this.retrieveUserGithubRepos();
+      })
   }
 
   createNewRoom() {
-    this.createRoomId(() => {
-      this.props.history.push(`/room/${this.state.value}`);
-    });
+    if (this.state.selectedRepo.length > 0){
+      this.createRoomId(() => {
+        this.props.history.push(`/room/${this.state.selectedRepo}/${this.state.value}`);
+      });
+    } else {
+      this.createRoomId(() => {
+        this.props.history.push(`/room/${this.state.value}`);
+      });
+    }
   }
 
   joinRoomIfValid() {
@@ -60,76 +77,105 @@ class SelectRoom extends Component {
       });
   }
 
+  retrieveUserGithubRepos() {
+    axios.get('/api/github/repos/', { params: { user: `${this.state.username}` } })
+    .then(({ data }) => { this.setState({repos : data}) });
+  }
+  
+
 
   render() {
     if (this.state.loading) {
       return (
         <div style={{ backgroundColor: '#1e1f21' }} >
-          <img src="https://i2.wp.com/merakidezain.com/wp-content/themes/snskanta/assets/img/prod_loading.gif?w=660" alt=""/>
+          <img src="https://i2.wp.com/merakidezain.com/wp-content/themes/snskanta/assets/img/prod_loading.gif?w=660" alt="" />
         </div>);
     } else {
       if (localStorage.getItem('authenticated') === 'true') {
         return (
-          <div id="SelectRoom" >
-            <div className="container-fluid" id="SelectRoomBox" >
-              <div className="row" id="formBox" >
-                <div className="col-md-3"   ></div>
-                <div className="col-md-6"  >
-                  <form role="form" >
-                    <div className="form-group" >
-                      <label htmlFor="NewEditor">Open New Editor</label><br />
-                      <button className="btn" onClick={() => this.createNewRoom()} type="button" >New Editor</button>
-                    </div>
-                    <div className="form-group" style={{ marginLeft: '10px', marginRight: '10px' }} >
-                      <a className="text-center" >Join a Room </a><br />
-                      <div className="input-group">
-                        <input type="text" className="form-control" placeholder="Room Key" value={this.state.value} onChange={(e) => { this.setState({ value: e.target.value }) }}></input>
+          <div id="Morpheus" >
+            <div id="GithubMode">
+              {/* <div className="dropdown"  >
+                <button className="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                  Repos
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton" >
+                  {
+                    this.state.repos.map((repo, i) => {
+                      return <a className="dropdown-item" key={i} onClick={()=>{this.startGithubSession(repo.name, repo.git_url)}} >{repo.name}</a>
+                    })
+                  }
+                </div> */}
+                <ul>
+                {
+                    this.state.repos.map((repo, i) => {
+                      return <li className="dropdown-item" key={i} onClick={()=>{ this.setState({ selectedRepo: repo.name }, () => { this.createNewRoom() })}} >{repo.name}</li>
+                    })
+                  }
+                </ul> 
+              {/* </div> */}
+            </div>
+            <div id="SelectRoom" >
+              <div className="container-fluid" id="SelectRoomBox" >
+                <div className="row" id="formBox" >
+                  <div className="col-md-1"   ></div>
+                  <div className="col-md-10"  >
+                    <form role="form" >
+                      <div className="form-group" >
+                        <label htmlFor="NewEditor">Open New Editor</label><br />
+                        <button className="btn" onClick={() => this.createNewRoom()} type="button" >New Editor</button>
+                      </div>
+                      <div className="form-group" style={{ marginLeft: '10px', marginRight: '10px' }} >
+                        <a className="text-center" >Join a Room </a><br />
+                        <div className="input-group">
+                          <input type="text" className="form-control" placeholder="Room Key" value={this.state.value} onChange={(e) => { this.setState({ value: e.target.value }) }}></input>
 
-                        <span className="input-group-btn">
-                          <button
-                            className="btn"
-                            type="button"
-                            onClick={this.joinRoomIfValid}
-                          >JOIN</button>
-                        </span>
+                          <span className="input-group-btn">
+                            <button
+                              className="btn"
+                              type="button"
+                              onClick={this.joinRoomIfValid}
+                            >JOIN</button>
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </form>
-                </div>
-                <div className="col-md-3" ></div>
-              </div>
-              {/* PREVIOUS SESSIONS IF EXIST */}
-              {
-                this.state.previousSessions.length > 0 ?
-                  <div className="row" >
-                    <div className="col-md-3" ></div>
-                    <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
-                      <div className="text-center" id="sessionTable" >
-                        <a > PREVIOUS SESSIONS</a>
-                      </div>
-                      <div className="table-responsive" >
-                        <table id="session" className="table col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-                          <thead  >
-                            <tr>
-                              <th align="left" className="text-center" >Title</th>
-                              <th className="text-center" ></th>
-                              <th align="right" className="text-center" >Last Modified</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {
-                              this.state.previousSessions.map(sessionInfo => <Session info={sessionInfo} key={sessionInfo.ref} />)
-                            }
-                          </tbody>
-
-                        </table>
-                      </div>
-                    </div>
-                    <div className="col-md-3" ></div>
+                    </form>
                   </div>
-                  :
+                  <div className="col-md-1" ></div>
+                </div>
+                {/* PREVIOUS SESSIONS IF EXIST */}
+                {
+                  this.state.previousSessions.length > 0 ?
+                    <div className="row" >
+                      <div className="col-md-1" ></div>
+                      <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10" >
+                        <div className="text-center" id="sessionTable" >
+                          <a > PREVIOUS SESSIONS</a>
+                        </div>
+                        <div className="table-responsive" >
+                          <table id="session" className="table col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                            <thead  >
+                              <tr>
+                                <th align="left" className="text-center" >Title</th>
+                                <th className="text-center" ></th>
+                                <th align="right" className="text-center" >Last Modified</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {
+                                this.state.previousSessions.map(sessionInfo => <Session info={sessionInfo} key={sessionInfo.ref} />)
+                              }
+                            </tbody>
+
+                          </table>
+                        </div>
+                      </div>
+                      <div className="col-md-1" ></div>
+                    </div>
+                    :
                   null
-              }
+                }
+              </div>
             </div>
           </div>
         )

@@ -11,7 +11,7 @@ const NavComponents = (props) => {
       </div>
     )
   } else if (props.tab === 'Github') {
-    return <GithubNav repos={props.repos}/>
+    return <GithubNav/>
   } else if (props.tab === 'Slack') {
     return <SlackNav />
   } else if (props.tab === 'Test') {
