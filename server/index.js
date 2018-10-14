@@ -261,6 +261,12 @@ app.get('/api/openRepo', (req, res) => {
       
       roomInfo[roomId].workspace['fileStructure'] = data.fileDirectory['repos'][username];
       roomInfo[roomId].workspace['fileArray'] = data.fileArray;
+      // store empty objects to hold file contents once loading starts
+      data.fileArray.forEach(file => {
+        roomInfo[roomId].workspace['fileContents'][file]['loaded'] = false;
+        roomInfo[roomId].workspace['fileContents'][file]['contents'] = '';
+      });
+
       res.send(data.fileDirectory['repos'][username]);
     })
     .catch(console.log);
@@ -271,6 +277,23 @@ app.get('/api/openRepo', (req, res) => {
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
+
+const loadFileContents = (repoName, username, roomId) => {
+  // look at repo fileArray stored in memory
+  // for each file, send off http request to ask for that file's content
+  // once file is done loading, store in memory, with loaded flag set to true
+  //
+  //
+  let repoFileArray = roomInfo[roomId].workspace['fileArray'];
+  repoFileArray.forEach(file => {
+    axios.get('/api/github/repo/contents/get', { params: { filepath: file, username: username, repoName: repoName } })
+      .then(({ data }) => {
+        roomInfo[roomId].workspace['fileContents'][file]['contents'] = data;
+        roomInfo[roomId].workspace['fileContents'][file]['loaded'] = true;
+      })
+      .catch(console.log);
+  });
+};
 
 let code = '';
 
@@ -293,12 +316,9 @@ nsp.on('connection', (socket) => {
     socket.emit('codeUpdated', code);
   });
 
-  socket.on('beginLoadingRepoContents', ({ repoName, user, roomId }) => {
-    // look at repo fileArray stored in memory
-    // for each file, send off http request to ask for that file's content
-    // once file is done loading, store in memory, with loaded flag set to true
-    //       roomInfo[roomId].workspace['fileContents'][<full_file_path>]['contents'] = file_contents
-    //       
+  socket.on('beginLoadingRepoContents', ({ repoName, username, roomId }) => {
+    loadFileContents(repoName, username, roomId);
+    
     // every time user clicks on a file to open, will only serve back file and ref id if loaded
     //  if file not loaded, set front-end fileLoading flag to true (will render loading icon on top of file structure)
     //    and also send HTTP request to server asking for the contents once done loading
