@@ -99,7 +99,7 @@ class Room extends Component {
 
   startRepoContentLoading() {
     if(this.state.repoName.length > 0) {
-      this.socket.emit('beginLoadingRepoContents', { repoName: this.state.repoName, user: this.state.user });
+      this.socket.emit('beginLoadingRepoContents', { repoName: this.state.repoName, user: this.state.user, roomId: this.state.roomId });
     }
   }
   
