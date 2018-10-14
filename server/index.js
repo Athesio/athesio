@@ -262,9 +262,12 @@ app.get('/api/openRepo', (req, res) => {
       roomInfo[roomId].workspace['fileStructure'] = data.fileDirectory['repos'][username];
       roomInfo[roomId].workspace['fileArray'] = data.fileArray;
       // store empty objects to hold file contents once loading starts
+      roomInfo[roomId].workspace['fileContents'] = {};
       data.fileArray.forEach(file => {
-        roomInfo[roomId].workspace['fileContents'][file]['loaded'] = false;
-        roomInfo[roomId].workspace['fileContents'][file]['contents'] = '';
+        roomInfo[roomId].workspace['fileContents'][file] = {
+          loaded: false,
+          contents: ''
+        }
       });
 
       res.send(data.fileDirectory['repos'][username]);
