@@ -133,7 +133,7 @@ class Room extends Component {
   // }
 
   handleSaveClick() {
-    axios.post('/api/saveroom', { user: this.state.user, roomId: this.state.roomId, ref: this.state.refId })
+    axios.post('/api/saveroom', { username: this.state.user.login, roomId: this.state.roomId, ref: this.state.refId })
       .then(result => console.log(result));
   }
 
