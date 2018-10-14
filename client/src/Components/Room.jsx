@@ -91,9 +91,10 @@ class Room extends Component {
   }
 
   openRepo() {
-    console.log(this.state.user); 
-    axios.get('/api/openRepo', { params: { repoName: this.state.repoName, username: this.state.user.login, roomId: this.state.roomId } })
-      .then(files => this.setState({ repoFileStructure: files.data }));
+    if (this.state.repoName.length > 0) {
+      axios.get('/api/openRepo', { params: { repoName: this.state.repoName, username: this.state.user.login, roomId: this.state.roomId } })
+        .then(files => this.setState({ repoFileStructure: files.data }, this.startRepoContentLoading));
+    }
   }
 
   startRepoContentLoading() {
