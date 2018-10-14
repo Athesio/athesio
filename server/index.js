@@ -148,7 +148,7 @@ app.post('/api/enterroom', (req, res) => {
         workspace: {}
       };
 
-                                      // MAKE CONTAINERS
+      // MAKE CONTAINERS
       // axios.get('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069/makecontainers')
       //   .then(response => console.log('attempt to create container'))
       //   .catch(err => console.log(err));
@@ -237,10 +237,12 @@ app.get('/api/github/repos', (req, res) => {
   request.get( { url:  url, qs: query, json:true, headers: { 'User-Agent': 'athesio' } }, (err, _, body) => {
     body.forEach(repo => {
       let { name, html_url, git_url, description, language } = repo;
-      description = description === null ? '' : description;
-      let repoObj = { name: name, url: html_url, git_url: git_url, description: description, language: language };
-      users[user]['repos'][name] = repoObj;
-      if (repoObj.language.toLowerCase() === 'javascript') repos.push(repoObj);
+      if (name && html_url && git_url && language) {
+        description = description === null ? '' : description;
+        let repoObj = { name: name, url: html_url, git_url: git_url, description: description, language: language };
+        users[user]['repos'][name] = repoObj;
+        if (repoObj.language.toLowerCase() === 'javascript') repos.push(repoObj);
+      }
     });
 
     res.send(repos);
