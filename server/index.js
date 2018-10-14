@@ -307,7 +307,11 @@ let nsp = io.of('/athesio');
 nsp.on('connection', (socket) => {
   socket.on('room', (room) => {
     socket.join(room);
-    socket.broadcast.emit('sendUpdateOnRoom', roomInfo[room]['users']);
+    if(roomInfo[room] !== undefined){
+      if (Object.keys(roomInfo[room]['users']).length > 1) {
+        socket.broadcast.emit('sendUpdateOnRoom', roomInfo[room].users);
+      }
+    }
   });
 
   socket.on('retrieveChatHistory', (room) => {
