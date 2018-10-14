@@ -253,10 +253,8 @@ app.get('/api/openRepo', (req, res) => {
   let { username, repoName, roomId } = req.query;
   let git_url = users[username]['repos'][repoName].git_url;
 
-  console.log(git_url);
   axios.post('http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000/api/github/clonerepo/', {username: username, repoName: repoName, gitUrl: git_url })
     .then(({ data }) => {
-      console.log(data);
       data.fileDirectory = JSON.parse(data.fileDirectory);
       
       roomInfo[roomId].workspace['fileStructure'] = data.fileDirectory['repos'][username];
@@ -273,8 +271,6 @@ app.get('/api/openRepo', (req, res) => {
       res.send(data.fileDirectory['repos'][username]);
     })
     .catch(console.log);
-  
-  
 });
 
 app.get('*', (req, res) => {
@@ -282,14 +278,11 @@ app.get('*', (req, res) => {
 });
 
 const loadFileContents = (repoName, username, roomId) => {
-  // look at repo fileArray stored in memory
-  // for each file, send off http request to ask for that file's content
-  // once file is done loading, store in memory, with loaded flag set to true
-  //
-  //
   let repoFileArray = roomInfo[roomId].workspace['fileArray'];
+
   repoFileArray.forEach(file => {
-    axios.get('/api/github/repo/contents/get', { params: { filepath: file, username: username, repoName: repoName } })
+    tempFileName = './' + file;
+    axios.get('http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000/api/github/repo/contents/get', { params: { filePath: tempFileName, username: username, repoName: repoName } })
       .then(({ data }) => {
         roomInfo[roomId].workspace['fileContents'][file]['contents'] = data;
         roomInfo[roomId].workspace['fileContents'][file]['loaded'] = true;
