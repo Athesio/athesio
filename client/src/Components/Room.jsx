@@ -99,7 +99,7 @@ class Room extends Component {
 
   startRepoContentLoading() {
     if(this.state.repoName.length > 0) {
-      this.socket.emit('beginLoadingRepoContents', { repoName: this.state.repoName, user: this.state.user });
+      this.socket.emit('beginLoadingRepoContents', { repoName: this.state.repoName, user: this.state.user, roomId: this.state.roomId });
     }
   }
   
@@ -133,7 +133,7 @@ class Room extends Component {
   // }
 
   handleSaveClick() {
-    axios.post('/api/saveroom', { user: this.state.user, roomId: this.state.roomId, ref: this.state.refId })
+    axios.post('/api/saveroom', { username: this.state.user.login, roomId: this.state.roomId, ref: this.state.refId })
       .then(result => console.log(result));
   }
 
