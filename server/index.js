@@ -293,6 +293,17 @@ nsp.on('connection', (socket) => {
     socket.emit('codeUpdated', code);
   });
 
+  socket.on('beginLoadingRepoContents', ({ repoName, user, roomId }) => {
+    // look at repo fileArray stored in memory
+    // for each file, send off http request to ask for that file's content
+    // once file is done loading, store in memory, with loaded flag set to true
+    //       roomInfo[roomId].workspace['fileContents'][<full_file_path>]['contents'] = file_contents
+    //       
+    // every time user clicks on a file to open, will only serve back file and ref id if loaded
+    //  if file not loaded, set front-end fileLoading flag to true (will render loading icon on top of file structure)
+    //    and also send HTTP request to server asking for the contents once done loading
+  });
+
   socket.on('disconnect', () => console.log('disconnecting client'));
 });
 
