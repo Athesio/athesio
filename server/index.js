@@ -223,7 +223,6 @@ app.get('/api/github/repos', (req, res) => {
   let user = req.query.user;
   let userGithubAccessToken = users[user].accessToken;
   let url = 'https://api.github.com/user/repos';
-  console.log(userGithubAccessToken);
 
   let query = { 
     access_token: userGithubAccessToken,
@@ -275,12 +274,15 @@ app.get('/api/openRepo', (req, res) => {
     .catch(console.log);
 });
 
+
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
 
 const loadFileContents = (repoName, username, roomId) => {
   let repoFileArray = roomInfo[roomId].workspace['fileArray'];
+
 
   repoFileArray.forEach(file => {
     tempFileName = './' + file;
@@ -318,19 +320,16 @@ nsp.on('connection', (socket) => {
     socket.emit('codeUpdated', code);
   });
 
-<<<<<<< HEAD
   socket.on('image', (data)=>{
     console.log(data);
     socket.emit('updatedImage', data);
   })
-=======
   socket.on('beginLoadingRepoContents', ({ repoName, username, roomId }) => {
     loadFileContents(repoName, username, roomId);
     // every time user clicks on a file to open, will only serve back file and ref id if loaded
     //  if file not loaded, set front-end fileLoading flag to true (will render loading icon on top of file structure)
     //    and also send HTTP request to server asking for the contents once done loading
   });
->>>>>>> 0a1d194d18d1f3f251c2e8c013be643286dac151
 
   socket.on('disconnect', () => console.log('disconnecting client'));
 });
