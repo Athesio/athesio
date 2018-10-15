@@ -148,7 +148,7 @@ app.post('/api/enterroom', (req, res) => {
         workspace: {}
       };
 
-                                      // MAKE CONTAINERS
+      // MAKE CONTAINERS
       // axios.get('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069/makecontainers')
       //   .then(response => console.log('attempt to create container'))
       //   .catch(err => console.log(err));
@@ -254,24 +254,48 @@ app.get('/api/openRepo', (req, res) => {
   let { username, repoName, roomId } = req.query;
   let git_url = users[username]['repos'][repoName].git_url;
 
-  console.log(git_url);
   axios.post('http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000/api/github/clonerepo/', {username: username, repoName: repoName, gitUrl: git_url })
     .then(({ data }) => {
-      console.log(data);
       data.fileDirectory = JSON.parse(data.fileDirectory);
       
       roomInfo[roomId].workspace['fileStructure'] = data.fileDirectory['repos'][username];
       roomInfo[roomId].workspace['fileArray'] = data.fileArray;
+      // store empty objects to hold file contents once loading starts
+      roomInfo[roomId].workspace['fileContents'] = {};
+      data.fileArray.forEach(file => {
+        roomInfo[roomId].workspace['fileContents'][file] = {
+          loaded: false,
+          contents: '',
+          refId: null
+        }
+      });
+
       res.send(data.fileDirectory['repos'][username]);
     })
     .catch(console.log);
-  
-  
 });
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
+
+const loadFileContents = (repoName, username, roomId) => {
+  let repoFileArray = roomInfo[roomId].workspace['fileArray'];
+
+  repoFileArray.forEach(file => {
+    tempFileName = './' + file;
+    axios.get('http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000/api/github/repo/contents/get', { params: { filePath: tempFileName, username: username, repoName: repoName } })
+      .then(({ data }) => {
+        axios.get(process.env.RANDOM_ID_URL)
+          .then((refId) => {
+            roomInfo[roomId].workspace['fileContents'][file]['contents'] = data;
+            roomInfo[roomId].workspace['fileContents'][file]['loaded'] = true;
+            roomInfo[roomId].workspace['fileContents'][file]['refId'] = refId.data
+          });
+      })
+      .catch(console.log);
+  });
+};
 
 let code = '';
 
@@ -294,10 +318,19 @@ nsp.on('connection', (socket) => {
     socket.emit('codeUpdated', code);
   });
 
+<<<<<<< HEAD
   socket.on('image', (data)=>{
     console.log(data);
     socket.emit('updatedImage', data);
   })
+=======
+  socket.on('beginLoadingRepoContents', ({ repoName, username, roomId }) => {
+    loadFileContents(repoName, username, roomId);
+    // every time user clicks on a file to open, will only serve back file and ref id if loaded
+    //  if file not loaded, set front-end fileLoading flag to true (will render loading icon on top of file structure)
+    //    and also send HTTP request to server asking for the contents once done loading
+  });
+>>>>>>> 0a1d194d18d1f3f251c2e8c013be643286dac151
 
   socket.on('disconnect', () => console.log('disconnecting client'));
 });

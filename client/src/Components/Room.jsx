@@ -91,16 +91,15 @@ class Room extends Component {
   }
 
   openRepo() {
-    console.log(this.state.user); 
-    axios.get('/api/openRepo', { params: { repoName: this.state.repoName, username: this.state.user.login, roomId: this.state.roomId } })
-      .then((files) => {
-        console.log('here are the files', files.data);
-        this.setState({ repoFileStructure: files.data })});
+    if (this.state.repoName.length > 0) {
+      axios.get('/api/openRepo', { params: { repoName: this.state.repoName, username: this.state.user.login, roomId: this.state.roomId } })
+        .then(files => this.setState({ repoFileStructure: files.data }, this.startRepoContentLoading));
+    }
   }
 
   startRepoContentLoading() {
     if(this.state.repoName.length > 0) {
-      this.socket.emit('beginLoadingRepoContents', { repoName: this.state.repoName, user: this.state.user });
+      this.socket.emit('beginLoadingRepoContents', { repoName: this.state.repoName, user: this.state.user, roomId: this.state.roomId });
     }
   }
   
@@ -134,7 +133,7 @@ class Room extends Component {
   // }
 
   handleSaveClick() {
-    axios.post('/api/saveroom', { user: this.state.user, roomId: this.state.roomId, ref: this.state.refId })
+    axios.post('/api/saveroom', { username: this.state.user.login, roomId: this.state.roomId, ref: this.state.refId })
       .then(result => console.log(result));
   }
 
