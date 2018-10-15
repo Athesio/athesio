@@ -305,11 +305,12 @@ let nsp = io.of('/athesio');
 nsp.on('connection', (socket) => {
   socket.on('room', (room) => {
     socket.join(room);
-    if(roomInfo[room] !== undefined){
-      if (Object.keys(roomInfo[room]['users']).length > 1) {
-        socket.broadcast.emit('sendUpdateOnRoom', roomInfo[room].users);
-      }
-    }
+    // if(roomInfo[room] !== undefined){
+    //   if (Object.keys(roomInfo[room]['users']).length > 1) {
+    //     console.log(roomInfo[room].users);
+    //     socket.broadcast.emit('sendUpdateOnRoom', roomInfo[room].users);
+    //   }
+    // }
   });
 
   socket.on('retrieveChatHistory', (room) => {
@@ -320,6 +321,7 @@ nsp.on('connection', (socket) => {
     chatHistory[messageObj.roomId] ? chatHistory[messageObj.roomId].push(messageObj) : chatHistory[messageObj.roomId] = [messageObj];
     socket.broadcast.to(messageObj.roomId).emit('newMessageFromServer', messageObj);
   });
+
   socket.on('codeSent', (code) => {
     console.log('from socket', code);
     socket.emit('codeUpdated', code);
@@ -334,6 +336,10 @@ nsp.on('connection', (socket) => {
     // every time user clicks on a file to open, will only serve back file and ref id if loaded
     //  if file not loaded, set front-end fileLoading flag to true (will render loading icon on top of file structure)
     //    and also send HTTP request to server asking for the contents once done loading
+  });
+  socket.on('updateRoomUsers', (roomId) => {
+    // console.log(roomInfo[roomId]['users']);
+    socket.broadcast.emit('sendUpdatedRoomInfo', roomInfo[roomId]['users']);
   });
 
   socket.on('disconnect', () => console.log('disconnecting client'));

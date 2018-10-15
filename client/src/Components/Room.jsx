@@ -57,10 +57,11 @@ class Room extends Component {
       this.setState({ code: code });
     });
 
-    this.socket.on('sendUpdateOnRoom', (roomUsers) => {
+    this.socket.on('sendUpdatedRoomInfo', (roomUsers) => {
       let otherUsers = [];
       otherUsers.push(roomUsers);
       this.setState({ roomUsers: otherUsers });
+      console.log(this.state.roomUsers);
     })
 
     // this.closeRightNav = this.closeRightNav.bind(this);
@@ -91,8 +92,8 @@ class Room extends Component {
               user: data.currentUser,
               roomUsers: allUsers
             }, this.openRepo);
-            
-          });
+          })
+          .then(() => {this.socket.emit('updateRoomUsers', this.state.roomId)})
       });
   }
 
