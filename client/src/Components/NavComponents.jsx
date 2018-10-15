@@ -1,13 +1,7 @@
 import React from 'react';
 import GithubNav from './NavBarComponents/GithubNav.jsx';
 import SlackNav from './NavBarComponents/SlackNav.jsx';
-
 import MetisMenu from 'react-metismenu';
-
-
-
-
-
 
 const NavComponents = (props) => {
   if (props.tab === 'Home') {
