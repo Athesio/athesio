@@ -344,8 +344,11 @@ nsp.on('connection', (socket) => {
   });
   socket.on('updateRoomUsers', (roomId) => {
     // console.log(roomInfo[roomId]['users']);
-    socket.broadcast.emit('sendUpdatedRoomInfo', roomInfo[roomId]['users']);
+    let roomUsers = [];
+    Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
+    socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
   });
+
 
   socket.on('disconnect', () => console.log('disconnecting client'));
 });
