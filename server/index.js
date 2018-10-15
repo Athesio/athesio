@@ -305,6 +305,12 @@ let nsp = io.of('/athesio');
 nsp.on('connection', (socket) => {
   socket.on('room', (room) => {
     socket.join(room);
+    // if(roomInfo[room] !== undefined){
+    //   if (Object.keys(roomInfo[room]['users']).length > 1) {
+    //     console.log(roomInfo[room].users);
+    //     socket.broadcast.emit('sendUpdateOnRoom', roomInfo[room].users);
+    //   }
+    // }
   });
 
   socket.on('retrieveChatHistory', (room) => {
@@ -315,6 +321,7 @@ nsp.on('connection', (socket) => {
     chatHistory[messageObj.roomId] ? chatHistory[messageObj.roomId].push(messageObj) : chatHistory[messageObj.roomId] = [messageObj];
     socket.broadcast.to(messageObj.roomId).emit('newMessageFromServer', messageObj);
   });
+
   socket.on('codeSent', (code) => {
     console.log('from socket', code);
     socket.emit('codeUpdated', code);
@@ -330,6 +337,13 @@ nsp.on('connection', (socket) => {
     //  if file not loaded, set front-end fileLoading flag to true (will render loading icon on top of file structure)
     //    and also send HTTP request to server asking for the contents once done loading
   });
+  socket.on('updateRoomUsers', (roomId) => {
+    // console.log(roomInfo[roomId]['users']);
+    let roomUsers = [];
+    Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
+    socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
+  });
+
 
   socket.on('disconnect', () => console.log('disconnecting client'));
 });

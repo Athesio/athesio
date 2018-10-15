@@ -57,6 +57,13 @@ class Room extends Component {
       this.setState({ code: code });
     });
 
+    this.socket.on('sendUpdatedRoomInfo', (roomUsers) => {
+      let otherUsers = [];
+      otherUsers.concat(roomUsers);
+      console.log(roomUsers);
+      this.setState({ roomUsers: roomUsers });
+    })
+
     // this.closeRightNav = this.closeRightNav.bind(this);
     // this.openRightNav = this.openRightNav.bind(this);
     this.logout = this.logout.bind(this);
@@ -85,8 +92,8 @@ class Room extends Component {
               user: data.currentUser,
               roomUsers: allUsers
             }, this.openRepo);
-            
-          });
+          })
+          .then(() => {this.socket.emit('updateRoomUsers', this.state.roomId)})
       });
   }
 
@@ -116,6 +123,7 @@ class Room extends Component {
 
   logout() {
     axios.post('/api/logout', { roomId: this.state.roomId, user: this.state.user })
+      .then(() => this.socket.emit('updateRoomUsers', this.state.roomId ))
       .then(() => window.location.assign('/'));
   }
 
@@ -204,7 +212,7 @@ class Room extends Component {
                         if (this.state.user.login !== user.username) {
                           return (
                             <a key={i} style={{ color: '#f1f1f1', fontSize: '12px', float: 'right' }} className="joinedUsers" >
-                              <img className="img-circle text-right" id="userImg" src={user.avatar_url} /> {user.username}
+                              <img className="img-circle text-right" id="userImg" key={user.avatar_url} src={user.avatar_url} /> {user.username}
                             </a>
                           )
                         }
