@@ -17,7 +17,9 @@ class Firepad extends Component {
       authDomain: 'athesio-66b77.firebaseapp.com',
       databaseURL: 'https://athesio-66b77.firebaseio.com'
     };
-    window.firebase.initializeApp(config);
+    if (!window.firebase.apps.length) {
+      window.firebase.initializeApp(config);
+    }
     let firepadRef = firebase.database().ref(this.state.refId);
     // create Ace editor and config
     let editor = ace.edit('firepad-container');
