@@ -291,6 +291,11 @@ nsp.on('connection', (socket) => {
     socket.emit('codeUpdated', code);
   });
 
+  socket.on('image', (data)=>{
+    console.log(data);
+    socket.emit('updatedImage', data);
+  })
+
   socket.on('disconnect', () => console.log('disconnecting client'));
 });
 

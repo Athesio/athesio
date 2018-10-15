@@ -3,13 +3,16 @@ import { Link, Redirect, withRouter } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute.jsx';
 import SelectRoom from './SelectRoom.jsx';
 import axios from 'axios';
+import {SketchField, Tools} from 'react-sketch';
+import WhiteBoard from './WhiteBoard.jsx';
 
 class LandingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
-      authStatus: false
+      authStatus: false,
+      sketch: ""
     }
   }
 
@@ -231,6 +234,9 @@ class LandingPage extends Component {
                       <em>Full Stack Engineer</em>
                       <p></p>
                       <a href="https://github.com/taroyamashita">Github</a>
+                    </div>
+                    <div>
+                      <WhiteBoard />
                     </div>
                   </div>
                 </div>
