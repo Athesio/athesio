@@ -59,9 +59,9 @@ class Room extends Component {
 
     this.socket.on('sendUpdatedRoomInfo', (roomUsers) => {
       let otherUsers = [];
-      otherUsers.concat(roomUsers);
-      console.log(roomUsers);
-      this.setState({ roomUsers: roomUsers });
+      otherUsers.push(roomUsers);
+      this.setState({ roomUsers: otherUsers });
+      console.log(this.state.roomUsers);
     })
 
     // this.closeRightNav = this.closeRightNav.bind(this);

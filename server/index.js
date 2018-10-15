@@ -307,11 +307,12 @@ let nsp = io.of('/athesio');
 nsp.on('connection', (socket) => {
   socket.on('room', (room) => {
     socket.join(room);
-    if(roomInfo[room] !== undefined){
-      if (Object.keys(roomInfo[room]['users']).length > 1) {
-        socket.broadcast.emit('sendUpdateOnRoom', roomInfo[room].users);
-      }
-    }
+    // if(roomInfo[room] !== undefined){
+    //   if (Object.keys(roomInfo[room]['users']).length > 1) {
+    //     console.log(roomInfo[room].users);
+    //     socket.broadcast.emit('sendUpdateOnRoom', roomInfo[room].users);
+    //   }
+    // }
   });
 
   socket.on('retrieveChatHistory', (room) => {
@@ -340,6 +341,10 @@ nsp.on('connection', (socket) => {
     let roomUsers = [];
     Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
     socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
+  });
+  socket.on('updateRoomUsers', (roomId) => {
+    // console.log(roomInfo[roomId]['users']);
+    socket.broadcast.emit('sendUpdatedRoomInfo', roomInfo[roomId]['users']);
   });
 
   socket.on('disconnect', () => console.log('disconnecting client'));
