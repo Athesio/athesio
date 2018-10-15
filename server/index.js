@@ -274,12 +274,15 @@ app.get('/api/openRepo', (req, res) => {
     .catch(console.log);
 });
 
+
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
 
 const loadFileContents = (repoName, username, roomId) => {
   let repoFileArray = roomInfo[roomId].workspace['fileArray'];
+
 
   repoFileArray.forEach(file => {
     tempFileName = './' + file;
@@ -317,6 +320,10 @@ nsp.on('connection', (socket) => {
     socket.emit('codeUpdated', code);
   });
 
+  socket.on('image', (data)=>{
+    console.log(data);
+    socket.emit('updatedImage', data);
+  })
   socket.on('beginLoadingRepoContents', ({ repoName, username, roomId }) => {
     loadFileContents(repoName, username, roomId);
     // every time user clicks on a file to open, will only serve back file and ref id if loaded
