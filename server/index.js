@@ -171,7 +171,6 @@ app.get('/api/authstatus', (req, res) => {
 });
 
 app.post('/api/saveroom', (req, res) => {
-
   db.saveRoomInfoForUser(req.body, (err, results) => {
     if (err) {
       console.log('Error saving room info to DB: ', err);
@@ -250,7 +249,7 @@ app.get('/api/openRepo', (req, res) => {
   let { username, repoName, roomId } = req.query;
   let git_url = users[username]['repos'][repoName].git_url;
 
-  axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/clonerepo/`, {username: username, repoName: repoName, gitUrl: git_url })
+  axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/clonerepo/`, { username: username, repoName: repoName, gitUrl: git_url })
     .then(({ data }) => {
       data.fileDirectory = JSON.parse(data.fileDirectory);
       
@@ -267,6 +266,17 @@ app.get('/api/openRepo', (req, res) => {
       });
 
       res.send(data.fileDirectory['repos'][username]);
+    })
+    .catch(console.log);
+});
+
+app.post('/api/saveNewGist', (req, res) => {
+  let { description, fileName, content, username } = req.body;
+  let userGithubAccessToken = users[username].accessToken;
+
+  axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/gists/create`, { accessToken: userGithubAccessToken, description: description, fileName: fileName, content: content })
+    .then(results => {
+      res.sendStatus(200);
     })
     .catch(console.log);
 });
