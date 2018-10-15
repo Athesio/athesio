@@ -89,8 +89,7 @@ app.get('/', isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-app.post('/api/logout', (req, res) => { 
-  // remove from users
+app.post('/api/logout', (req, res) => {
   let { user, roomId } = req.body;
   delete roomInfo[roomId].users[user.login];
   roomInfo[roomId].userCount = Object.keys(roomInfo[roomId].users).length;
@@ -158,8 +157,6 @@ app.post('/api/enterroom', (req, res) => {
   })
   .catch(console.log);
 });
-
-
 
 app.get('/api/validateRoomId', (req, res) => {
   roomInfo[req.query.roomId] ? res.send({ isValid: true }) : res.send({ isValid: false });
@@ -253,7 +250,7 @@ app.get('/api/openRepo', (req, res) => {
   let { username, repoName, roomId } = req.query;
   let git_url = users[username]['repos'][repoName].git_url;
 
-  axios.post('http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000/api/github/clonerepo/', {username: username, repoName: repoName, gitUrl: git_url })
+  axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/clonerepo/`, {username: username, repoName: repoName, gitUrl: git_url })
     .then(({ data }) => {
       data.fileDirectory = JSON.parse(data.fileDirectory);
       
@@ -274,8 +271,6 @@ app.get('/api/openRepo', (req, res) => {
     .catch(console.log);
 });
 
-
-
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
@@ -283,10 +278,9 @@ app.get('*', (req, res) => {
 const loadFileContents = (repoName, username, roomId) => {
   let repoFileArray = roomInfo[roomId].workspace['fileArray'];
 
-
   repoFileArray.forEach(file => {
     tempFileName = './' + file;
-    axios.get('http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000/api/github/repo/contents/get', { params: { filePath: tempFileName, username: username, repoName: repoName } })
+    axios.get(`${process.env.GITHUB_SERVICE_URL}/api/github/repo/contents/get`, { params: { filePath: tempFileName, username: username, repoName: repoName }})
       .then(({ data }) => {
         axios.get(process.env.RANDOM_ID_URL)
           .then((refId) => {
@@ -299,18 +293,10 @@ const loadFileContents = (repoName, username, roomId) => {
   });
 };
 
-let code = '';
-
 let nsp = io.of('/athesio');
 nsp.on('connection', (socket) => {
   socket.on('room', (room) => {
     socket.join(room);
-    // if(roomInfo[room] !== undefined){
-    //   if (Object.keys(roomInfo[room]['users']).length > 1) {
-    //     console.log(roomInfo[room].users);
-    //     socket.broadcast.emit('sendUpdateOnRoom', roomInfo[room].users);
-    //   }
-    // }
   });
 
   socket.on('retrieveChatHistory', (room) => {
@@ -327,41 +313,22 @@ nsp.on('connection', (socket) => {
     socket.emit('codeUpdated', code);
   });
 
-  socket.on('image', (data)=>{
+  socket.on('image', (data) => {
     console.log(data);
     socket.emit('updatedImage', data);
   })
   socket.on('beginLoadingRepoContents', ({ repoName, username, roomId }) => {
     loadFileContents(repoName, username, roomId);
-    // every time user clicks on a file to open, will only serve back file and ref id if loaded
-    //  if file not loaded, set front-end fileLoading flag to true (will render loading icon on top of file structure)
-    //    and also send HTTP request to server asking for the contents once done loading
   });
+
   socket.on('updateRoomUsers', (roomId) => {
-    // console.log(roomInfo[roomId]['users']);
     let roomUsers = [];
     Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
     socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
   });
 
-
   socket.on('disconnect', () => console.log('disconnecting client'));
 });
-
-// io.on('connection', (socket) => {
-//   io.emit('newClientConnection', code);
-
-//   socket.on('clientUpdateCode', (newCode) => {
-//     code = newCode;
-//     io.emit('serverUpdateCode', code);
-//   });
-
-//   socket.on('disconnect', () => console.log('Client disconnected'));
-
-
-// });
-
-
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => console.log(`Listening on port ${port}`));
