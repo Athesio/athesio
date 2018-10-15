@@ -237,11 +237,11 @@ app.get('/api/github/repos', (req, res) => {
   request.get( { url:  url, qs: query, json:true, headers: { 'User-Agent': 'athesio' } }, (err, _, body) => {
     body.forEach(repo => {
       let { name, html_url, git_url, description, language } = repo;
-      if (name && html_url && git_url && language) {
+      if (language && language.toLowerCase() === 'javascript') {
         description = description === null ? '' : description;
         let repoObj = { name: name, url: html_url, git_url: git_url, description: description, language: language };
         users[user]['repos'][name] = repoObj;
-        if (repoObj.language.toLowerCase() === 'javascript') repos.push(repoObj);
+        repos.push(repoObj);
       }
     });
 
@@ -264,7 +264,8 @@ app.get('/api/openRepo', (req, res) => {
       data.fileArray.forEach(file => {
         roomInfo[roomId].workspace['fileContents'][file] = {
           loaded: false,
-          contents: ''
+          contents: '',
+          refId: null
         }
       });
 
@@ -284,8 +285,12 @@ const loadFileContents = (repoName, username, roomId) => {
     tempFileName = './' + file;
     axios.get('http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000/api/github/repo/contents/get', { params: { filePath: tempFileName, username: username, repoName: repoName } })
       .then(({ data }) => {
-        roomInfo[roomId].workspace['fileContents'][file]['contents'] = data;
-        roomInfo[roomId].workspace['fileContents'][file]['loaded'] = true;
+        axios.get(process.env.RANDOM_ID_URL)
+          .then((refId) => {
+            roomInfo[roomId].workspace['fileContents'][file]['contents'] = data;
+            roomInfo[roomId].workspace['fileContents'][file]['loaded'] = true;
+            roomInfo[roomId].workspace['fileContents'][file]['refId'] = refId.data
+          });
       })
       .catch(console.log);
   });
