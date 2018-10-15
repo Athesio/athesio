@@ -61,7 +61,6 @@ class Room extends Component {
       let otherUsers = [];
       otherUsers.push(roomUsers);
       this.setState({ roomUsers: otherUsers });
-      console.log(this.state.roomUsers);
     })
 
     // this.closeRightNav = this.closeRightNav.bind(this);
