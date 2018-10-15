@@ -223,6 +223,7 @@ app.get('/api/github/repos', (req, res) => {
   let user = req.query.user;
   let userGithubAccessToken = users[user].accessToken;
   let url = 'https://api.github.com/user/repos';
+  console.log(userGithubAccessToken);
 
   let query = { 
     access_token: userGithubAccessToken,
@@ -237,10 +238,12 @@ app.get('/api/github/repos', (req, res) => {
   request.get( { url:  url, qs: query, json:true, headers: { 'User-Agent': 'athesio' } }, (err, _, body) => {
     body.forEach(repo => {
       let { name, html_url, git_url, description, language } = repo;
-      description = description === null ? '' : description;
-      let repoObj = { name: name, url: html_url, git_url: git_url, description: description, language: language };
-      users[user]['repos'][name] = repoObj;
-      if (repoObj.language.toLowerCase() === 'javascript') repos.push(repoObj);
+      if (language && language.toLowerCase() === 'javascript') {
+        description = description === null ? '' : description;
+        let repoObj = { name: name, url: html_url, git_url: git_url, description: description, language: language };
+        users[user]['repos'][name] = repoObj;
+        repos.push(repoObj);
+      }
     });
 
     res.send(repos);
