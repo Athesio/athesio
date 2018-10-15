@@ -319,7 +319,6 @@ nsp.on('connection', (socket) => {
 
   socket.on('beginLoadingRepoContents', ({ repoName, username, roomId }) => {
     loadFileContents(repoName, username, roomId);
-    
     // every time user clicks on a file to open, will only serve back file and ref id if loaded
     //  if file not loaded, set front-end fileLoading flag to true (will render loading icon on top of file structure)
     //    and also send HTTP request to server asking for the contents once done loading
