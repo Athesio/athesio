@@ -4,48 +4,48 @@ import { Button } from 'reactstrap';
 
 
 
-const originalContent=[
-  {
-      icon: 'fas fa-folder',
-      label: 'Utility',
-      to: "#",
-  },
-  {
-      icon: 'fas fa-folder',
-      label: 'Server',
-      content: [
-          {
-              icon: 'fas fa-folder',
-              label: 'Mother',
-              to: '#',
-              content: [
-              {
-                  icon: 'fas fa-file',
-                  label: 'Index.js',
-                  to :'#'
-              }
-              ]
-          },
-      ],
-  },
+const originalContent = [
+    {
+        icon: 'fas fa-folder',
+        label: 'Utility',
+        to: "#",
+    },
+    {
+        icon: 'fas fa-folder',
+        label: 'Server',
+        content: [
+            {
+                icon: 'fas fa-folder',
+                label: 'Mother',
+                to: '#',
+                content: [
+                {
+                    icon: 'fas fa-file',
+                    label: 'Index.js',
+                    to :'#'
+                }
+                ]
+            },
+        ],
+    },
 ];
 
 const newContent = [{"label":".gitignore","to":"#","icon":"fas fa-file"},{"label":"README.md","to":"#","icon":"fas fa-file"},{"label":"child-server","to":"#","icon":"fas fa-folder","content":[{"label":"Dockerfile","to":"#","icon":"fas fa-file"},{"label":"README.md","to":"#","icon":"fas fa-file"},{"label":"package-lock.json","to":"#","icon":"fas fa-file"},{"label":"package.json","to":"#","icon":"fas fa-file"},{"label":"server","to":"#","icon":"fas fa-folder","content":[{"label":"index.js","to":"#","icon":"fas fa-file"},{"label":"testFile.js","to":"#","icon":"fas fa-file"}]}]},{"label":"mother-server","to":"#","icon":"fas fa-folder","content":[{"label":"index.js","to":"#","icon":"fas fa-file"}]},{"label":"package-lock.json","to":"#","icon":"fas fa-file"},{"label":"package.json","to":"#","icon":"fas fa-file"}];
 
-function repoStructureTrimmer (obj){
-  let key1 =Object.keys(obj["repos"]); 
-  let actualData = obj["repos"][key1]
-  let key2 = Object.keys(actualData)
-  actualData = obj["repos"][key1][key2];
-  return actualData;
+function repoStructureTrimmer (obj) {
+    let key1 =Object.keys(obj["repos"]); 
+    let actualData = obj["repos"][key1]
+    let key2 = Object.keys(actualData)
+    actualData = obj["repos"][key1][key2];
+    return actualData;
 }
 
 
 
 
 
-const dataFormatter = (repoStructure) =>{
-  const fileProcess = (k, v) => {
+const dataFormatter = (repoStructure) => {
+    const fileProcess = (k, v) => {
     const result = {};
     result.module = k;
     result.path = v;

@@ -3,11 +3,7 @@ import GithubNav from './NavBarComponents/GithubNav.jsx';
 import SlackNav from './NavBarComponents/SlackNav.jsx';
 import TreeMenu from './TreeMenu.jsx';
 
-
-import MetisMenu from 'react-metismenu';
-
 const NavComponents = (props) => {
-  console.log(props.content);
   if (props.tab === 'Home') {
     return (
       <div id="HomeNav" >

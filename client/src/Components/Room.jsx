@@ -66,10 +66,8 @@ class Room extends Component {
 
     this.socket.on('contentsUpdated', ()=>{
       console.log('contents have been updated');
-      this.setState({contentsLoaded: true});
+      this.setState({ contentsLoaded: true });
     })
-
-
 
     this.socket.on('sendUpdatedRoomInfo', (roomUsers) => {
       let otherUsers = [];
