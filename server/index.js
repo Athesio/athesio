@@ -242,7 +242,7 @@ app.get('/api/github/repos', (req, res) => {
     });
     res.send(repos);
   });
-});
+});gi
 
 app.get('/api/openRepo', (req, res) => {
   let { username, repoName, roomId } = req.query;
@@ -288,49 +288,12 @@ app.post('/api/updateFileContents', (req, res) => {
   res.send('contents updated').status(200);
 });
 
-// TODO: test this updating endpoint
+  // TODO: test this updating endpoint
 app.post('/api/saveUpdatedRepoContents', (req, res) => {
   let { username, commitMessage, roomId, repoName } = req.body;
   let userGithubAccessToken = users[username].accessToken;
   let repoFileArray = roomInfo[roomId].workspace['fileArray'];
   let repoObj = users[user].repos[repoName];
-  let updatedFiles = {};
-
-  repoFileArray.forEach(file => {
-    let currFile = roomInfo[roomId].workspace['fileContents'][file];
-    if (currFile.updated) {
-      updatedFiles[file] = {
-        contents: currFile.contents,
-        filePath: file
-      }
-    }
-  });
-
-  axios.post('/api/github/repo/update', { updatedFiles: updatedFiles, repo: repoObj, username: username, commitMessage: commitMessage, accessToken: userGithubAccessToken })
-    .then(result => {
-      console.log(result);
-      res.send('repo updated successfully').status(200);
-    })
-    .catch(console.log);
-});
-
-app.post('/api/updateFileContents', (req, res) => {
-  let { roomId, filePath, newContents } = req.body;
-  let file = roomInfo[roomId].workspace['fileContents'][filePath];
-
-  if (file.contents !== newContents) {
-    file.contents = newContents;
-    file.updated = true;
-  }
-
-  res.send('contents updated').status(200);
-});
-
-// TODO: test this updating endpoint
-app.post('/api/saveUpdatedRepoContents', (req, res) => {
-  let { username, commitMessage, roomId, repoName } = req.body;
-  let userGithubAccessToken = users[username].accessToken;
-  let repoFileArray = roomInfo[roomId].workspace['fileArray'];
   let updatedFiles = {};
 
   repoFileArray.forEach(file => {
