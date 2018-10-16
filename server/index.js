@@ -261,7 +261,8 @@ app.get('/api/openRepo', (req, res) => {
         roomInfo[roomId].workspace['fileContents'][file] = {
           loaded: false,
           contents: '',
-          refId: null
+          refId: null,
+          updated: false
         }
       });
 
@@ -302,6 +303,7 @@ const loadFileContents = (repoName, username, roomId) => {
             roomInfo[roomId].workspace['fileContents'][file]['contents'] = data;
             roomInfo[roomId].workspace['fileContents'][file]['loaded'] = true;
             roomInfo[roomId].workspace['fileContents'][file]['refId'] = refId.data
+            roomInfo[roomId].workspace['fileContents'][file]['updated'] = true;
           });
       })
       .catch(console.log);
