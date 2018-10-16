@@ -89,8 +89,7 @@ app.get('/', isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-app.post('/api/logout', (req, res) => { 
-  // remove from users
+app.post('/api/logout', (req, res) => {
   let { user, roomId } = req.body;
   delete roomInfo[roomId].users[user.login];
   roomInfo[roomId].userCount = Object.keys(roomInfo[roomId].users).length;
@@ -159,8 +158,6 @@ app.post('/api/enterroom', (req, res) => {
   .catch(console.log);
 });
 
-
-
 app.get('/api/validateRoomId', (req, res) => {
   roomInfo[req.query.roomId] ? res.send({ isValid: true }) : res.send({ isValid: false });
 });
@@ -174,7 +171,6 @@ app.get('/api/authstatus', (req, res) => {
 });
 
 app.post('/api/saveroom', (req, res) => {
-
   db.saveRoomInfoForUser(req.body, (err, results) => {
     if (err) {
       console.log('Error saving room info to DB: ', err);
@@ -236,15 +232,14 @@ app.get('/api/github/repos', (req, res) => {
 
   request.get( { url:  url, qs: query, json:true, headers: { 'User-Agent': 'athesio' } }, (err, _, body) => {
     body.forEach(repo => {
-      let { name, html_url, git_url, description, language } = repo;
+      let { name, html_url, git_url, description, language, contents_url } = repo;
       if (language && language.toLowerCase() === 'javascript') {
         description = description === null ? '' : description;
-        let repoObj = { name: name, url: html_url, git_url: git_url, description: description, language: language };
+        let repoObj = { name: name, url: html_url, git_url: git_url, contents_url: contents_url, description: description, language: language };
         users[user]['repos'][name] = repoObj;
         repos.push(repoObj);
       }
     });
-
     res.send(repos);
   });
 });
@@ -255,7 +250,7 @@ app.get('/api/openRepo', (req, res) => {
   let { username, repoName, roomId } = req.query;
   let git_url = users[username]['repos'][repoName].git_url;
 
-  axios.post('http://localhost:3067/api/github/clonerepo/', {username: username, repoName: repoName, gitUrl: git_url })
+  axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/clonerepo/`, { username: username, repoName: repoName, gitUrl: git_url })
     .then(({ data }) => {
       data.fileDirectory = JSON.parse(data.fileDirectory);
       
@@ -267,7 +262,8 @@ app.get('/api/openRepo', (req, res) => {
         roomInfo[roomId].workspace['fileContents'][file] = {
           loaded: false,
           contents: '',
-          refId: null
+          refId: null,
+          updated: false
         }
       });
 
@@ -276,7 +272,59 @@ app.get('/api/openRepo', (req, res) => {
     .catch(console.log);
 });
 
+app.get('/api/openFile', (req, res) => {
+  let { filePath, roomId } = req.query;
+  let file = roomInfo[roomId].workspace['fileContents'][filePath];
+  res.send({ contents: file.contents, refId: file.refId });
+});
 
+app.post('/api/updateFileContents', (req, res) => {
+  let { roomId, filePath, newContents } = req.body;
+  let file = roomInfo[roomId].workspace['fileContents'][filePath];
+
+  if (file.contents !== newContents) {
+    file.contents = newContents;
+    file.updated = true;
+  }
+
+  res.send('contents updated').status(200);
+});
+
+// TODO: test this updating endpoint
+app.post('/api/saveUpdatedRepoContents', (req, res) => {
+  let { username, commitMessage, roomId, repoName } = req.body;
+  let userGithubAccessToken = users[username].accessToken;
+  let repoFileArray = roomInfo[roomId].workspace['fileArray'];
+  let repoObj = users[user].repos[repoName];
+  let updatedFiles = {};
+
+  repoFileArray.forEach(file => {
+    let currFile = roomInfo[roomId].workspace['fileContents'][file];
+    if (currFile.updated) {
+      updatedFiles[file] = {
+        contents: currFile.contents,
+        filePath: file
+      }
+    }
+  });
+
+  axios.post('/api/github/repo/update', { updatedFiles: updatedFiles, repo: repoObj, username: username, commitMessage: commitMessage, accessToken: userGithubAccessToken })
+    .then(result => {
+      console.log(result);
+      res.send('repo updated successfully').status(200);
+    })
+    .catch(console.log);
+});
+
+app.post('/api/saveNewGist', (req, res) => {
+  let { description, fileName, content, username } = req.body;
+  let userGithubAccessToken = users[username].accessToken;
+  axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/gists/create`, { accessToken: userGithubAccessToken, description: description, fileName: fileName, content: content })
+    .then(results => {
+      res.sendStatus(200);
+    })
+    .catch(console.log);
+});
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
@@ -287,10 +335,9 @@ let localurl = 'http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000'
 const loadFileContents = (repoName, username, roomId) => {
   let repoFileArray = roomInfo[roomId].workspace['fileArray'];
 
-
-  let promisedContents = repoFileArray.map(file => {
+  repoFileArray.forEach(file => {
     tempFileName = './' + file;
-    axios.get('http://localhost:3067/api/github/repo/contents/get', { params: { filePath: tempFileName, username: username, repoName: repoName } })
+    axios.get(`${process.env.GITHUB_SERVICE_URL}/api/github/repo/contents/get`, { params: { filePath: tempFileName, username: username, repoName: repoName }})
       .then(({ data }) => {
         axios.get(process.env.RANDOM_ID_URL)
           .then((refId) => {
@@ -303,12 +350,16 @@ const loadFileContents = (repoName, username, roomId) => {
   });
 };
 
-let code = '';
-
 let nsp = io.of('/athesio');
 nsp.on('connection', (socket) => {
   socket.on('room', (room) => {
     socket.join(room);
+    // if(roomInfo[room] !== undefined){
+    //   if (Object.keys(roomInfo[room]['users']).length > 1) {
+    //     console.log(roomInfo[room].users);
+    //     socket.broadcast.emit('sendUpdateOnRoom', roomInfo[room].users);
+    //   }
+    // }
   });
 
   socket.on('retrieveChatHistory', (room) => {
@@ -319,12 +370,13 @@ nsp.on('connection', (socket) => {
     chatHistory[messageObj.roomId] ? chatHistory[messageObj.roomId].push(messageObj) : chatHistory[messageObj.roomId] = [messageObj];
     socket.broadcast.to(messageObj.roomId).emit('newMessageFromServer', messageObj);
   });
+
   socket.on('codeSent', (code) => {
     console.log('from socket', code);
     socket.emit('codeUpdated', code);
   });
 
-  socket.on('image', (data)=>{
+  socket.on('image', (data) => {
     console.log(data);
     socket.emit('updatedImage', data);
   })
@@ -337,23 +389,21 @@ nsp.on('connection', (socket) => {
     //    and also send HTTP request to server asking for the contents once done loading
   });
 
+  socket.on('updateRoomUsers', (roomId) => {
+    let roomUsers = [];
+    Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
+    socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
+  });
+  socket.on('updateRoomUsers', (roomId) => {
+    // console.log(roomInfo[roomId]['users']);
+    let roomUsers = [];
+    Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
+    socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
+  });
+
+
   socket.on('disconnect', () => console.log('disconnecting client'));
 });
-
-// io.on('connection', (socket) => {
-//   io.emit('newClientConnection', code);
-
-//   socket.on('clientUpdateCode', (newCode) => {
-//     code = newCode;
-//     io.emit('serverUpdateCode', code);
-//   });
-
-//   socket.on('disconnect', () => console.log('Client disconnected'));
-
-
-// });
-
-
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => console.log(`Listening on port ${port}`));

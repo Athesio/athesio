@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Button } from 'reactstrap';
+
 
 class Firepad extends Component {
   constructor(props) {
@@ -17,7 +19,9 @@ class Firepad extends Component {
       authDomain: 'athesio-66b77.firebaseapp.com',
       databaseURL: 'https://athesio-66b77.firebaseio.com'
     };
-    window.firebase.initializeApp(config);
+    if (!window.firebase.apps.length) {
+      window.firebase.initializeApp(config);
+    }
     let firepadRef = firebase.database().ref(this.state.refId);
     // create Ace editor and config
     let editor = ace.edit('firepad-container');
@@ -46,8 +50,11 @@ class Firepad extends Component {
         <div id='firepad-container'>
         </div>
         <div className="row" >
-        <div className="col-md-10 col-lg-10" id='runBtn' >
-          <button type="button" 
+        <div className="col-xs-9 col-sm-9 col-md-9 col-lg-9" id='runBtn'  >
+          <Button style={{ marginRight: '10px'}} type="button" size="sm" onClick={() => this.props.toggleGistModal(this.state.code)} > Create Gist </Button>
+          <Button type="button" size="sm" onClick={this.props.handleSaveClick}>Save Code</Button> 
+        </div>
+          <Button type="button" size="sm" color="warning"
             onClick={() => {
               axios.post('/api/run-code', { data: this.state.code })
                 .then((response) => {
@@ -56,10 +63,7 @@ class Firepad extends Component {
                   this.props.runCode(response.data);
                 }
               )}
-            }>Run</button>
-        </div>
-
-        <button type="button" onClick={this.props.handleSaveClick}>Save</button> 
+            }>Run Code</Button>
       </div>
       </div>
     );

@@ -6,11 +6,6 @@ import TreeMenu from './TreeMenu.jsx';
 
 import MetisMenu from 'react-metismenu';
 
-
-
-
-
-
 const NavComponents = (props) => {
   console.log(props.content);
   if (props.tab === 'Home') {

@@ -47,7 +47,7 @@ class FloatingChatDiv extends React.Component {
               <div className="floating-div-container">
                 <div id="fdh" >
                   <div id="floatingDivHeader" className="handle" >
-                    Drag from here
+                    Chat
                   </div>
                 <div className="exitChat" onClick={this.props.minimize}>
                   X
