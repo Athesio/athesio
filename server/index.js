@@ -276,6 +276,18 @@ app.get('/api/openFile', (req, res) => {
   res.send({ contents: roomInfo[roomId].workspace['fileContents'][filePath]['contents'], refId: roomInfo[roomId].workspace['fileContents'][filePath]['refId'] });
 });
 
+app.post('/api/updateFileContents', (req, res) => {
+  let { roomId, filePath, newContents } = req.body;
+  let currentContents = roomInfo[roomId].workspace['fileContents'][filePath];
+
+  if (currentContents !== newContents) {
+    roomInfo[roomId].workspace['fileContents'][filePath]['contents'] = newContents;
+    roomInfo[roomId].workspace['fileContents'][filePath]['updated'] = true;
+  }
+
+  res.send('contents updated').status(200);
+});
+
 app.post('/api/saveNewGist', (req, res) => {
   let { description, fileName, content, username } = req.body;
   let userGithubAccessToken = users[username].accessToken;
