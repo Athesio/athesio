@@ -232,15 +232,14 @@ app.get('/api/github/repos', (req, res) => {
 
   request.get( { url:  url, qs: query, json:true, headers: { 'User-Agent': 'athesio' } }, (err, _, body) => {
     body.forEach(repo => {
-      let { name, html_url, git_url, description, language } = repo;
+      let { name, html_url, git_url, description, language, contents_url } = repo;
       if (language && language.toLowerCase() === 'javascript') {
         description = description === null ? '' : description;
-        let repoObj = { name: name, url: html_url, git_url: git_url, description: description, language: language };
+        let repoObj = { name: name, url: html_url, git_url: git_url, contents_url: contents_url, description: description, language: language };
         users[user]['repos'][name] = repoObj;
         repos.push(repoObj);
       }
     });
-
     res.send(repos);
   });
 });
@@ -294,6 +293,7 @@ app.post('/api/saveUpdatedRepoContents', (req, res) => {
   let { username, commitMessage, roomId, repoName } = req.body;
   let userGithubAccessToken = users[username].accessToken;
   let repoFileArray = roomInfo[roomId].workspace['fileArray'];
+  let repoObj = users[user].repos[repoName];
   let updatedFiles = {};
 
   repoFileArray.forEach(file => {
@@ -306,7 +306,7 @@ app.post('/api/saveUpdatedRepoContents', (req, res) => {
     }
   });
 
-  axios.post('/api/github/repo/update', { updatedFiles: updatedFiles, repoName: repoName, username: username, commitMessage: commitMessage, accessToken: userGithubAccessToken })
+  axios.post('/api/github/repo/update', { updatedFiles: updatedFiles, repo: repoObj, username: username, commitMessage: commitMessage, accessToken: userGithubAccessToken })
     .then(result => {
       console.log(result);
       res.send('repo updated successfully').status(200);
@@ -317,7 +317,6 @@ app.post('/api/saveUpdatedRepoContents', (req, res) => {
 app.post('/api/saveNewGist', (req, res) => {
   let { description, fileName, content, username } = req.body;
   let userGithubAccessToken = users[username].accessToken;
-  console.log(req.body);
   axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/gists/create`, { accessToken: userGithubAccessToken, description: description, fileName: fileName, content: content })
     .then(results => {
       res.sendStatus(200);
