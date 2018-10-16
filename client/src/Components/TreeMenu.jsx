@@ -1,30 +1,28 @@
 import React, { Component } from 'react';
 import Tree from 'react-ui-tree';
 import ReactDOM from 'react-dom';
-import tree from '/Users/taroyamashita/Desktop/athesio/client/dummyTreeData.js'
 import cx from 'classnames';
 
   
 
-class TreeMenu extends Component{
-    constructor(props){
+class TreeMenu extends Component {
+    constructor(props) {
         super(props);
-         this.state ={
-             active: {module: 'test', collapsed: false, leaf: true},
-             tree: null
+        this.state = {
+          active: {module: 'test', collapsed: false, leaf: true},
+          tree: null
         }
         this.renderNode = this.renderNode.bind(this);
         this.onClickNode = this.onClickNode.bind(this);
     }
 
-    componentDidMount(){
-        
-        console.log('something from treemenu');
-        console.log(this.props.data);
+    componentDidMount() {
+        // console.log('something from treemenu');
+        // console.log(this.props.data);
         this.setState({tree: this.props.data});
     }
 
-    renderNode(node){
+    renderNode(node) {
         return (
           <span
             className={cx('node', {
@@ -37,20 +35,20 @@ class TreeMenu extends Component{
         );
       };
     
-      onClickNode(node){
+      onClickNode(node) {
         this.setState({
           active: node
-        }, ()=>{ console.log(this.state);})
+        }, () => { console.log(this.state) })
       };
     
 
-    handleChange(tree){
+    handleChange(tree) {
         this.setState({
           tree: tree
         });
       };
     
-      updateTree(){
+      updateTree() {
         const { tree } = this.state;
         tree.children.push({ module: 'test' });
         this.setState({

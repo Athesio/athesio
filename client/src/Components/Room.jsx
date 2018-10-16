@@ -23,7 +23,7 @@ class Room extends Component {
       user: {},
       roomUsers: [],
       loading: true,
-      contentsLoaded: false, 
+      contentsLoaded: roomPath.length === 4 ? false : true,
       refId: null,
       code: "hello world",
       showChatDiv: false,
@@ -64,7 +64,7 @@ class Room extends Component {
       this.setState({ code: code });
     });
 
-    this.socket.on('contentsUpdated', ()=>{
+    this.socket.on('contentsUpdated', () => {
       console.log('contents have been updated');
       this.setState({ contentsLoaded: true });
     })
@@ -91,6 +91,8 @@ class Room extends Component {
   }
 
   componentDidMount() {
+    console.log('contentsLoaded: ', this.state.contentsLoaded)
+    console.log('url: ', window.location.pathname.split('/'));
     axios.post('/api/enterroom', { roomId: this.state.roomId })
       .then(data => {
         axios.get('/api/retrieveRoomInfo', { params: { roomId: this.state.roomId } })
@@ -122,7 +124,6 @@ class Room extends Component {
       this.socket.emit('beginLoadingRepoContents', { repoName: this.state.repoName, username: this.state.user.login, roomId: this.state.roomId });
     }
   }
-  
 
   sendNewMessage(newMessageText, clearInputBoxFn) {
     let newMessageObj = { text: newMessageText, user: this.state.user, roomId: this.state.roomId, createTime: new Date() };
@@ -197,15 +198,17 @@ class Room extends Component {
           <div className="wrapper">
             {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv} miniStatus={this.state.minimizeDiv} /> : null}
             {/* USER NAVIGATION BAR */}
-
-            {!this.state.contentsLoaded &&  <div style={{ backgroundColor: '#1e1f21' }} >
-          <img src="https://i2.wp.com/merakidezain.com/wp-content/themes/snskanta/assets/img/prod_loading.gif?w=660" alt="" />
-        </div>} 
-        {this.state.contentsLoaded && <nav id="userNav" className="sidenav">
-            
-            <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} />
-          </nav>}
-          <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} />
+            {!this.state.contentsLoaded && 
+              <div style={{ backgroundColor: '#1e1f21' }} >
+                <img src="https://i2.wp.com/merakidezain.com/wp-content/themes/snskanta/assets/img/prod_loading.gif?w=660" alt="" />
+              </div>
+            } 
+            { this.state.contentsLoaded && 
+              <nav id="userNav" className="sidenav">
+                <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} />
+              </nav>
+            }
+            {/* <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} /> */}
 
             {/* MIDDLE SECTION OF DASHBOARD */}
             <div id="Editor" >
