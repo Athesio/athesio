@@ -171,7 +171,6 @@ app.get('/api/authstatus', (req, res) => {
 });
 
 app.post('/api/saveroom', (req, res) => {
-  console.log(req.body);
   db.saveRoomInfoForUser(req.body, (err, results) => {
     if (err) {
       console.log('Error saving room info to DB: ', err);
