@@ -232,15 +232,14 @@ app.get('/api/github/repos', (req, res) => {
 
   request.get( { url:  url, qs: query, json:true, headers: { 'User-Agent': 'athesio' } }, (err, _, body) => {
     body.forEach(repo => {
-      let { name, html_url, git_url, description, language } = repo;
+      let { name, html_url, git_url, description, language, contents_url } = repo;
       if (language && language.toLowerCase() === 'javascript') {
         description = description === null ? '' : description;
-        let repoObj = { name: name, url: html_url, git_url: git_url, description: description, language: language };
+        let repoObj = { name: name, url: html_url, git_url: git_url, contents_url: contents_url, description: description, language: language };
         users[user]['repos'][name] = repoObj;
         repos.push(repoObj);
       }
     });
-
     res.send(repos);
   });
 });
@@ -261,7 +260,8 @@ app.get('/api/openRepo', (req, res) => {
         roomInfo[roomId].workspace['fileContents'][file] = {
           loaded: false,
           contents: '',
-          refId: null
+          refId: null,
+          updated: false
         }
       });
 
@@ -272,13 +272,51 @@ app.get('/api/openRepo', (req, res) => {
 
 app.get('/api/openFile', (req, res) => {
   let { filePath, roomId } = req.query;
-  res.send({ contents: roomInfo[roomId].workspace['fileContents'][filePath]['contents'], refId: roomInfo[roomId].workspace['fileContents'][filePath]['refId'] });
+  let file = roomInfo[roomId].workspace['fileContents'][filePath];
+  res.send({ contents: file.contents, refId: file.refId });
+});
+
+app.post('/api/updateFileContents', (req, res) => {
+  let { roomId, filePath, newContents } = req.body;
+  let file = roomInfo[roomId].workspace['fileContents'][filePath];
+
+  if (file.contents !== newContents) {
+    file.contents = newContents;
+    file.updated = true;
+  }
+
+  res.send('contents updated').status(200);
+});
+
+// TODO: test this updating endpoint
+app.post('/api/saveUpdatedRepoContents', (req, res) => {
+  let { username, commitMessage, roomId, repoName } = req.body;
+  let userGithubAccessToken = users[username].accessToken;
+  let repoFileArray = roomInfo[roomId].workspace['fileArray'];
+  let repoObj = users[user].repos[repoName];
+  let updatedFiles = {};
+
+  repoFileArray.forEach(file => {
+    let currFile = roomInfo[roomId].workspace['fileContents'][file];
+    if (currFile.updated) {
+      updatedFiles[file] = {
+        contents: currFile.contents,
+        filePath: file
+      }
+    }
+  });
+
+  axios.post('/api/github/repo/update', { updatedFiles: updatedFiles, repo: repoObj, username: username, commitMessage: commitMessage, accessToken: userGithubAccessToken })
+    .then(result => {
+      console.log(result);
+      res.send('repo updated successfully').status(200);
+    })
+    .catch(console.log);
 });
 
 app.post('/api/saveNewGist', (req, res) => {
   let { description, fileName, content, username } = req.body;
   let userGithubAccessToken = users[username].accessToken;
-  console.log(req.body);
   axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/gists/create`, { accessToken: userGithubAccessToken, description: description, fileName: fileName, content: content })
     .then(results => {
       res.sendStatus(200);
