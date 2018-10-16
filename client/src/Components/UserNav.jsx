@@ -42,8 +42,6 @@ function repoStructureTrimmer (obj){
 
 const dataFormatter = (repoStructure) =>{
 
-  console.log(repoStructure);
-
   let helper = function(obj){
     const result = []; 
     const keys = Object.keys(obj);
