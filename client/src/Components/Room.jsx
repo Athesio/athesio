@@ -19,6 +19,7 @@ class Room extends Component {
       user: {},
       roomUsers: [],
       loading: true,
+      contentsLoaded: false, 
       refId: null,
       code: "hello world",
       showChatDiv: false,
@@ -56,6 +57,13 @@ class Room extends Component {
       console.log('code updated');
       this.setState({ code: code });
     });
+
+    this.socket.on('contentsUpdated', ()=>{
+      console.log('contents have been updated');
+      this.setState({contentsLoaded: true});
+    })
+
+
 
     // this.closeRightNav = this.closeRightNav.bind(this);
     // this.openRightNav = this.openRightNav.bind(this);
@@ -163,9 +171,15 @@ class Room extends Component {
           <div className="wrapper">
             {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv} miniStatus={this.state.minimizeDiv} /> : null}
             {/* USER NAVIGATION BAR */}
-            <nav id="userNav" className="sidenav">
-              <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} />
-            </nav>
+
+            {!this.state.contentsLoaded &&  <div style={{ backgroundColor: '#1e1f21' }} >
+          <img src="https://i2.wp.com/merakidezain.com/wp-content/themes/snskanta/assets/img/prod_loading.gif?w=660" alt="" />
+        </div>} 
+        {this.state.contentsLoaded && <nav id="userNav" className="sidenav">
+            
+            <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} />
+          </nav>}
+          <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} />
 
             {/* MIDDLE SECTION OF DASHBOARD */}
             <div id="Editor" >
