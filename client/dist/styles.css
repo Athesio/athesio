@@ -451,7 +451,13 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
 
 #LogoutBtn {
   bottom: 0;
+  padding: 0px;
   cursor: pointer;
+}
+
+#shareSession {
+  padding: 0px;
+  margin-top: 10px;
 }
 
 #iconBar {
