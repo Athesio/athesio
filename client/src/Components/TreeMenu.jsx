@@ -10,7 +10,7 @@ class TreeMenu extends Component {
         super(props);
         this.state = {
           active: {module: 'test', collapsed: false, leaf: true},
-          tree: null
+          tree: this.props.data
         }
         this.renderNode = this.renderNode.bind(this);
         this.onClickNode = this.onClickNode.bind(this);
@@ -19,7 +19,7 @@ class TreeMenu extends Component {
     componentDidMount() {
         // console.log('something from treemenu');
         // console.log(this.props.data);
-        this.setState({tree: this.props.data});
+        //this.setState({tree: this.props.data});
     }
 
     renderNode(node) {
