@@ -303,12 +303,14 @@ app.post('/api/saveUpdatedRepoContents', (req, res) => {
         fileName: file
       }
     }
-
   });
 
   axios.post('/api/github/updateRepo', { updatedFiles: updatedFiles, repoName: repoName, username: username, commitMessage: commitMessage })
-    .then(result => console.log(result))
-    .catch(console.log)
+    .then(result => {
+      console.log(result);
+      res.send('repo updated successfully').status(200);
+    })
+    .catch(console.log);
 });
 
 app.post('/api/saveNewGist', (req, res) => {
