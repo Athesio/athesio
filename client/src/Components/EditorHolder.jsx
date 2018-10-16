@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Firepad from './Firepad.jsx';
 import otherUsers from '../../fakeOtherUsers.js';
+import { Button } from 'reactstrap';
+
 
 
 const EditorHolder = (props) => {
@@ -9,8 +11,9 @@ const EditorHolder = (props) => {
       {/* LEFT SIDE FIREPAD */}
       <div className="col-xs-12  col-sm-6 col-md-6 col-lg-6" id="Ace" >
         <div className='editor-container'>
-          <Firepad roomId={props.roomId} refId={props.refId} runCode={props.runCode} handleSaveClick={props.handleSaveClick} />
+          <Firepad roomId={props.roomId} refId={props.refId} runCode={props.runCode} toggleGistModal={props.toggleGistModal} handleSaveClick={props.handleSaveClick} />
         </div>
+        {/* <Button type="button" onClick={props.toggleGistModal} > Create Gist </Button>         */}
       </div>
       {/* IFRAME FOR CODE EXECUTION */}
       <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6" id='res' >

@@ -171,6 +171,7 @@ app.get('/api/authstatus', (req, res) => {
 });
 
 app.post('/api/saveroom', (req, res) => {
+  console.log(req.body);
   db.saveRoomInfoForUser(req.body, (err, results) => {
     if (err) {
       console.log('Error saving room info to DB: ', err);
@@ -273,7 +274,7 @@ app.get('/api/openRepo', (req, res) => {
 app.post('/api/saveNewGist', (req, res) => {
   let { description, fileName, content, username } = req.body;
   let userGithubAccessToken = users[username].accessToken;
-
+  console.log(req.body);
   axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/gists/create`, { accessToken: userGithubAccessToken, description: description, fileName: fileName, content: content })
     .then(results => {
       res.sendStatus(200);

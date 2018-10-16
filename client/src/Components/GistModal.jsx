@@ -13,7 +13,6 @@ class GistModal extends React.Component {
   }
 
   updateField(e) {
-    console.log(e.target.name);
     this.setState({ [`${e.target.name}`]: e.target.value });
   }
 
@@ -28,7 +27,7 @@ class GistModal extends React.Component {
           </ModalBody>
           <ModalFooter>
             <Button onClick={() => this.props.saveGist(this.state.gistName, this.state.gistDescription)} >Create</Button>
-            <Button onClick={this.props.toggle} >Cancel</Button>
+            <Button onClick={() => this.props.toggle('')} >Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>

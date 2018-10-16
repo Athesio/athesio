@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Button } from 'reactstrap';
+
 
 class Firepad extends Component {
   constructor(props) {
@@ -48,8 +50,11 @@ class Firepad extends Component {
         <div id='firepad-container'>
         </div>
         <div className="row" >
-        <div className="col-md-10 col-lg-10" id='runBtn' >
-          <button type="button" 
+        <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10" id='runBtn' >
+          <Button type="button" onClick={() => this.props.toggleGistModal(this.state.code)} > Create Gist </Button>
+          <Button type="button" onClick={this.props.handleSaveClick}>Save Code</Button> 
+        </div>
+          <Button type="button" color="success"
             onClick={() => {
               axios.post('/api/run-code', { data: this.state.code })
                 .then((response) => {
@@ -58,10 +63,7 @@ class Firepad extends Component {
                   this.props.runCode(response.data);
                 }
               )}
-            }>Run</button>
-        </div>
-
-        <button type="button" onClick={this.props.handleSaveClick}>Save</button> 
+            }>Run</Button>
       </div>
       </div>
     );
