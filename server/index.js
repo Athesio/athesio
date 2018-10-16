@@ -326,11 +326,11 @@ app.get('/api/github/gists', (req, res) => {
 
 app.post('/api/updateFileContents', (req, res) => {
   let { roomId, filePath, newContents } = req.body;
-  let currentContents = roomInfo[roomId].workspace['fileContents'][filePath];
+  let file = roomInfo[roomId].workspace['fileContents'][filePath];
 
-  if (currentContents !== newContents) {
-    roomInfo[roomId].workspace['fileContents'][filePath]['contents'] = newContents;
-    roomInfo[roomId].workspace['fileContents'][filePath]['updated'] = true;
+  if (file.contents !== newContents) {
+    file.contents = newContents;
+    file.updated = true;
   }
 
   res.send('contents updated').status(200);
