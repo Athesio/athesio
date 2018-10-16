@@ -3,6 +3,7 @@ import NavComponents from './NavComponents.jsx';
 import { Button } from 'reactstrap';
 
 
+
 const originalContent=[
   {
       icon: 'fas fa-folder',
@@ -42,31 +43,33 @@ function repoStructureTrimmer (obj){
 
 
 
+
 const dataFormatter = (repoStructure) =>{
-
-  let helper = function(obj){
-    const result = []; 
-    const keys = Object.keys(obj);
-    for(var i = 0; i < keys.length; i++){
-      const content = {}; 
-      content.label = keys[i];
-      content.to = "#";
-      
-    if(typeof obj[keys[i]] ==="string"){
-      content.icon = "fas fa-file"
-      result.push(content);
-    } else {
-      content.icon = "fas fa-folder"
-      content.content = helper(obj[keys[i]]); 
-      result.push(content);
-    }
-  }
-  return result; 
-  }
-
-  return JSON.parse(JSON.stringify(helper(repoStructure)))
-
+  const fileProcess = (k, v) => {
+    const result = {};
+    result.module = k;
+    result.path = v;
+    result.leaf = true;
+    return result;
 }
+const folderProcess = (k, v) => {
+    const result = {};
+    result.module = k;
+    result.children = [];
+    for (let key in v) {
+        if (typeof v[key] === 'string') {
+            result.children.push(fileProcess(key, v[key]))
+        } else {
+            result.children.push(folderProcess(key, v[key]));
+        }
+    }
+    return result;
+}
+const repoRoot = Object.keys(repoStructure)[0];
+const raw =folderProcess(repoRoot, repoStructure[repoRoot]);
+return raw;
+}
+
 
 
 

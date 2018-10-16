@@ -1,15 +1,19 @@
 import React from 'react';
 import GithubNav from './NavBarComponents/GithubNav.jsx';
 import SlackNav from './NavBarComponents/SlackNav.jsx';
+import TreeMenu from './TreeMenu.jsx';
+
+
 import MetisMenu from 'react-metismenu';
 
 const NavComponents = (props) => {
+  console.log(props.content);
   if (props.tab === 'Home') {
     return (
       <div id="HomeNav" >
           <h3 className="text-center" > Workspace </h3>
           <div className="fileBox text-center"  >
-          <MetisMenu content={props.content}/>
+          < TreeMenu data={props.content}/>
           </div>
       </div>
     )

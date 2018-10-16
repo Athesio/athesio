@@ -244,6 +244,8 @@ app.get('/api/github/repos', (req, res) => {
   });
 });
 
+let url ='http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000'
+
 app.get('/api/openRepo', (req, res) => {
   let { username, repoName, roomId } = req.query;
   let git_url = users[username]['repos'][repoName].git_url;
@@ -328,6 +330,8 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
 
+let localurl = 'http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000'
+
 const loadFileContents = (repoName, username, roomId) => {
   let repoFileArray = roomInfo[roomId].workspace['fileArray'];
 
@@ -342,7 +346,7 @@ const loadFileContents = (repoName, username, roomId) => {
             roomInfo[roomId].workspace['fileContents'][file]['refId'] = refId.data
           });
       })
-      .catch(console.log);
+      .catch();
   });
 };
 
@@ -378,6 +382,11 @@ nsp.on('connection', (socket) => {
   })
   socket.on('beginLoadingRepoContents', ({ repoName, username, roomId }) => {
     loadFileContents(repoName, username, roomId);
+    console.log(typeof roomId);
+    setTimeout(()=>{socket.emit('contentsUpdated')},2000);
+    // every time user clicks on a file to open, will only serve back file and ref id if loaded
+    //  if file not loaded, set front-end fileLoading flag to true (will render loading icon on top of file structure)
+    //    and also send HTTP request to server asking for the contents once done loading
   });
 
   socket.on('updateRoomUsers', (roomId) => {
