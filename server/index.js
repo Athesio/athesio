@@ -244,8 +244,6 @@ app.get('/api/github/repos', (req, res) => {
   });
 });
 
-let url ='http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000'
-
 app.get('/api/openRepo', (req, res) => {
   let { username, repoName, roomId } = req.query;
   let git_url = users[username]['repos'][repoName].git_url;
