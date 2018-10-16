@@ -270,6 +270,11 @@ app.get('/api/openRepo', (req, res) => {
     .catch(console.log);
 });
 
+app.get('/api/openFile', (req, res) => {
+  let { filePath, roomId } = req.query;
+  res.send({ contents: roomInfo[roomId].workspace['fileContents'][filePath]['contents'], refId: roomInfo[roomId].workspace['fileContents'][filePath]['refId'] });
+});
+
 app.post('/api/saveNewGist', (req, res) => {
   let { description, fileName, content, username } = req.body;
   let userGithubAccessToken = users[username].accessToken;
