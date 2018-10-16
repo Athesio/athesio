@@ -340,7 +340,6 @@ const loadFileContents = (repoName, username, roomId) => {
             roomInfo[roomId].workspace['fileContents'][file]['contents'] = data;
             roomInfo[roomId].workspace['fileContents'][file]['loaded'] = true;
             roomInfo[roomId].workspace['fileContents'][file]['refId'] = refId.data
-            roomInfo[roomId].workspace['fileContents'][file]['updated'] = true;
           });
       })
       .catch(console.log);
