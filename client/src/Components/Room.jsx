@@ -195,15 +195,6 @@ class Room extends Component {
           <div className="wrapper">
             {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv} miniStatus={this.state.minimizeDiv} /> : null}
             {/* USER NAVIGATION BAR */}
-            {/* {!this.state.contentsLoaded && 
-              <div style={{ backgroundColor: '#1e1f21' }} >
-                <img src="https://i2.wp.com/merakidezain.com/wp-content/themes/snskanta/assets/img/prod_loading.gif?w=660" alt="" />
-              </div>
-            } 
-            { this.state.contentsLoaded && 
-              
-            } */}
-            {/* <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} /> */}
             <nav id="userNav" className="sidenav">
               <UserNav user={this.state.user} logout={this.logout} contentLoaded={this.state.contentsLoaded} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} />
             </nav>
