@@ -272,7 +272,7 @@ app.get('/api/openRepo', (req, res) => {
 
 app.get('/api/openFile', (req, res) => {
   let { filePath, roomId } = req.query;
-  res.send(roomInfo[roomId].workspace['fileContents'][filePath]);
+  res.send({ contents: roomInfo[roomId].workspace['fileContents'][filePath]['contents'], refId: roomInfo[roomId].workspace['fileContents'][filePath]['refId'] });
 });
 
 app.post('/api/saveNewGist', (req, res) => {
