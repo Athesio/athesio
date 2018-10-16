@@ -3,20 +3,20 @@ import GithubNav from './NavBarComponents/GithubNav.jsx';
 import SlackNav from './NavBarComponents/SlackNav.jsx';
 import TreeMenu from './TreeMenu.jsx';
 
-
-import MetisMenu from 'react-metismenu';
-
 const NavComponents = (props) => {
-  console.log(props.content);
   if (props.tab === 'Home') {
-    return (
+    return props.contentLoaded ? (
       <div id="HomeNav" >
-          <h3 className="text-center" > Workspace </h3>
-          <div className="fileBox text-center"  >
-          < TreeMenu data={props.content}/>
-          </div>
+        <h3 className="text-center" > Workspace </h3>
+        <div className="fileBox"  >
+          <TreeMenu data={props.content} />
+        </div>
       </div>
-    )
+    ) : (
+        <div className="fileBox" style={{ backgroundColor: '#1e1f21' }} >
+          <img src="https://i2.wp.com/merakidezain.com/wp-content/themes/snskanta/assets/img/prod_loading.gif?w=660" alt="" />
+        </div>
+    );
   } else if (props.tab === 'Github') {
     return <GithubNav/>
   } else if (props.tab === 'Slack') {

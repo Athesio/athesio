@@ -244,8 +244,6 @@ app.get('/api/github/repos', (req, res) => {
   });
 });
 
-let url ='http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000'
-
 app.get('/api/openRepo', (req, res) => {
   let { username, repoName, roomId } = req.query;
   let git_url = users[username]['repos'][repoName].git_url;
@@ -290,7 +288,7 @@ app.post('/api/updateFileContents', (req, res) => {
   res.send('contents updated').status(200);
 });
 
-// TODO: test this updating endpoint
+  // TODO: test this updating endpoint
 app.post('/api/saveUpdatedRepoContents', (req, res) => {
   let { username, commitMessage, roomId, repoName } = req.body;
   let userGithubAccessToken = users[username].accessToken;
@@ -330,8 +328,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
 
-let localurl = 'http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000'
-
 const loadFileContents = (repoName, username, roomId) => {
   let repoFileArray = roomInfo[roomId].workspace['fileArray'];
 
@@ -346,7 +342,7 @@ const loadFileContents = (repoName, username, roomId) => {
             roomInfo[roomId].workspace['fileContents'][file]['refId'] = refId.data
           });
       })
-      .catch();
+      .catch(console.log);
   });
 };
 
@@ -354,7 +350,7 @@ let nsp = io.of('/athesio');
 nsp.on('connection', (socket) => {
   socket.on('room', (room) => {
     socket.join(room);
-    // if(roomInfo[room] !== undefined){
+    // if(roomInfo[room] !== undefined) {
     //   if (Object.keys(roomInfo[room]['users']).length > 1) {
     //     console.log(roomInfo[room].users);
     //     socket.broadcast.emit('sendUpdateOnRoom', roomInfo[room].users);
@@ -382,7 +378,6 @@ nsp.on('connection', (socket) => {
   })
   socket.on('beginLoadingRepoContents', ({ repoName, username, roomId }) => {
     loadFileContents(repoName, username, roomId);
-    console.log(typeof roomId);
     setTimeout(()=>{socket.emit('contentsUpdated')},2000);
     // every time user clicks on a file to open, will only serve back file and ref id if loaded
     //  if file not loaded, set front-end fileLoading flag to true (will render loading icon on top of file structure)
@@ -395,7 +390,6 @@ nsp.on('connection', (socket) => {
     socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
   });
   socket.on('updateRoomUsers', (roomId) => {
-    // console.log(roomInfo[roomId]['users']);
     let roomUsers = [];
     Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
     socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
