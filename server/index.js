@@ -348,12 +348,12 @@ app.post('/api/saveUpdatedRepoContents', (req, res) => {
     if (currFile.updated) {
       updatedFiles[file] = {
         contents: currFile.contents,
-        fileName: file
+        filePath: file
       }
     }
   });
 
-  axios.post('/api/github/updateRepo', { updatedFiles: updatedFiles, repoName: repoName, username: username, commitMessage: commitMessage, accessToken: userGithubAccessToken })
+  axios.post('/api/github/repo/update', { updatedFiles: updatedFiles, repoName: repoName, username: username, commitMessage: commitMessage, accessToken: userGithubAccessToken })
     .then(result => {
       console.log(result);
       res.send('repo updated successfully').status(200);
