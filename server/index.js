@@ -273,7 +273,8 @@ app.get('/api/openRepo', (req, res) => {
 
 app.get('/api/openFile', (req, res) => {
   let { filePath, roomId } = req.query;
-  res.send({ contents: roomInfo[roomId].workspace['fileContents'][filePath]['contents'], refId: roomInfo[roomId].workspace['fileContents'][filePath]['refId'] });
+  let file = roomInfo[roomId].workspace['fileContents'][filePath];
+  res.send({ contents: file.contents, refId: file.refId });
 });
 
 app.post('/api/updateFileContents', (req, res) => {
