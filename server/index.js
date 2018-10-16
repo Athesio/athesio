@@ -242,7 +242,7 @@ app.get('/api/github/repos', (req, res) => {
     });
     res.send(repos);
   });
-});gi
+});
 
 app.get('/api/openRepo', (req, res) => {
   let { username, repoName, roomId } = req.query;

@@ -65,7 +65,6 @@ class Room extends Component {
     });
 
     this.socket.on('contentsUpdated', () => {
-      console.log('contents have been updated');
       this.setState({ contentsLoaded: true });
     })
 
@@ -91,8 +90,6 @@ class Room extends Component {
   }
 
   componentDidMount() {
-    console.log('contentsLoaded: ', this.state.contentsLoaded)
-    console.log('url: ', window.location.pathname.split('/'));
     axios.post('/api/enterroom', { roomId: this.state.roomId })
       .then(data => {
         axios.get('/api/retrieveRoomInfo', { params: { roomId: this.state.roomId } })
