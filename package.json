@@ -45,6 +45,7 @@
     "react-metismenu": "^1.4.0",
     "react-router-dom": "^4.3.1",
     "react-sketch": "^0.4.4",
+    "reactstrap": "^6.5.0",
     "request": "^2.88.0",
     "semantic-ui-react": "^0.82.5",
     "socket.io": "^2.1.1",

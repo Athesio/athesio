@@ -278,7 +278,7 @@ app.get('/api/openFile', (req, res) => {
 app.post('/api/saveNewGist', (req, res) => {
   let { description, fileName, content, username } = req.body;
   let userGithubAccessToken = users[username].accessToken;
-
+  console.log(req.body);
   axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/gists/create`, { accessToken: userGithubAccessToken, description: description, fileName: fileName, content: content })
     .then(results => {
       res.sendStatus(200);
@@ -312,6 +312,12 @@ let nsp = io.of('/athesio');
 nsp.on('connection', (socket) => {
   socket.on('room', (room) => {
     socket.join(room);
+    // if(roomInfo[room] !== undefined){
+    //   if (Object.keys(roomInfo[room]['users']).length > 1) {
+    //     console.log(roomInfo[room].users);
+    //     socket.broadcast.emit('sendUpdateOnRoom', roomInfo[room].users);
+    //   }
+    // }
   });
 
   socket.on('retrieveChatHistory', (room) => {
@@ -341,6 +347,13 @@ nsp.on('connection', (socket) => {
     Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
     socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
   });
+  socket.on('updateRoomUsers', (roomId) => {
+    // console.log(roomInfo[roomId]['users']);
+    let roomUsers = [];
+    Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
+    socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
+  });
+
 
   socket.on('disconnect', () => console.log('disconnecting client'));
 });

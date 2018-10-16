@@ -5,7 +5,11 @@ import io from "socket.io-client";
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import FloatingChatDiv from './FloatingChatDiv.jsx';
+import GistModal from './GistModal.jsx';
 import querystring from 'querystring';
+import { Button } from 'reactstrap';
+
+
 
 class Room extends Component {
   constructor(props) {
@@ -26,7 +30,9 @@ class Room extends Component {
       messages: [],
       repoName: roomPath.length === 4 ? roomPath[2] : '',
       githubMode: false,
-      repoFileStructure: {}
+      repoFileStructure: {},
+      showGistModal: false,
+      gistContent: '' 
     }
 
     this.socket = io('/athesio').connect();
@@ -60,7 +66,6 @@ class Room extends Component {
     this.socket.on('sendUpdatedRoomInfo', (roomUsers) => {
       let otherUsers = [];
       otherUsers.concat(roomUsers);
-      console.log(roomUsers);
       this.setState({ roomUsers: roomUsers });
     })
 
@@ -75,6 +80,8 @@ class Room extends Component {
     this.minimizeFloatingDiv = this.minimizeFloatingDiv.bind(this);
     this.startRepoContentLoading = this.startRepoContentLoading.bind(this);
     this.openRepo = this.openRepo.bind(this);
+    this.toggleGistModal = this.toggleGistModal.bind(this);
+    this.saveGistData = this.saveGistData.bind(this);
   }
 
   componentDidMount() {
@@ -140,8 +147,21 @@ class Room extends Component {
   //   document.getElementById("Editor").style.marginRight = "0";
   // }
 
+  toggleGistModal(gistContent) {
+    // let newState = !this.state.showGistModal;
+    this.setState({ showGistModal: !this.state.showGistModal });
+    this.setState({ gistContent: gistContent });
+  }
+
+  saveGistData(gistName, gistDescription) {
+    axios.post('/api/saveNewGist', { username: this.state.user.login, fileName: gistName, description: gistDescription, content: this.state.gistContent })
+      .then(() => this.setState({ showGistModal: !(this.state.showGistModal) }));
+
+  }
+  
+
   handleSaveClick() {
-    axios.post('/api/saveroom', { username: this.state.user.login, roomId: this.state.roomId, ref: this.state.refId })
+    axios.post('/api/saveroom', { user: this.state.user, roomId: this.state.roomId, ref: this.state.refId })
       .then(result => console.log(result));
   }
 
@@ -200,14 +220,19 @@ class Room extends Component {
                 </div>
 
                 <div className="col-xs-11 col-md-11 col-lg-11" id="main" >
+
                   {/* NAME OF THE APPLICATION/ TOP NAVBAR AREA */}
-                  <div className="row" style={{ paddingTop: '5px' }} >
-                    <div className="col-xs-4 col-md-4 col-lg-4"  >
-                      <p className="text-center" >
-                        <a style={{ color: '#ffffff' }} >Share room: {this.state.roomId}</a>
-                      </p>
-                    </div>
-                    <div className="col-xs-8 col-md-8 col-lg-8" id="userDiv" >
+                  <div>
+                  { this.state.showGistModal === true ? <GistModal saveGist={this.saveGistData} status={this.state.showGistModal} toggle={this.toggleGistModal} /> : null }
+                  {/* <div className="row" style={{ paddingTop: '5px' }} > */}
+                    {/* <div className="col-xs-4 col-md-4 col-lg-4"  > */}
+                      {/* <p className="text-center" > */}
+                      {/* </p> */}
+                    {/* </div> */}
+
+                    <div id="userDiv" >
+                    <a style={{ color: '#ffffff', marginTop: '5px', marginLeft: '5px' }} >Share room: {this.state.roomId}</a>
+                    {/* <Button type="button" onClick={this.toggleGistModal} > Create Gist </Button>  */}
                       {this.state.roomUsers.map((user, i) => {
                         if (this.state.user.login !== user.username) {
                           return (
@@ -223,7 +248,16 @@ class Room extends Component {
 
                   {/* HOLDS BOTH THE FIREPAD AND THE IFRAME */}
                   <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="navBtm" style={{ paddingLeft: '0px' }} >
-                    <EditorHolder roomId={this.state.roomId} user={this.state.user} allUsers={this.state.roomUsers} refId={this.state.refId} code={this.state.code} runCode={this.runCode} handleSaveClick={this.handleSaveClick} />
+                    <EditorHolder 
+                      roomId={this.state.roomId} 
+                      user={this.state.user} 
+                      allUsers={this.state.roomUsers} 
+                      refId={this.state.refId} 
+                      code={this.state.code} 
+                      runCode={this.runCode} 
+                      handleSaveClick={this.handleSaveClick} 
+                      toggleGistModal={this.toggleGistModal}
+                    />
                   </div>
                 </div>
               </div>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Session from './Session.jsx';
+import { Button } from 'reactstrap';
+
 
 class SelectRoom extends Component {
   constructor(props) {
@@ -95,25 +97,25 @@ class SelectRoom extends Component {
         return (
           <div id="Morpheus" >
             <div id="GithubMode">
-              {/* <div className="dropdown"  >
-                <button className="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+              <div className="dropdown"  >
+                <Button className="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                   Repos
-                </button>
+                </Button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton" >
                   {
                     this.state.repos.map((repo, i) => {
-                      return <a className="dropdown-item" key={i} onClick={()=>{this.startGithubSession(repo.name, repo.git_url)}} >{repo.name}</a>
+                      return <a className="dropdown-item" key={i} onClick={()=>{ this.setState({ selectedRepo: repo.name }, () => { this.createNewRoom() })}} >{repo.name}</a>
                     })
                   }
-                </div> */}
-                <ul>
+                </div>
+                {/* <ul>
                 {
                     this.state.repos.map((repo, i) => {
                       return <li className="dropdown-item" key={i} onClick={()=>{ this.setState({ selectedRepo: repo.name }, () => { this.createNewRoom() })}} >{repo.name}</li>
                     })
                   }
-                </ul> 
-              {/* </div> */}
+                </ul>  */}
+              </div>
             </div>
             <div id="SelectRoom" >
               <div className="container-fluid" id="SelectRoomBox" >
@@ -123,7 +125,7 @@ class SelectRoom extends Component {
                     <form role="form" >
                       <div className="form-group" >
                         <label htmlFor="NewEditor">Open New Editor</label><br />
-                        <button className="btn" onClick={() => this.createNewRoom()} type="button" >New Editor</button>
+                        <Button className="btn" onClick={() => this.createNewRoom()} type="button" >New Editor</Button>
                       </div>
                       <div className="form-group" style={{ marginLeft: '10px', marginRight: '10px' }} >
                         <a className="text-center" >Join a Room </a><br />
@@ -131,11 +133,11 @@ class SelectRoom extends Component {
                           <input type="text" className="form-control" placeholder="Room Key" value={this.state.value} onChange={(e) => { this.setState({ value: e.target.value }) }}></input>
 
                           <span className="input-group-btn">
-                            <button
+                            <Button
                               className="btn"
                               type="button"
                               onClick={this.joinRoomIfValid}
-                            >JOIN</button>
+                            >JOIN</Button>
                           </span>
                         </div>
                       </div>
