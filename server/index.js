@@ -288,6 +288,17 @@ app.post('/api/updateFileContents', (req, res) => {
   res.send('contents updated').status(200);
 });
 
+app.get('/api/github/gists', (req, res) => {
+  let { username } = req.query;
+  let userGithubAccessToken = users[username].accessToken;
+
+  axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/gists/get`, { username: username, accessToken: userGithubAccessToken })
+    .then(gists => {
+      res.send(gists.data);
+    })
+    .catch(console.log);
+});
+
 // TODO: test this updating endpoint
 app.post('/api/saveUpdatedRepoContents', (req, res) => {
   let { username, commitMessage, roomId, repoName } = req.body;
