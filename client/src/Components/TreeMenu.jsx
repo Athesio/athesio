@@ -40,7 +40,9 @@ class TreeMenu extends Component{
       onClickNode(node){
         this.setState({
           active: node
-        }, ()=>{ console.log(this.state);})
+        }, ()=>{
+        this.props.handleFileClick(this.state.active.path);
+        })
       };
     
 

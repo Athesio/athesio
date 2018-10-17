@@ -33,7 +33,8 @@ class Room extends Component {
       githubMode: false,
       repoFileStructure: {},
       showGistModal: false,
-      gistContent: '' 
+      gistContent: '',
+      repoFirepadCode: '' 
     }
 
     this.socket = io('/athesio').connect();
@@ -90,6 +91,7 @@ class Room extends Component {
     this.openRepo = this.openRepo.bind(this);
     this.toggleGistModal = this.toggleGistModal.bind(this);
     this.saveGistData = this.saveGistData.bind(this);
+    this.handleFileClick = this.handleFileClick.bind(this);
   }
 
   componentDidMount() {
@@ -187,6 +189,13 @@ class Room extends Component {
     this.setState({ minimizeDiv: !(this.state.minimizeDiv) });
   }
 
+  handleFileClick(path){
+    axios.get(`/api/openFile?filePath=${path}&roomId=${this.state.roomId}`).then((data)=>{
+      console.log(data)
+      this.setState({refId: data.data.refId, repoFirepadCode: data.data.contents});
+    })
+  }
+
   render() {
     if (this.state.loading) {
       return (
@@ -205,7 +214,7 @@ class Room extends Component {
         </div>} 
         {this.state.contentsLoaded && <nav id="userNav" className="sidenav">
             
-            <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} />
+            <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} handleFileClick ={this.handleFileClick} />
           </nav>}
           <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} />
 
@@ -268,6 +277,7 @@ class Room extends Component {
                       allUsers={this.state.roomUsers} 
                       refId={this.state.refId} 
                       code={this.state.code} 
+                      repoFirepadCode={this.state.repoFirepadCode}
                       runCode={this.runCode} 
                       handleSaveClick={this.handleSaveClick} 
                       toggleGistModal={this.toggleGistModal}

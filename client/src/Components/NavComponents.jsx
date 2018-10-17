@@ -13,7 +13,7 @@ const NavComponents = (props) => {
       <div id="HomeNav" >
           <h3 className="text-center" > Workspace </h3>
           <div className="fileBox text-center"  >
-          < TreeMenu data={props.content}/>
+          < TreeMenu data={props.content} handleFileClick={props.handleFileClick}/>
           </div>
       </div>
     )

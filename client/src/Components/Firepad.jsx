@@ -9,8 +9,12 @@ class Firepad extends Component {
     this.state = {
       roomId: this.props.roomId,
       refId: this.props.refId,
-      code: ""
+      code: "",
+      firepad: '',
+      repoFirepadCode: this.props.repoFirepadCode
     };
+
+    this.fireSetter = this.fireSetter.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +46,16 @@ class Firepad extends Component {
       this.setState({code: firepad.getText()});
       //console.log(firepad.getText());
     });
+
+    this.setState({firepad: firepad});
+
+    //this.state.firepad.setText(this.state.repoFirepadCode);
+
+
+  }
+
+  fireSetter(text){
+    this.state.firepad.setText(this.props.repoFirepadCode);
   }
 
   render() {
@@ -64,6 +78,7 @@ class Firepad extends Component {
                 }
               )}
             }>Run Code</Button>
+            <button onClick={()=> {this.fireSetter()}}> Set me on Fire!! </button>
       </div>
       </div>
     );

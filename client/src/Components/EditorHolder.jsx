@@ -11,7 +11,7 @@ const EditorHolder = (props) => {
       {/* LEFT SIDE FIREPAD */}
       <div className="col-xs-12  col-sm-6 col-md-6 col-lg-6" id="Ace" >
         <div className='editor-container'>
-          <Firepad roomId={props.roomId} refId={props.refId} runCode={props.runCode} toggleGistModal={props.toggleGistModal} handleSaveClick={props.handleSaveClick} />
+          <Firepad roomId={props.roomId} refId={props.refId} runCode={props.runCode} toggleGistModal={props.toggleGistModal} handleSaveClick={props.handleSaveClick} repoFirepadCode={props.repoFirepadCode}/>
         </div>
         {/* <Button type="button" onClick={props.toggleGistModal} > Create Gist </Button>         */}
       </div>
