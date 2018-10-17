@@ -161,7 +161,7 @@ class SelectRoom extends Component {
                   </div>
                   <div className="col-md-1" ></div>
                 </div>
-                {/* PREVIOUS SESSIONS IF EXIST */}
+                PREVIOUS SESSIONS IF EXIST
                 {
                   this.state.previousSessions.length > 0 ?
                     <div className="row" >
