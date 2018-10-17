@@ -159,7 +159,7 @@ app.post('/api/enterroom', (req, res) => {
 });
 
 app.get('/api/validateRoomId', (req, res) => {
-  roomInfo[req.query.roomId] ? res.send({ isValid: true }) : res.send({ isValid: false });
+  roomInfo[req.query.roomId] ? res.send(roomInfo[req.query.roomId].workspace['repoName']) : res.send({ isValid: false });
 });
 
 app.get('/api/authstatus', (req, res) => {
@@ -252,6 +252,7 @@ app.get('/api/openRepo', (req, res) => {
     .then(({ data }) => {
       data.fileDirectory = JSON.parse(data.fileDirectory);
       
+      roomInfo[roomId].workspace['repoName'] = repoName;
       roomInfo[roomId].workspace['fileStructure'] = data.fileDirectory['repos'][username];
       roomInfo[roomId].workspace['fileArray'] = data.fileArray;
       // store empty objects to hold file contents once loading starts
@@ -268,6 +269,11 @@ app.get('/api/openRepo', (req, res) => {
       res.send(data.fileDirectory['repos'][username]);
     })
     .catch(console.log);
+});
+
+app.get('/api/getExistingRepo', (req, res) => {
+  let { roomId } = req.query;
+  res.send(roomInfo[roomId].workspace['fileStructure']);
 });
 
 app.get('/api/openFile', (req, res) => {
