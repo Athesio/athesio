@@ -73,9 +73,13 @@ class SelectRoom extends Component {
 
   joinRoomIfValid() {
     axios.get('/api/validateRoomId', { params: { roomId: this.state.value } })
-      .then(({ data }) => {
-        if (data.isValid) {
-          this.props.history.push(`/room/${this.state.value}`);
+      .then((repoName) => {
+        if (repoName.data) { // repo name exists in roomInfo
+          if (repoName.data.length > 0) {
+            this.props.history.push(`/room/${repoName.data}/${this.state.value}`);
+          } else {
+            this.props.history.push(`/room/${this.state.value}`);
+          }
         } else {
           this.setState({
             value: ''
