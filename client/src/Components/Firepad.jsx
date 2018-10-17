@@ -44,12 +44,12 @@ class Firepad extends Component {
 
     firepad.on('synced', () => {
       this.setState({code: firepad.getText()});
-      //console.log(firepad.getText());
     });
+
 
     this.setState({firepad: firepad});
 
-    //this.state.firepad.setText(this.state.repoFirepadCode);
+    
 
 
   }
@@ -59,6 +59,9 @@ class Firepad extends Component {
   }
 
   render() {
+    if(this.props.repoFirepadCode){
+      this.fireSetter();
+    }
     return (
       <div>
         <div id='firepad-container'>
