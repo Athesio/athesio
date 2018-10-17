@@ -324,6 +324,17 @@ app.post('/api/saveUpdatedRepoContents', (req, res) => {
     .catch(console.log);
 });
 
+app.get('/api/github/gists', (req, res) => {
+  let { username } = req.query;
+  let userGithubAccessToken = users[username].accessToken;
+
+  axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/gists/get`, { username: username, accessToken: userGithubAccessToken })
+    .then(gists => {
+      res.send(gists.data).status(200);
+    })
+    .catch(console.log);
+});
+
 app.post('/api/saveNewGist', (req, res) => {
   let { description, fileName, content, username } = req.body;
   let userGithubAccessToken = users[username].accessToken;
