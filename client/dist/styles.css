@@ -811,13 +811,13 @@ tr:hover {
   font-family: Menlo;
 }
 
+.children .m-node .inner:hover {
+  cursor: pointer;
+  background-color: #31363F;
+}
+
 .m-node .node {
   display: inline-block;
   width: 100%;
   padding: 4px 5px;
-}
-
-.m-node .node:hover {
-  cursor: pointer;
-  background-color: #31363F;
 }
