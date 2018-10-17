@@ -24,6 +24,7 @@ class SelectRoom extends Component {
     this.createNewRoom = this.createNewRoom.bind(this);
     this.joinRoomIfValid = this.joinRoomIfValid.bind(this);
     this.getPreviousSessions = this.getPreviousSessions.bind(this);
+    this.retrieveUserGithubGists = this.retrieveUserGithubGists.bind(this);
 
   }
 
@@ -51,6 +52,7 @@ class SelectRoom extends Component {
       })
       .then(() => {
         this.retrieveUserGithubRepos();
+        this.retrieveUserGithubGists();
       })
   }
 
@@ -81,10 +83,13 @@ class SelectRoom extends Component {
 
   retrieveUserGithubRepos() {
     axios.get('/api/github/repos/', { params: { user: `${this.state.username}` } })
-    .then(({ data }) => { this.setState({repos : data}) });
+      .then(({ data }) => { this.setState({repos : data}) });
   }
-  
 
+  retrieveUserGithubGists() {
+    axios.get('/api/github/gists', { params: { username: `${this.state.username}` } })
+      .then(({ data }) => { this.setState({ gists: data }) });
+  }
 
   render() {
     if (this.state.loading) {
