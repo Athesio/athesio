@@ -32,7 +32,12 @@ class Room extends Component {
       githubMode: false,
       repoFileStructure: {},
       showGistModal: false,
-      gistContent: '' 
+      gistContent: '',
+      lastFile: '',
+      currentFile: '',
+      fileContent: '',
+      codeFromFirePad: '',
+      getCode: false 
     }
 
     this.socket = io('/athesio').connect();
@@ -82,6 +87,8 @@ class Room extends Component {
     this.openRepo = this.openRepo.bind(this);
     this.toggleGistModal = this.toggleGistModal.bind(this);
     this.saveGistData = this.saveGistData.bind(this);
+    this.grabCode = this.grabCode.bind(this);
+    this.openFile = this.openFile.bind(this);
   }
 
   componentDidMount() {
@@ -116,6 +123,34 @@ class Room extends Component {
       this.socket.emit('beginLoadingRepoContents', { repoName: this.state.repoName, username: this.state.user.login, roomId: this.state.roomId });
     }
   }
+
+  grabCode(firepadCode) {
+   console.log(firepadCode);
+  }
+
+  openFile(clickedFilePath) {
+    console.log('hi');
+    if(this.state.currentFile.length === 0 && this.state.lastFile.length === 0) {
+      // This means that this is the first file opened
+      console.log(clickedFilePath);
+      this.setState({ currentFile: clickedFilePath, getCode: true });
+      console.log(this.state.codeFromFirePad)
+      // request to have it opened (no need to get data from Firepad)
+      // after finished, get set the last file path to be this current file
+      // axios.get('/api/openFile', { params: { filePath: clickedFilePath, roomId: this.state.roomId }})
+      //   .then((fileInfo) => this.setState({ refId: fileInfo.refId, fileContent: fileInfo.contents, lastFile: clickedFilePath }));
+    } else {
+      // This means that the file a file has been opened before this. 
+      
+      // Get code from firepad for last File
+      
+      // Send last file's path to be compared in the server (and updated if need be)
+
+      // Send Request to get contents for clicked File 
+
+      // after successful serving of content, set state of last file to be the clickedFile's path
+    }
+  }
   
 
   sendNewMessage(newMessageText, clearInputBoxFn) {
@@ -148,7 +183,6 @@ class Room extends Component {
   // }
 
   toggleGistModal(gistContent) {
-    // let newState = !this.state.showGistModal;
     this.setState({ showGistModal: !this.state.showGistModal });
     this.setState({ gistContent: gistContent });
   }
@@ -229,8 +263,9 @@ class Room extends Component {
                       {/* <p className="text-center" > */}
                       {/* </p> */}
                     {/* </div> */}
-
+                    
                     <div id="userDiv" >
+                    <a onClick={() => this.openFile('app/client/src/index.js')}>Test</a>
                     <a style={{ color: '#ffffff', marginTop: '5px', marginLeft: '5px' }} >Share room: {this.state.roomId}</a>
                     {/* <Button type="button" onClick={this.toggleGistModal} > Create Gist </Button>  */}
                       {this.state.roomUsers.map((user, i) => {
@@ -257,6 +292,8 @@ class Room extends Component {
                       runCode={this.runCode} 
                       handleSaveClick={this.handleSaveClick} 
                       toggleGistModal={this.toggleGistModal}
+                      getCode={this.state.getCode}
+                      grabCode={this.grabCode}
                     />
                   </div>
                 </div>

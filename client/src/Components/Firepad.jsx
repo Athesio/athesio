@@ -9,8 +9,16 @@ class Firepad extends Component {
     this.state = {
       roomId: this.props.roomId,
       refId: this.props.refId,
-      code: ""
+      code: "",
+      githubCode: ''
     };
+
+    this.sendCode = this.sendCode.bind(this);
+    
+    console.log(this.props.getCode === true);
+    if(this.props.getCode === true) {
+      console.log('in constructor');
+    }
   }
 
   componentDidMount() {
@@ -42,8 +50,16 @@ class Firepad extends Component {
       this.setState({code: firepad.getText()});
       //console.log(firepad.getText());
     });
-  }
 
+    if(this.props.getCode === true) {
+      console.log('in didMount');
+    }
+  }
+  
+  sendCode() {
+    this.setState({})
+  }
+  
   render() {
     return (
       <div>
