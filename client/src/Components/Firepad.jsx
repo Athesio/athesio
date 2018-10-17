@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Button } from 'reactstrap';
+import { connect } from 'react-redux';
 
 
 class Firepad extends Component {
@@ -62,6 +63,7 @@ class Firepad extends Component {
     if(this.props.repoFirepadCode){
       this.fireSetter();
     }
+    // console.log('using redux', this.props);
     return (
       <div>
         <div id='firepad-container'>
@@ -89,4 +91,13 @@ class Firepad extends Component {
 
 };
 
+// const mapStateToProps = (state) =>{
+//   return{
+//     reduxCode: state.code
+//   }
+
+// }
+
 export default Firepad;
+
+// export default Firepad;
