@@ -3,7 +3,7 @@ import EditorHolder from './EditorHolder.jsx';
 import UserNav from './UserNav.jsx';
 import io from "socket.io-client";
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import FloatingChatDiv from './FloatingChatDiv.jsx';
 import GistModal from './GistModal.jsx';
 import querystring from 'querystring';
@@ -14,7 +14,6 @@ import { Button } from 'reactstrap';
 class Room extends Component {
   constructor(props) {
     super(props);
-
     let roomPath = window.location.pathname.split('/');
 
     this.state = {
@@ -23,7 +22,7 @@ class Room extends Component {
       user: {},
       roomUsers: [],
       loading: true,
-      contentsLoaded: false, 
+      contentsLoaded: roomPath.length === 4 ? false : true,
       refId: null,
       code: "hello world",
       showChatDiv: false,
@@ -34,7 +33,8 @@ class Room extends Component {
       repoFileStructure: {},
       showGistModal: false,
       gistContent: '',
-      repoFirepadCode: '' 
+      repoFirepadCode: '',
+      prevRef: this.props && this.props.history && this.props.history.location && this.props.history.location.state ? this.props.history.location.state.prevRef : null
     }
 
     this.socket = io('/athesio').connect();
@@ -65,12 +65,9 @@ class Room extends Component {
       this.setState({ code: code });
     });
 
-    this.socket.on('contentsUpdated', ()=>{
-      console.log('contents have been updated');
-      this.setState({contentsLoaded: true});
+    this.socket.on('contentsUpdated', () => {
+      this.setState({ contentsLoaded: true });
     })
-
-
 
     this.socket.on('sendUpdatedRoomInfo', (roomUsers) => {
       let otherUsers = [];
@@ -126,7 +123,6 @@ class Room extends Component {
       this.socket.emit('beginLoadingRepoContents', { repoName: this.state.repoName, username: this.state.user.login, roomId: this.state.roomId });
     }
   }
-  
 
   sendNewMessage(newMessageText, clearInputBoxFn) {
     let newMessageObj = { text: newMessageText, user: this.state.user, roomId: this.state.roomId, createTime: new Date() };
@@ -171,7 +167,7 @@ class Room extends Component {
   
 
   handleSaveClick() {
-    axios.post('/api/saveroom', { user: this.state.user, roomId: this.state.roomId, ref: this.state.refId })
+    axios.post('/api/saveroom', { user: this.state.user, roomId: this.state.roomId, ref: this.state.prevRef !== null ? this.state.prevRef : this.state.refId })
       .then(result => console.log(result));
   }
 
@@ -208,15 +204,9 @@ class Room extends Component {
           <div className="wrapper">
             {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv} miniStatus={this.state.minimizeDiv} /> : null}
             {/* USER NAVIGATION BAR */}
-
-            {!this.state.contentsLoaded &&  <div style={{ backgroundColor: '#1e1f21' }} >
-          <img src="https://i2.wp.com/merakidezain.com/wp-content/themes/snskanta/assets/img/prod_loading.gif?w=660" alt="" />
-        </div>} 
-        {this.state.contentsLoaded && <nav id="userNav" className="sidenav">
-            
-            <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} handleFileClick ={this.handleFileClick} />
-          </nav>}
-          <UserNav user={this.state.user} logout={this.logout} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} />
+            <nav id="userNav" className="sidenav">
+              <UserNav user={this.state.user} logout={this.logout} contentLoaded={this.state.contentsLoaded} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} handleFileClick = { this.handleFileClick } />
+            </nav>
 
             {/* MIDDLE SECTION OF DASHBOARD */}
             <div id="Editor" >
@@ -275,7 +265,7 @@ class Room extends Component {
                       roomId={this.state.roomId} 
                       user={this.state.user} 
                       allUsers={this.state.roomUsers} 
-                      refId={this.state.refId} 
+                      refId={this.state.prevRef !== null ? this.state.prevRef : this.state.refId} 
                       code={this.state.code} 
                       repoFirepadCode={this.state.repoFirepadCode}
                       runCode={this.runCode} 
@@ -299,4 +289,4 @@ class Room extends Component {
   }
 }
 
-export default Room;
+export default withRouter(Room);

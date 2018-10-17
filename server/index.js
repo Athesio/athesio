@@ -290,12 +290,22 @@ app.post('/api/updateFileContents', (req, res) => {
   res.send('contents updated').status(200);
 });
 
+app.get('/api/github/gists', (req, res) => {
+  let { username } = req.query;
+  let userGithubAccessToken = users[username].accessToken;
+
+  axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/gists/get`, { username: username, accessToken: userGithubAccessToken })
+    .then(gists => {
+      res.send(gists.data);
+    })
+    .catch(console.log);
+});
+
 // TODO: test this updating endpoint
 app.post('/api/saveUpdatedRepoContents', (req, res) => {
   let { username, commitMessage, roomId, repoName } = req.body;
   let userGithubAccessToken = users[username].accessToken;
   let repoFileArray = roomInfo[roomId].workspace['fileArray'];
-  let repoObj = users[user].repos[repoName];
   let updatedFiles = {};
 
   repoFileArray.forEach(file => {
@@ -312,6 +322,17 @@ app.post('/api/saveUpdatedRepoContents', (req, res) => {
     .then(result => {
       console.log(result);
       res.send('repo updated successfully').status(200);
+    })
+    .catch(console.log);
+});
+
+app.get('/api/github/gists', (req, res) => {
+  let { username } = req.query;
+  let userGithubAccessToken = users[username].accessToken;
+
+  axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/gists/get`, { username: username, accessToken: userGithubAccessToken })
+    .then(gists => {
+      res.send(gists.data);
     })
     .catch(console.log);
 });
@@ -354,7 +375,7 @@ let nsp = io.of('/athesio');
 nsp.on('connection', (socket) => {
   socket.on('room', (room) => {
     socket.join(room);
-    // if(roomInfo[room] !== undefined){
+    // if(roomInfo[room] !== undefined) {
     //   if (Object.keys(roomInfo[room]['users']).length > 1) {
     //     console.log(roomInfo[room].users);
     //     socket.broadcast.emit('sendUpdateOnRoom', roomInfo[room].users);
@@ -382,7 +403,6 @@ nsp.on('connection', (socket) => {
   })
   socket.on('beginLoadingRepoContents', ({ repoName, username, roomId }) => {
     loadFileContents(repoName, username, roomId);
-    console.log(typeof roomId);
     setTimeout(()=>{socket.emit('contentsUpdated')},2000);
     // every time user clicks on a file to open, will only serve back file and ref id if loaded
     //  if file not loaded, set front-end fileLoading flag to true (will render loading icon on top of file structure)
@@ -395,7 +415,6 @@ nsp.on('connection', (socket) => {
     socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
   });
   socket.on('updateRoomUsers', (roomId) => {
-    // console.log(roomInfo[roomId]['users']);
     let roomUsers = [];
     Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
     socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
