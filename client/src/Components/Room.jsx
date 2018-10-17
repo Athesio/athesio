@@ -33,6 +33,7 @@ class Room extends Component {
       repoFileStructure: {},
       showGistModal: false,
       gistContent: '',
+      repoFirepadCode: '',
       prevRef: this.props && this.props.history && this.props.history.location && this.props.history.location.state ? this.props.history.location.state.prevRef : null
     }
 
@@ -87,6 +88,7 @@ class Room extends Component {
     this.openRepo = this.openRepo.bind(this);
     this.toggleGistModal = this.toggleGistModal.bind(this);
     this.saveGistData = this.saveGistData.bind(this);
+    this.handleFileClick = this.handleFileClick.bind(this);
   }
 
   componentDidMount() {
@@ -183,6 +185,13 @@ class Room extends Component {
     this.setState({ minimizeDiv: !(this.state.minimizeDiv) });
   }
 
+  handleFileClick(path){
+    axios.get(`/api/openFile?filePath=${path}&roomId=${this.state.roomId}`).then((data)=>{
+      console.log(data)
+      this.setState({refId: data.data.refId, repoFirepadCode: data.data.contents});
+    })
+  }
+
   render() {
     if (this.state.loading) {
       return (
@@ -196,7 +205,7 @@ class Room extends Component {
             {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv} miniStatus={this.state.minimizeDiv} /> : null}
             {/* USER NAVIGATION BAR */}
             <nav id="userNav" className="sidenav">
-              <UserNav user={this.state.user} logout={this.logout} contentLoaded={this.state.contentsLoaded} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} />
+              <UserNav user={this.state.user} logout={this.logout} contentLoaded={this.state.contentsLoaded} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} handleFileClick = { this.handleFileClick } />
             </nav>
 
             {/* MIDDLE SECTION OF DASHBOARD */}
@@ -258,6 +267,7 @@ class Room extends Component {
                       allUsers={this.state.roomUsers} 
                       refId={this.state.prevRef !== null ? this.state.prevRef : this.state.refId} 
                       code={this.state.code} 
+                      repoFirepadCode={this.state.repoFirepadCode}
                       runCode={this.runCode} 
                       handleSaveClick={this.handleSaveClick} 
                       toggleGistModal={this.toggleGistModal}

@@ -7,6 +7,19 @@ import Login from './Components/Login.jsx';
 import Logout from './Components/Logout.jsx';
 import LandingPage from './Components/LandingPage.jsx';
 import ProtectedRoute from './Components/ProtectedRoute.jsx';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+const initState = {
+  code: [{refId: 'abc123', code:'console.log(`hello world`)'}]
+}
+
+const rootReducer = (state =initState, action)=>{
+return state;   
+}
+
+
+const store = createStore(rootReducer);
 
 class App extends Component {
   constructor(props) {
@@ -50,6 +63,6 @@ class App extends Component {
 }
 
 ReactDOM.render((
-<BrowserRouter>
-  <App />
+<BrowserRouter> 
+  <Provider store={store}><App /></Provider>
 </BrowserRouter>), document.getElementById('app'));

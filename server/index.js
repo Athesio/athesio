@@ -363,7 +363,7 @@ const loadFileContents = (repoName, username, roomId) => {
             roomInfo[roomId].workspace['fileContents'][file]['refId'] = refId.data
           });
       })
-      .catch(console.log);
+      .catch();
   });
 };
 
@@ -407,15 +407,10 @@ nsp.on('connection', (socket) => {
 
   socket.on('updateRoomUsers', (roomId) => {
     let roomUsers = [];
+    let roomFolderStructure = roomInfo[roomId]['fileStructure']; 
     Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
     socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
   });
-  socket.on('updateRoomUsers', (roomId) => {
-    let roomUsers = [];
-    Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
-    socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
-  });
-
 
   socket.on('disconnect', () => console.log('disconnecting client'));
 });

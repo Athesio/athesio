@@ -35,14 +35,16 @@ class TreeMenu extends Component {
         );
       };
     
-      onClickNode(node) {
+      onClickNode(node){
         this.setState({
           active: node
-        }, () => { console.log(this.state) })
+        }, ()=>{
+        this.props.handleFileClick(this.state.active.path);
+        })
       };
     
 
-    handleChange(tree) {
+    handleChange(tree){
         this.setState({
           tree: tree
         });

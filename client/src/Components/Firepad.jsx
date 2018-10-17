@@ -9,8 +9,12 @@ class Firepad extends Component {
     this.state = {
       roomId: this.props.roomId,
       refId: this.props.refId,
-      code: ""
+      code: "",
+      firepad: '',
+      repoFirepadCode: this.props.repoFirepadCode
     };
+
+    this.fireSetter = this.fireSetter.bind(this);
   }
 
   componentDidMount() {
@@ -40,11 +44,25 @@ class Firepad extends Component {
 
     firepad.on('synced', () => {
       this.setState({code: firepad.getText()});
-      //console.log(firepad.getText());
     });
+
+
+    this.setState({firepad: firepad});
+
+    
+
+
+  }
+
+  fireSetter(text){
+    this.state.firepad.setText(this.props.repoFirepadCode);
   }
 
   render() {
+    if(this.props.repoFirepadCode){
+      this.fireSetter();
+    }
+    // console.log('using redux', this.props);
     return (
       <div>
         <div id='firepad-container'>
@@ -64,6 +82,7 @@ class Firepad extends Component {
                 }
               )}
             }>Run Code</Button>
+            <button onClick={()=> {this.fireSetter()}}> Set me on Fire!! </button>
       </div>
       </div>
     );
@@ -71,4 +90,7 @@ class Firepad extends Component {
 
 };
 
+
 export default Firepad;
+
+// export default Firepad;
