@@ -856,4 +856,12 @@ tr:hover {
 
 #runCodeBtn {
   right: 0px;
+  margin-right: 0px;
+  position: absolute;
+}
+
+#githubEditorHolder {
+  margin-top:5px;
+  padding-right: 0px;
+  margin-left: 10px;
 }

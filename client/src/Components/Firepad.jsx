@@ -83,7 +83,6 @@ class Firepad extends Component {
                 }
               )}
             }>Run Code</Button>
-            <button onClick={()=> {this.fireSetter()}}> Set me on Fire!! </button>
       </div>
         }
       </div>

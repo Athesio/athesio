@@ -7,7 +7,7 @@ import { Button } from 'reactstrap';
 
 const EditorHolder = (props) => {
   return (
-    <div  style={{ paddingRight: '0px', marginleft: '10px' }} >
+    <div id="githubEditorHolder" >
 
       {props.githubMode ?
         <div id="GHAce" >
