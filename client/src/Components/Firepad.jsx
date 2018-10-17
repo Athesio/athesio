@@ -67,23 +67,25 @@ class Firepad extends Component {
       <div>
         <div id='firepad-container'>
         </div>
-        <div className="row" >
-        <div className="col-xs-9 col-sm-9 col-md-9 col-lg-9" id='runBtn'  >
-          <Button style={{ marginRight: '10px'}} type="button" size="sm" onClick={() => this.props.toggleGistModal(this.state.code)} > Create Gist </Button>
-          <Button type="button" size="sm" onClick={this.props.handleSaveClick}>Save Code</Button> 
+        {this.props.githubMode ? 
+        <div className='EditorButtonDiv' >
+          <Button type="button" size="sm" color="warning" >Save Code</Button> 
         </div>
-          <Button type="button" size="sm" color="warning"
+        :
+        <div className='EditorButtonDiv' >
+          <Button type="button" size="sm" onClick={() => this.props.toggleGistModal(this.state.code)} > Create Gist </Button>
+          <Button type="button" size="sm" onClick={this.props.handleSaveClick}>Save Code</Button> 
+          <Button type="button" size="sm" color="warning" id="runCodeBtn"
             onClick={() => {
               axios.post('/api/run-code', { data: this.state.code })
                 .then((response) => {
-                  console.log(response);
-                  console.log(typeof response);
                   this.props.runCode(response.data);
                 }
               )}
             }>Run Code</Button>
             <button onClick={()=> {this.fireSetter()}}> Set me on Fire!! </button>
       </div>
+        }
       </div>
     );
   }
