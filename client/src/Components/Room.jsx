@@ -203,7 +203,7 @@ class Room extends Component {
             {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv} miniStatus={this.state.minimizeDiv} /> : null}
             {/* USER NAVIGATION BAR */}
             <nav id="userNav" className="sidenav">
-              <UserNav user={this.state.user} logout={this.logout} contentLoaded={this.state.contentsLoaded} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} handleFileClick = { this.handleFileClick } />
+              <UserNav roomId={this.state.roomId} socket={this.socket} user={this.state.user} logout={this.logout} contentLoaded={this.state.contentsLoaded} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} handleFileClick = { this.handleFileClick } />
             </nav>
 
             {/* MIDDLE SECTION OF DASHBOARD */}
@@ -262,6 +262,7 @@ class Room extends Component {
                       handleSaveClick={this.handleSaveClick} 
                       toggleGistModal={this.toggleGistModal}
                       githubMode={this.state.githubMode}
+                      socket={this.socket}
                     />
                   </div>
                 </div>
