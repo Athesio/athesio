@@ -57,10 +57,13 @@ class Firepad extends Component {
   }
   
   sendCode() {
-    this.setState({})
+    this.setState({ githubCode: firepad.getText()});
   }
   
   render() {
+    if(this.props.getCode === true) {
+      console.log('in didMount');
+    }
     return (
       <div>
         <div id='firepad-container'>
