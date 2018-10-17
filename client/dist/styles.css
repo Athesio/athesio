@@ -790,3 +790,34 @@ tr:hover {
   cursor: pointer;
   background-color: #585b61;
 }
+
+/* folder structure styling */
+.tree {
+  /* position: fixed; */
+  /* top: 0;
+  left: 0;
+  bottom: 0; */
+  /* width: 300px; */
+  margin-left: 10px;
+  width: inherit;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* background-color: #21252B; */
+}
+
+.m-node .inner {
+  color: #9DA5B4;
+  font-size: 12px;
+  font-family: Menlo;
+}
+
+.m-node .node {
+  display: inline-block;
+  width: 100%;
+  padding: 4px 5px;
+}
+
+.m-node .node:hover {
+  cursor: pointer;
+  background-color: #31363F;
+}
