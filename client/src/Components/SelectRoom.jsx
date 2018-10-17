@@ -18,6 +18,8 @@ class SelectRoom extends Component {
       gists: [],
       username: '',
       selectedRepo: '',
+      hovered: false,
+      showData: false
     }
 
     this.createRoomId = this.createRoomId.bind(this);
@@ -107,8 +109,8 @@ class SelectRoom extends Component {
     } else {
       if (localStorage.getItem('authenticated') === 'true') {
         return (
-          <div id="Morpheus" >
-            <div id="GithubMode">
+          <div id="Morpheus"  >
+            <div id="GithubMode" className="left" >
               <div className="dropdown"  >
                 <Button className="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                   Repos
@@ -120,13 +122,6 @@ class SelectRoom extends Component {
                     })
                   }
                 </div>
-                {/* <ul>
-                {
-                    this.state.repos.map((repo, i) => {
-                      return <li className="dropdown-item" key={i} onClick={()=>{ this.setState({ selectedRepo: repo.name }, () => { this.createNewRoom() })}} >{repo.name}</li>
-                    })
-                  }
-                </ul>  */}
               </div>
             </div>
             <div id="SelectRoom" >
@@ -157,7 +152,7 @@ class SelectRoom extends Component {
                   </div>
                   <div className="col-md-1" ></div>
                 </div>
-                {/* PREVIOUS SESSIONS IF EXIST */}
+                PREVIOUS SESSIONS IF EXIST
                 {
                   this.state.previousSessions.length > 0 ?
                     <div className="row" >
