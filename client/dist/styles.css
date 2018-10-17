@@ -863,3 +863,9 @@ tr:hover {
 .send-message-container {
 
 }
+
+#githubEditorHolder {
+  margin-top:5px;
+  padding-right: 0px;
+  margin-left: 10px;
+}
