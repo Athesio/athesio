@@ -9,8 +9,8 @@ const NavComponents = (props) => {
     return props.contentLoaded ? (
       <div id="HomeNav" >
           <h3 className="text-center" > Workspace </h3>
-          <div className="fileBox text-center"  >
-          < TreeMenu data={props.content} handleFileClick={props.handleFileClick}/>
+          <div className="fileBox"  >
+          <TreeMenu roomId={props.roomId} user={props.user} socket={props.socket} data={props.content} handleFileClick={props.handleFileClick}/>
           </div>
       </div>
     ) : (

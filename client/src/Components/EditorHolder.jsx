@@ -12,11 +12,13 @@ const EditorHolder = (props) => {
       {props.githubMode ?
         <div id="GHAce" >
           <Firepad 
-            roomId={props.roomId} 
-            refId={props.refId} 
-            runCode={props.runCode} 
-            toggleGistModal={props.toggleGistModal} 
-            handleSaveClick={props.handleSaveClick} 
+            user={props.user}
+            socket={props.socket}
+            roomId={props.roomId}
+            refId={props.refId}
+            runCode={props.runCode}
+            toggleGistModal={props.toggleGistModal}
+            handleSaveClick={props.handleSaveClick}
             githubMode={props.githubMode}
             repoFirepadCode={props.repoFirepadCode}
             />          
