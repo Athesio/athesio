@@ -25,7 +25,7 @@ class SelectRoom extends Component {
     this.joinRoomIfValid = this.joinRoomIfValid.bind(this);
     this.getPreviousSessions = this.getPreviousSessions.bind(this);
     this.retrieveUserGithubGists = this.retrieveUserGithubGists.bind(this);
-
+    this.handlePreviousSessionClick = this.handlePreviousSessionClick.bind(this);
   }
 
   createRoomId(cb) {
@@ -89,6 +89,13 @@ class SelectRoom extends Component {
   retrieveUserGithubGists() {
     axios.get('/api/github/gists', { params: { username: `${this.state.username}` } })
       .then(({ data }) => { this.setState({ gists: data }) });
+  }
+
+  handlePreviousSessionClick(session) {
+    this.props.history.push({
+      pathname: `/room/${session.roomId}`,
+      state: { prevRef: session.ref }
+    });
   }
 
   render() {
@@ -170,7 +177,7 @@ class SelectRoom extends Component {
                             </thead>
                             <tbody>
                               {
-                                this.state.previousSessions.map(sessionInfo => <Session info={sessionInfo} key={sessionInfo.ref} />)
+                                this.state.previousSessions.map( (sessionInfo, i) => <Session info={sessionInfo} key={i} handleClick={this.handlePreviousSessionClick}/>)
                               }
                             </tbody>
 
