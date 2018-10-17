@@ -244,8 +244,6 @@ app.get('/api/github/repos', (req, res) => {
   });
 });
 
-let url ='http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000'
-
 app.get('/api/openRepo', (req, res) => {
   let { username, repoName, roomId } = req.query;
   let git_url = users[username]['repos'][repoName].git_url;
@@ -351,8 +349,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
 });
 
-let localurl = 'http://ec2-18-191-180-246.us-east-2.compute.amazonaws.com:3000'
-
 const loadFileContents = (repoName, username, roomId) => {
   let repoFileArray = roomInfo[roomId].workspace['fileArray'];
 
@@ -411,15 +407,10 @@ nsp.on('connection', (socket) => {
 
   socket.on('updateRoomUsers', (roomId) => {
     let roomUsers = [];
+    let roomFolderStructure = roomInfo[roomId]['fileStructure']; 
     Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
     socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
   });
-  socket.on('updateRoomUsers', (roomId) => {
-    let roomUsers = [];
-    Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
-    socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
-  });
-
 
   socket.on('disconnect', () => console.log('disconnecting client'));
 });

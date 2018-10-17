@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Button } from 'reactstrap';
-import { connect } from 'react-redux';
 
 
 class Firepad extends Component {
@@ -91,12 +90,6 @@ class Firepad extends Component {
 
 };
 
-// const mapStateToProps = (state) =>{
-//   return{
-//     reduxCode: state.code
-//   }
-
-// }
 
 export default Firepad;
 
