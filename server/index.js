@@ -288,12 +288,11 @@ app.post('/api/updateFileContents', (req, res) => {
   res.send('contents updated').status(200);
 });
 
-  // TODO: test this updating endpoint
+// TODO: test this updating endpoint
 app.post('/api/saveUpdatedRepoContents', (req, res) => {
   let { username, commitMessage, roomId, repoName } = req.body;
   let userGithubAccessToken = users[username].accessToken;
   let repoFileArray = roomInfo[roomId].workspace['fileArray'];
-  let repoObj = users[user].repos[repoName];
   let updatedFiles = {};
 
   repoFileArray.forEach(file => {
@@ -310,6 +309,17 @@ app.post('/api/saveUpdatedRepoContents', (req, res) => {
     .then(result => {
       console.log(result);
       res.send('repo updated successfully').status(200);
+    })
+    .catch(console.log);
+});
+
+app.get('/api/github/gists', (req, res) => {
+  let { username } = req.query;
+  let userGithubAccessToken = users[username].accessToken;
+
+  axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/gists/get`, { username: username, accessToken: userGithubAccessToken })
+    .then(gists => {
+      res.send(gists.data);
     })
     .catch(console.log);
 });

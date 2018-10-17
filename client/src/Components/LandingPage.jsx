@@ -236,7 +236,7 @@ class LandingPage extends Component {
                       <a href="https://github.com/taroyamashita">Github</a>
                     </div>
                     <div>
-                      <WhiteBoard />
+                      {/* <WhiteBoard /> */}
                     </div>
                   </div>
                 </div>
