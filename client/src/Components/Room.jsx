@@ -3,7 +3,7 @@ import EditorHolder from './EditorHolder.jsx';
 import UserNav from './UserNav.jsx';
 import io from "socket.io-client";
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import FloatingChatDiv from './FloatingChatDiv.jsx';
 import GistModal from './GistModal.jsx';
 import querystring from 'querystring';
@@ -14,7 +14,6 @@ import { Button } from 'reactstrap';
 class Room extends Component {
   constructor(props) {
     super(props);
-
     let roomPath = window.location.pathname.split('/');
 
     this.state = {
@@ -33,7 +32,8 @@ class Room extends Component {
       githubMode: false,
       repoFileStructure: {},
       showGistModal: false,
-      gistContent: '' 
+      gistContent: '',
+      prevRef: this.props && this.props.history && this.props.history.location && this.props.history.location.state ? this.props.history.location.state.prevRef : null
     }
 
     this.socket = io('/athesio').connect();
@@ -165,7 +165,7 @@ class Room extends Component {
   
 
   handleSaveClick() {
-    axios.post('/api/saveroom', { user: this.state.user, roomId: this.state.roomId, ref: this.state.refId })
+    axios.post('/api/saveroom', { user: this.state.user, roomId: this.state.roomId, ref: this.state.prevRef !== null ? this.state.prevRef : this.state.refId })
       .then(result => console.log(result));
   }
 
@@ -256,7 +256,7 @@ class Room extends Component {
                       roomId={this.state.roomId} 
                       user={this.state.user} 
                       allUsers={this.state.roomUsers} 
-                      refId={this.state.refId} 
+                      refId={this.state.prevRef !== null ? this.state.prevRef : this.state.refId} 
                       code={this.state.code} 
                       runCode={this.runCode} 
                       handleSaveClick={this.handleSaveClick} 
@@ -279,4 +279,4 @@ class Room extends Component {
   }
 }
 
-export default Room;
+export default withRouter(Room);
