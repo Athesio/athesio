@@ -319,7 +319,7 @@ app.get('/api/github/gists', (req, res) => {
 
   axios.post(`${process.env.GITHUB_SERVICE_URL}/api/github/gists/get`, { username: username, accessToken: userGithubAccessToken })
     .then(gists => {
-      res.send(gists.data).status(200);
+      res.send(gists.data);
     })
     .catch(console.log);
 });
