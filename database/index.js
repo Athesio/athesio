@@ -93,7 +93,7 @@ module.exports.saveRoomInfoForUser = (roomInfo, cb) => {
 };
 
 module.exports.getPreviousRoomsForUser = (userGithubId, cb) => {
-  let selectUserHistoryQuery = `SELECT u.github_id, u.github_username, r.room_uuid, firebase_ref, r.create_date, r.last_modified_date FROM users u JOIN users_rooms ur ON u.id=ur.user_id JOIN rooms r ON ur.room_id=r.id WHERE u.github_id=?`;
+  let selectUserHistoryQuery = `SELECT u.github_id, u.github_username, r.room_uuid, r.firebase_ref, r.create_date, r.last_modified_date FROM users u JOIN users_rooms ur ON u.id=ur.user_id JOIN rooms r ON ur.room_id=r.id WHERE u.github_id=?`;
 
   db.query(selectUserHistoryQuery, [userGithubId], (err, results) => {
     if (err) {
