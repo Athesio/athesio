@@ -6,6 +6,8 @@ var firepad;
 var firepadRef;
 var editor;
 
+var currentFilePath = '';
+
 class Firepad extends Component {
   constructor(props) {
     super(props);
@@ -33,16 +35,30 @@ class Firepad extends Component {
     // });
 
     this.props.socket.on('fromServerChangeFile', (changeFileInfo) => {
-      // axios.post('/api/updateFileContents', { roomId: this.props.roomId, filePath: changeFileInfo.path, newContents: this.state.code })
-      //   .then(() => {
-          
-      //   });
-      if (changeFileInfo.user.login === this.props.user.login) {
-        firepadRef = window.firebase.database().ref(changeFileInfo.fileObj.refId);
-        // firepad = window.Firepad.fromACE(firepadRef, editor);
-        firepad.setText(changeFileInfo.fileObj.contents);
-        // firepad.on('ready', () => {
-        // })
+      let filePath = currentFilePath === '' ? changeFileInfo.path : currentFilePath;
+      if (firepad.getText() !== '') {
+        axios.post('/api/updateFileContents', { roomId: this.props.roomId, filePath: filePath, newContents: firepad.getText() })
+          .then(() => {
+            currentFilePath = changeFileInfo.path;
+            if (changeFileInfo.user.login === this.props.user.login) {
+              firepadRef = window.firebase.database().ref(changeFileInfo.fileObj.refId);
+              // firepad = window.Firepad.fromACE(firepadRef, editor);
+              //firepad.setText(changeFileInfo.fileObj.contents);
+              firepad.setText(changeFileInfo.fileObj.contents);
+              // firepad.on('ready', () => {
+              // })
+            }
+          });
+      } else {
+        if (changeFileInfo.user.login === this.props.user.login) {
+          currentFilePath = changeFileInfo.path;
+          firepadRef = window.firebase.database().ref(changeFileInfo.fileObj.refId);
+          // firepad = window.Firepad.fromACE(firepadRef, editor);
+          //firepad.setText(changeFileInfo.fileObj.contents);
+          firepad.setText(changeFileInfo.fileObj.contents);
+          // firepad.on('ready', () => {
+          // })
+        }
       }
     });
   }
