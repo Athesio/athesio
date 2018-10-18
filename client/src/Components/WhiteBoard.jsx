@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import Draggable from 'react-draggable';
 import {SketchField, Tools} from 'react-sketch';
-import io from "socket.io-client";
-
-
+import { Button } from 'reactstrap';
 
 
 
@@ -19,22 +16,11 @@ class WhiteBoard extends Component {
       }
       this.download = this.download.bind(this);
       this.eraser = this.eraser.bind(this);
-      this.emit = this.emit.bind(this);
 
-      //socket connections
+      //socket connection
 
-      this.socket = io('/athesio').connect();
-
-      this.socket.on('connect', () => {
-
-        console.log('connected client side');
-        this.socket.emit('room', this.state.roomId);
-        this.socket.emit('retrieveChatHistory', this.state.roomId);
-      });
-
-      this.socket.on('updatedImage', (data)=>{
-          console.log(data);
-          this.setState({defaultImage: data});
+      this.props.socket.on('updatedImage', (data)=>{
+        this.setState({defaultImage: data.image});
       })
     }
 
@@ -54,42 +40,29 @@ class WhiteBoard extends Component {
     }
 
     emit(){
-        this.socket.emit('image', JSON.stringify(this.state.sketch), (err, data)=>{
-            if(err) console.log(err);
-            console.log('success');
-        })
+        this.props.sendNewImage(this.state.sketch);
     }
+
 
 
     render(){
         return(
-            <Draggable
-        axis="both"
-        handle=".handle"
-        defaultPosition={{ x: 5, y: 5 }}
-        position={null}
-        grid={[10, 10]}
-        bounds="parent"
-        onStart={this.handleStart}
-        onDrag={this.handleDrag}
-        onStop={this.handleStop}>
+    
 
             <div style={{ backgroundColor: 'black'}}>
-            <button onClick ={()=>{this.eraser();  console.log('clicked')}}>Eraser</button>
-            <button onClick ={()=>{this.pen(); console.log('clicked')}}>Pen</button>
-            <button onClick ={()=>{this.download(); console.log('clicked')}}>Save</button>
-            <button onClick ={()=>{this.emit(); console.log('clicked')}}>Emit</button>
+             <Button onClick ={ ()=>{this.pen()} } outline color="secondary" type="button" size="lg" inline >Pen</Button> 
+             <Button onClick ={ ()=>{this.eraser()} } outline color="secondary" type="button" size="lg" inline >Eraser</Button>     
+             <Button onClick ={ ()=>{this.emit()} } outline color="secondary" type="button" size="lg" inline >Share</Button>         
             <SketchField
                     ref={(c) => {
-                      console.log( `sketch is ${this.state.sketch}`);
-                      console.log( `c is ${c}`)
                      return this.state.sketch = c  
                   }}
+                   defaultValue={this.state.defaultImage}
+                   value={this.state.defaultImage}
                    tool={this.state.tool} 
                    lineColor={this.state.lineColor}
                    lineWidth={this.state.lineWidth}/>
             </div>
-            </Draggable>
         )
     }
 }
