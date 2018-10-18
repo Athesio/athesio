@@ -32,7 +32,7 @@ class Firepad extends Component {
     //   }
     // });
 
-    props.socket.on('fromServerChangeFile', (changeFileInfo) => {
+    this.props.socket.on('fromServerChangeFile', (changeFileInfo) => {
       // axios.post('/api/updateFileContents', { roomId: this.props.roomId, filePath: changeFileInfo.path, newContents: this.state.code })
       //   .then(() => {
           
