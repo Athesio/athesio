@@ -322,7 +322,7 @@ app.post('/api/saveUpdatedRepoContents', (req, res) => {
     }
   });
 
-  axios.post('/api/github/repo/update', { updatedFiles: updatedFiles, repo: repoObj, username: username, commitMessage: commitMessage, accessToken: userGithubAccessToken })
+  axios.post(`${GITHUB_SERVICE_URL}/api/github/repo/update`, { updatedFiles: updatedFiles, repo: repoObj, username: username, commitMessage: commitMessage, accessToken: userGithubAccessToken })
     .then(result => {
       console.log(result);
       res.send('repo updated successfully').status(200);
@@ -437,7 +437,7 @@ nsp.on('connection', (socket) => {
     let roomId = changeFileInfo.roomId;
     let fileObj = roomInfo[roomId].workspace['fileContents'][path];
     
-    socket.emit('fromServerChangeFile', { user: user, fileObj: fileObj });
+    socket.emit('fromServerChangeFile', { user: user, fileObj: fileObj, path: path });
   });
 
   socket.on('disconnect', () => console.log('disconnecting client'));
