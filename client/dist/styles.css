@@ -225,13 +225,28 @@ iframe {
 }
 
 #Ace {
+  display: flex;
+  flex-direction: column;
   width: 50%;
   min-width: 370px;
   padding-right:0px;
   padding-left: 0px;
   height: 100%;
 }
+
+#GHAce {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 370px;
+  padding-right:0px;
+  padding-left: 0px;
+  height: 100%;
+}
 #res {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
   padding-left: 0px;
   padding-right: 0px;
   height: 87vh;
@@ -242,6 +257,12 @@ iframe {
   padding-bottom: 0px;
   padding-right: 35px;
 } 
+
+#userDiv a {
+  color: #ffffff;
+  margin-top: 5px;
+  margin-left: 5px;
+}
 
 #userImg {
   height: 30px;
@@ -270,6 +291,8 @@ iframe {
   margin-right: 0px;
   width: 100%;
   height: 90%;
+  display: flex;
+  flex-direction: row;
 }
 
 #Login {
@@ -451,6 +474,13 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
 
 #LogoutBtn {
   bottom: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+#shareSession {
+  bottom: 0;
+  padding: 0;
   cursor: pointer;
 }
 
@@ -653,10 +683,12 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
   padding: 0;
 }
 
-#runBtn {
+.EditorButtonDiv {
   padding: 0px;
   margin-top: 2px;
-  margin-left: 16px;
+}
+.EditorButtonDiv button {
+  margin-right: 10px;
 }
 
 #githubComponent a {
@@ -820,4 +852,16 @@ tr:hover {
   display: inline-block;
   width: 100%;
   padding: 4px 5px;
+}
+
+#runCodeBtn {
+  right: 0px;
+  margin-right: 0px;
+  position: absolute;
+}
+
+#githubEditorHolder {
+  margin-top:5px;
+  padding-right: 0px;
+  margin-right: 0px;
 }

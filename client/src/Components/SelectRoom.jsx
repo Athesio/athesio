@@ -18,6 +18,8 @@ class SelectRoom extends Component {
       gists: [],
       username: '',
       selectedRepo: '',
+      hovered: false,
+      showData: false
     }
 
     this.createRoomId = this.createRoomId.bind(this);
@@ -26,6 +28,7 @@ class SelectRoom extends Component {
     this.getPreviousSessions = this.getPreviousSessions.bind(this);
     this.retrieveUserGithubGists = this.retrieveUserGithubGists.bind(this);
     this.handlePreviousSessionClick = this.handlePreviousSessionClick.bind(this);
+    this.expand = this.expand.bind(this);
   }
 
   createRoomId(cb) {
@@ -98,6 +101,10 @@ class SelectRoom extends Component {
     });
   }
 
+  expand(e) {
+    console.log(e.target);
+  }
+
   render() {
     if (this.state.loading) {
       return (
@@ -107,8 +114,10 @@ class SelectRoom extends Component {
     } else {
       if (localStorage.getItem('authenticated') === 'true') {
         return (
-          <div id="Morpheus" >
-            <div id="GithubMode">
+          <div id="Morpheus"  >
+            <div id="GithubMode" className="left" onMouseEnter={this.expand} >
+            {
+              this.state.showData === false ? 
               <div className="dropdown"  >
                 <Button className="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                   Repos
@@ -120,14 +129,8 @@ class SelectRoom extends Component {
                     })
                   }
                 </div>
-                {/* <ul>
-                {
-                    this.state.repos.map((repo, i) => {
-                      return <li className="dropdown-item" key={i} onClick={()=>{ this.setState({ selectedRepo: repo.name }, () => { this.createNewRoom() })}} >{repo.name}</li>
-                    })
-                  }
-                </ul>  */}
-              </div>
+              </div> : null
+            }
             </div>
             <div id="SelectRoom" >
               <div className="container-fluid" id="SelectRoomBox" >
