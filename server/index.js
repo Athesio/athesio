@@ -402,7 +402,6 @@ nsp.on('connection', (socket) => {
   });
 
   socket.on('image', (imageObj) => {
-  console.log(imageObj);
    socket.broadcast.to(imageObj.roomId).emit('updatedImage', imageObj);
   })
 

@@ -73,10 +73,6 @@ class Room extends Component {
       this.setState({ roomUsers: roomUsers });
     })
 
-    this.socket.on('imageUpdated', (imageObj)=>{
-      console.log('from room', imageObj);
-    })
-
     // this.closeRightNav = this.closeRightNav.bind(this);
     // this.openRightNav = this.openRightNav.bind(this);
     this.logout = this.logout.bind(this);
