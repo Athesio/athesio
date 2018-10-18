@@ -27,7 +27,7 @@ body, html {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: rgb(182, 161, 42);
+  background-color: rgb(199, 176, 47);
   width: 50%;
   /* right: 0px; */
   transition: 1s;
@@ -868,7 +868,6 @@ tr:hover {
   margin-top:5px;
   padding-right: 0px;
   margin-right: 0px;
-
 }
 
 #ReplModeHover {

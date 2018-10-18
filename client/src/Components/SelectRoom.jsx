@@ -12,14 +12,16 @@ class SelectRoom extends Component {
       value: '',
       loading: true,
       previousSessions: [],
-      githubMode: false, //github mode or not
-      type: '', //repo or gist
       repos: [],
       gists: [],
       username: '',
       selectedRepo: '',
       hovered: false,
-      showData: false
+      showData: false,
+      modes: {
+        GithubMode: ['Github Mode' ,'Open a repo or gist from Github to open and collaboratively edit files.'],
+        ReplMode: ['REPL.mode','Perfect for interviews and collaborative code writing/testing.']
+      }
     }
 
     this.createRoomId = this.createRoomId.bind(this);
@@ -104,29 +106,17 @@ class SelectRoom extends Component {
   }
 
   addHover(e) {
-    if(e.target.id === 'GithubMode') {
-      let target = document.getElementById('GithubMode');
-      document.getElementById('GithubMode').className = `GithubModeHover`;
-      let messageElement = document.createElement("h5");
-      messageElement.setAttribute('id', 'GithubModeHover');
-      let message = document.createTextNode("Github Mode");
-      messageElement.appendChild(message);
-      target.appendChild(messageElement);
-      target.style.width = '90%';
-      document.getElementById('ReplMode').style.width='10%';
 
-    } else if (e.target.id === 'ReplMode') {
+    let target = document.getElementById(`${e.target.id}`);
+    document.getElementById(`${e.target.id}`).className = `${e.target.id}Hover`;
+    let messageElement = document.createElement("h5");
+    messageElement.setAttribute('id', `${e.target.id}Hover`);
+    let message = document.createTextNode(`${this.state.modes[e.target.id][0]}`);
+    messageElement.appendChild(message);
+    target.appendChild(messageElement);
+    target.style.width = '90%';
+    e.target.id === 'GithubMode' ?  document.getElementById('ReplMode').style.width='10%' :  document.getElementById('GithubMode').style.width='10%';
 
-      let target = document.getElementById('ReplMode');
-      document.getElementById('ReplMode').className = `ReplModeHover`;
-      let messageElement = document.createElement("h5");
-      messageElement.setAttribute('id', 'ReplModeHover');
-      let message = document.createTextNode("Repl Mode");
-      messageElement.appendChild(message);
-      target.appendChild(messageElement);
-      target.style.width = '90%';
-      document.getElementById('GithubMode').style.width='10%';
-    }
   }
 
   removeHover(e) {
@@ -142,6 +132,9 @@ class SelectRoom extends Component {
       document.getElementById('GithubMode').style.width = '50%';
     }
   }
+
+
+
 
   render() {
     if (this.state.loading) {
