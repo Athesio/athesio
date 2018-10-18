@@ -405,10 +405,7 @@ nsp.on('connection', (socket) => {
   })
   socket.on('beginLoadingRepoContents', ({ repoName, username, roomId }) => {
     loadFileContents(repoName, username, roomId);
-    setTimeout(()=>{socket.emit('contentsUpdated')},2000);
-    // every time user clicks on a file to open, will only serve back file and ref id if loaded
-    //  if file not loaded, set front-end fileLoading flag to true (will render loading icon on top of file structure)
-    //    and also send HTTP request to server asking for the contents once done loading
+    setTimeout(()=>{ socket.emit('contentsUpdated')}, 2000);
   });
 
   socket.on('updateRoomUsers', (roomId) => {
@@ -416,6 +413,31 @@ nsp.on('connection', (socket) => {
     let roomFolderStructure = roomInfo[roomId]['fileStructure']; 
     Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
     socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
+  });
+
+  socket.on('updateFileContentsInServerMemory', (changeFileInfo) => {
+    console.log(changeFileInfo);
+    let path = changeFileInfo.prevFile.filePath;
+    let user = changeFileInfo.user;
+    let roomId = changeFileInfo.roomId;
+    
+    let fileObj = roomInfo[roomId].workspace['fileContents'][path];
+
+    if (changeFileInfo.prevFile.contents !== fileObj.contents) {
+      fileObj.contents = changeFileInfo.prevFile.contents;
+      fileObj.updated = true;
+    }
+  });
+
+  socket.on('toServerChangeFile', (changeFileInfo) => {
+    console.log('im in server toServerChangeFile event handler')
+    // send back refId and contents
+    let path = changeFileInfo.filePath;
+    let user = changeFileInfo.user;
+    let roomId = changeFileInfo.roomId;
+    let fileObj = roomInfo[roomId].workspace['fileContents'][path];
+    
+    socket.emit('fromServerChangeFile', { user: user, fileObj: fileObj });
   });
 
   socket.on('disconnect', () => console.log('disconnecting client'));
