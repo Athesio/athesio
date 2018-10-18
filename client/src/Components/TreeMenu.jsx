@@ -12,6 +12,7 @@ class TreeMenu extends Component {
           active: {module: 'test', collapsed: false, leaf: true},
           tree: this.props.data
         }
+
         this.renderNode = this.renderNode.bind(this);
         this.onClickNode = this.onClickNode.bind(this);
     }
@@ -39,7 +40,12 @@ class TreeMenu extends Component {
         this.setState({
           active: node
         }, ()=>{
-        this.props.handleFileClick(this.state.active.path);
+          this.props.socket.emit('toServerChangeFile', {
+            filePath: this.state.active.path,
+            user: this.props.user,
+            roomId: this.props.roomId
+          });
+          //this.props.handleFileClick(this.state.active.path);
         })
       };
     
