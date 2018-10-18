@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Button } from 'reactstrap';
 
+var firepad;
+var firepadRef;
+var editor;
 
 class Firepad extends Component {
   constructor(props) {
@@ -14,7 +17,34 @@ class Firepad extends Component {
       repoFirepadCode: this.props.repoFirepadCode
     };
 
-    this.fireSetter = this.fireSetter.bind(this);
+    // let lastFileEdited = null;
+
+    // props.socket.on('toFirepadChangeFile', (changeFileInfo) => {
+    //   // take this stuff, add currentContents and send off to server
+    //   if (lastFileEdited === null) {
+    //     lastFileEdited = changeFileInfo.filePath;
+    //     props.socket.emit('toServerChangeFile', changeFileInfo);
+    //   } else { // already clicked on at least 1 file
+    //     changeFileInfo['prevFile'] = { filePath: lastFileEdited, contents: firepad.getText() };
+    //     props.socket.emit('updateFileContentsInServerMemory', changeFileInfo);
+    //     let lastFileEdited = changeFileInfo.filePath;
+    //     props.socket.emit('toServerChangeFile', changeFileInfo);
+    //   }
+    // });
+
+    props.socket.on('fromServerChangeFile', (changeFileInfo) => {
+      // axios.post('/api/updateFileContents', { roomId: this.props.roomId, filePath: changeFileInfo.path, newContents: this.state.code })
+      //   .then(() => {
+          
+      //   });
+      if (changeFileInfo.user.login === props.user.login) {
+        firepadRef = window.firebase.database().ref(changeFileInfo.fileObj.refId);
+        // firepad = window.Firepad.fromACE(firepadRef, editor);
+        firepad.setText(changeFileInfo.fileObj.contents);
+        // firepad.on('ready', () => {
+        // })
+      }
+    });
   }
 
   componentDidMount() {
@@ -26,9 +56,9 @@ class Firepad extends Component {
     if (!window.firebase.apps.length) {
       window.firebase.initializeApp(config);
     }
-    let firepadRef = firebase.database().ref(this.state.refId);
+    firepadRef = firebase.database().ref(this.props.refId);
     // create Ace editor and config
-    let editor = ace.edit('firepad-container');
+    editor = ace.edit('firepad-container');
     editor.setTheme('ace/theme/tomorrow_night');
     editor.$blockScrolling = 1;
 
@@ -38,31 +68,18 @@ class Firepad extends Component {
     session.setTabSize(2);
     session.setMode('ace/mode/javascript');
 
-    let firepad = window.Firepad.fromACE(firepadRef, editor, {
-      defaultText: 'console.log("hello world");'
-    });
+    firepad = window.Firepad.fromACE(firepadRef, editor);
+    
+    // firepad.on('ready', () => {
+    //   this.setState({ code: firepad.getText() });
+    // });
 
     firepad.on('synced', () => {
-      this.setState({code: firepad.getText()});
+      this.setState({ code: firepad.getText() });
     });
-
-
-    this.setState({firepad: firepad});
-
-    
-
-
-  }
-
-  fireSetter(text){
-    this.state.firepad.setText(this.props.repoFirepadCode);
   }
 
   render() {
-    if(this.props.repoFirepadCode){
-      this.fireSetter();
-    }
-    // console.log('using redux', this.props);
     return (
       <div>
         <div id='firepad-container'>
@@ -88,10 +105,6 @@ class Firepad extends Component {
       </div>
     );
   }
-
 };
 
-
 export default Firepad;
-
-// export default Firepad;

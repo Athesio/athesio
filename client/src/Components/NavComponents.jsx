@@ -4,13 +4,12 @@ import SlackNav from './NavBarComponents/SlackNav.jsx';
 import TreeMenu from './TreeMenu.jsx';
 
 const NavComponents = (props) => {
-  console.log(props.content);
   if (props.tab === 'Home') {
     return props.contentLoaded ? (
       <div id="HomeNav" >
           <h3 className="text-center" > Workspace </h3>
-          <div className="fileBox text-center"  >
-          < TreeMenu data={props.content} handleFileClick={props.handleFileClick}/>
+          <div className="fileBox"  >
+          <TreeMenu roomId={props.roomId} user={props.user} socket={props.socket} data={props.content} handleFileClick={props.handleFileClick}/>
           </div>
       </div>
     ) : (

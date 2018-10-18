@@ -159,7 +159,7 @@ app.post('/api/enterroom', (req, res) => {
 });
 
 app.get('/api/validateRoomId', (req, res) => {
-  roomInfo[req.query.roomId] ? res.send({ isValid: true }) : res.send({ isValid: false });
+  roomInfo[req.query.roomId] ? res.send(roomInfo[req.query.roomId].workspace['repoName']) : res.send({ isValid: false });
 });
 
 app.get('/api/authstatus', (req, res) => {
@@ -252,6 +252,7 @@ app.get('/api/openRepo', (req, res) => {
     .then(({ data }) => {
       data.fileDirectory = JSON.parse(data.fileDirectory);
       
+      roomInfo[roomId].workspace['repoName'] = repoName;
       roomInfo[roomId].workspace['fileStructure'] = data.fileDirectory['repos'][username];
       roomInfo[roomId].workspace['fileArray'] = data.fileArray;
       // store empty objects to hold file contents once loading starts
@@ -268,6 +269,11 @@ app.get('/api/openRepo', (req, res) => {
       res.send(data.fileDirectory['repos'][username]);
     })
     .catch(console.log);
+});
+
+app.get('/api/getExistingRepo', (req, res) => {
+  let { roomId } = req.query;
+  res.send(roomInfo[roomId].workspace['fileStructure']);
 });
 
 app.get('/api/openFile', (req, res) => {
@@ -316,7 +322,7 @@ app.post('/api/saveUpdatedRepoContents', (req, res) => {
     }
   });
 
-  axios.post('/api/github/repo/update', { updatedFiles: updatedFiles, repo: repoObj, username: username, commitMessage: commitMessage, accessToken: userGithubAccessToken })
+  axios.post(`${GITHUB_SERVICE_URL}/api/github/repo/update`, { updatedFiles: updatedFiles, repo: repoObj, username: username, commitMessage: commitMessage, accessToken: userGithubAccessToken })
     .then(result => {
       console.log(result);
       res.send('repo updated successfully').status(200);
@@ -399,10 +405,7 @@ nsp.on('connection', (socket) => {
   })
   socket.on('beginLoadingRepoContents', ({ repoName, username, roomId }) => {
     loadFileContents(repoName, username, roomId);
-    setTimeout(()=>{socket.emit('contentsUpdated')},2000);
-    // every time user clicks on a file to open, will only serve back file and ref id if loaded
-    //  if file not loaded, set front-end fileLoading flag to true (will render loading icon on top of file structure)
-    //    and also send HTTP request to server asking for the contents once done loading
+    setTimeout(()=>{ socket.emit('contentsUpdated')}, 2000);
   });
 
   socket.on('updateRoomUsers', (roomId) => {
@@ -410,6 +413,31 @@ nsp.on('connection', (socket) => {
     let roomFolderStructure = roomInfo[roomId]['fileStructure']; 
     Object.keys(roomInfo[roomId]['users']).forEach(user => roomUsers.push(roomInfo[roomId]['users'][user]));
     socket.broadcast.emit('sendUpdatedRoomInfo', roomUsers);
+  });
+
+  socket.on('updateFileContentsInServerMemory', (changeFileInfo) => {
+    console.log(changeFileInfo);
+    let path = changeFileInfo.prevFile.filePath;
+    let user = changeFileInfo.user;
+    let roomId = changeFileInfo.roomId;
+    
+    let fileObj = roomInfo[roomId].workspace['fileContents'][path];
+
+    if (changeFileInfo.prevFile.contents !== fileObj.contents) {
+      fileObj.contents = changeFileInfo.prevFile.contents;
+      fileObj.updated = true;
+    }
+  });
+
+  socket.on('toServerChangeFile', (changeFileInfo) => {
+    console.log('im in server toServerChangeFile event handler')
+    // send back refId and contents
+    let path = changeFileInfo.filePath;
+    let user = changeFileInfo.user;
+    let roomId = changeFileInfo.roomId;
+    let fileObj = roomInfo[roomId].workspace['fileContents'][path];
+    
+    socket.emit('fromServerChangeFile', { user: user, fileObj: fileObj, path: path });
   });
 
   socket.on('disconnect', () => console.log('disconnecting client'));

@@ -106,9 +106,14 @@ class Room extends Component {
   }
 
   openRepo() {
-    if (this.state.repoName.length > 0) {
+    if (this.state.repoName.length > 0 && this.state.roomUsers.length === 1) {
       axios.get('/api/openRepo', { params: { repoName: this.state.repoName, username: this.state.user.login, roomId: this.state.roomId } })
-        .then(files => this.setState({ repoFileStructure: files.data }, this.startRepoContentLoading));
+        .then(files => this.setState({ repoFileStructure: files.data }, this.startRepoContentLoading))
+        .catch(console.log);
+    } else if (this.state.repoName.length > 1) {
+      axios.get('/api/getExistingRepo', { params: { roomId: this.state.roomId } })
+        .then(files => this.setState({ repoFileStructure: files.data, contentsLoaded: true }))
+        .catch(console.log);
     }
   }
 
@@ -155,10 +160,8 @@ class Room extends Component {
   saveGistData(gistName, gistDescription) {
     axios.post('/api/saveNewGist', { username: this.state.user.login, fileName: gistName, description: gistDescription, content: this.state.gistContent })
       .then(() => this.setState({ showGistModal: !(this.state.showGistModal) }));
-
   }
   
-
   handleSaveClick() {
     axios.post('/api/saveroom', { user: this.state.user, roomId: this.state.roomId, ref: this.state.prevRef !== null ? this.state.prevRef : this.state.refId })
       .then(result => console.log(result));
@@ -198,7 +201,7 @@ class Room extends Component {
             {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv} miniStatus={this.state.minimizeDiv} /> : null}
             {/* USER NAVIGATION BAR */}
             <nav id="userNav" className="sidenav">
-              <UserNav user={this.state.user} logout={this.logout} contentLoaded={this.state.contentsLoaded} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} handleFileClick = { this.handleFileClick } />
+              <UserNav roomId={this.state.roomId} socket={this.socket} user={this.state.user} logout={this.logout} contentLoaded={this.state.contentsLoaded} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} handleFileClick = { this.handleFileClick } />
             </nav>
 
             {/* MIDDLE SECTION OF DASHBOARD */}
@@ -257,6 +260,7 @@ class Room extends Component {
                       handleSaveClick={this.handleSaveClick} 
                       toggleGistModal={this.toggleGistModal}
                       githubMode={this.state.githubMode}
+                      socket={this.socket}
                     />
                   </div>
                 </div>
