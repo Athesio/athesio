@@ -160,10 +160,8 @@ class Room extends Component {
   saveGistData(gistName, gistDescription) {
     axios.post('/api/saveNewGist', { username: this.state.user.login, fileName: gistName, description: gistDescription, content: this.state.gistContent })
       .then(() => this.setState({ showGistModal: !(this.state.showGistModal) }));
-
   }
   
-
   handleSaveClick() {
     axios.post('/api/saveroom', { user: this.state.user, roomId: this.state.roomId, ref: this.state.prevRef !== null ? this.state.prevRef : this.state.refId })
       .then(result => console.log(result));
