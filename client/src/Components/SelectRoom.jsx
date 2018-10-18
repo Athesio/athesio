@@ -28,7 +28,8 @@ class SelectRoom extends Component {
     this.getPreviousSessions = this.getPreviousSessions.bind(this);
     this.retrieveUserGithubGists = this.retrieveUserGithubGists.bind(this);
     this.handlePreviousSessionClick = this.handlePreviousSessionClick.bind(this);
-    this.expand = this.expand.bind(this);
+    this.addHover = this.addHover.bind(this);
+    this.removeHover = this.removeHover.bind(this);
   }
 
   createRoomId(cb) {
@@ -102,8 +103,44 @@ class SelectRoom extends Component {
     });
   }
 
-  expand(e) {
-    //console.log(e.target);
+  addHover(e) {
+    if(e.target.id === 'GithubMode') {
+      let target = document.getElementById('GithubMode');
+      document.getElementById('GithubMode').className = `GithubModeHover`;
+      let messageElement = document.createElement("h5");
+      messageElement.setAttribute('id', 'GithubModeHover');
+      let message = document.createTextNode("Github Mode");
+      messageElement.appendChild(message);
+      target.appendChild(messageElement);
+      target.style.width = '90%';
+      document.getElementById('ReplMode').style.width='10%';
+
+    } else if (e.target.id === 'ReplMode') {
+
+      let target = document.getElementById('ReplMode');
+      document.getElementById('ReplMode').className = `ReplModeHover`;
+      let messageElement = document.createElement("h5");
+      messageElement.setAttribute('id', 'ReplModeHover');
+      let message = document.createTextNode("Repl Mode");
+      messageElement.appendChild(message);
+      target.appendChild(messageElement);
+      target.style.width = '90%';
+      document.getElementById('GithubMode').style.width='10%';
+    }
+  }
+
+  removeHover(e) {
+    if(e.target.id === "GithubMode") {
+      let side = document.getElementById("GithubMode");
+      side.removeChild(side.childNodes[0]);
+      side.style.width = '50%';
+      document.getElementById('ReplMode').style.width = '50%';
+    } else {
+      let side = document.getElementById("ReplMode");
+      side.removeChild(side.childNodes[0]);
+      side.style.width = '50%';
+      document.getElementById('GithubMode').style.width = '50%';
+    }
   }
 
   render() {
@@ -116,11 +153,11 @@ class SelectRoom extends Component {
       if (localStorage.getItem('authenticated') === 'true') {
         return (
           <div id="Morpheus"  >
-            <div id="GithubMode" className="left" onMouseEnter={this.expand} >
+            <div id="GithubMode" onMouseEnter={this.addHover} onMouseLeave={this.removeHover}>
             {
-              this.state.showData === false ? 
+              this.state.showData === true ? 
               <div className="dropdown"  >
-                <Button className="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                <Button className="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-addHovered="false" >
                   Repos
                 </Button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton" >
@@ -133,7 +170,9 @@ class SelectRoom extends Component {
               </div> : null
             }
             </div>
-            <div id="SelectRoom" >
+            <div id="ReplMode" onMouseEnter={this.addHover} onMouseLeave={this.removeHover} >
+            {this.state.showData ? 
+            
               <div className="container-fluid" id="SelectRoomBox" >
                 <div className="row" id="formBox" >
                   <div className="col-md-1"   ></div>
@@ -194,6 +233,8 @@ class SelectRoom extends Component {
                   null
                 }
               </div>
+            : null
+            } 
             </div>
           </div>
         )
