@@ -43,13 +43,21 @@ body, html {
   background-color: #25282d;
   color: white;
   transition: 1s;
-
+  cursor: pointer;
 }
 
-#ReplMode form {
+#ReplModeDetails form {
   border-color: gray;
   border-style: solid;
   border-width: 2px;
+  text-align: center;
+}
+
+
+#GithubModeDetails form {
+  /* border-color: gray;
+  border-style: solid;
+  border-width: 2px; */
   text-align: center;
 }
 
@@ -63,7 +71,10 @@ body, html {
   /* top: 50px; */
 }
 
-#formBox {
+#formBoxGithub {
+  padding-top: 5%;
+}
+#formBoxRepl {
   padding-top: 5%;
 }
 
@@ -696,7 +707,7 @@ table, tr, tbody {
 
 tr:hover {
   cursor: pointer;
-  background-color: rgb(31, 36, 58);
+  background-color: gray;
 }
 
 #HomeNav {
@@ -856,14 +867,6 @@ tr:hover {
   width: 199px;
 }
 
-.message-input-container {
-
-}
-
-.send-message-container {
-
-}
-
 #githubEditorHolder {
   margin-top:5px;
   padding-right: 0px;
@@ -878,8 +881,8 @@ tr:hover {
   text-align: center;
   background-color: #141618f1;
   /* color: white; */
-  color: #25282dda;
-  padding-top: 15%;
+  color: #3b4047da;
+  padding-top: 17%;
 }
 #GithubModeHover {
   display: flex;
@@ -889,7 +892,7 @@ tr:hover {
   height: 100vh;
   text-align: center;
   padding-top: 15%;
-  color: rgba(116, 102, 26, 0.541);
+  color: rgba(99, 87, 22, 0.767);
   /* color: white; */
   padding-top: 17%;
   cursor: pointer;
@@ -901,12 +904,11 @@ tr:hover {
 }
 #GithubModeDetails {
   background-color: rgb(199, 176, 47);
-  color: white;
+  color: #25282d;
   height: 100vh;
 }
 #ReplModeDetails {
   background-color: #25282d;
   color: white;
   height: 100vh;
-
 }

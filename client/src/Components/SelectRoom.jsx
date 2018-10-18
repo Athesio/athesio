@@ -161,17 +161,24 @@ class SelectRoom extends Component {
     e.target.id.includes('G') ? GithubMode.removeChild(GithubMode.childNodes[0]) : ReplMode.removeChild( ReplMode.childNodes[0]); 
     e.target.id.includes('G') ? GithubMode.style.width='90%' :  ReplMode.style.width='90%';
     e.target.id.includes('G') ? ReplMode.style.width='10%' : GithubMode.style.width='10%';
-    console.log(e.target.id.includes('G'));
     e.target.id.includes('G') ? this.setState({ showDataGithubMode: true }) : this.setState({ showDataReplMode: true });
-    console.log(this.state.showDataGithubMode)
   } 
 
   changeDiv(e) {
-    console.log(e.target.id.includes('G'));
-    console.log(this.state.showDataGithubMode)
-    e.target.id.includes('G') ? this.setState({ showDataGithubMode: false }) : this.setState({ showDataReplMode: false });
-    // e.target.id.includes('G') ? null : document.getElementById('ReplModeDetails').style.width='50%';
-    // e.target.id.includes('G') ? document.getElementById('GithubMode').style.width='50%' : null;
+    let lastValue = e.target.id;
+    // removes details from div
+    e.target.id === "GitModeDetails" ? null : this.setState({ showDataReplMode: false });
+    e.target.id === "ReplModeDetails" ? null : this.setState({ showDataGithubMode: false });
+
+    // closes div
+    if(lastValue.includes("Github")) {
+      document.getElementById('ReplMode').style.width='50%';
+      document.getElementById('GithubModeDetails').style.width='50%';
+    }
+    if(lastValue.includes("Repl")) {
+      document.getElementById('ReplModeDetails').style.width='50%';
+      document.getElementById('GithubMode').style.width='50%';
+    }
   }
 
   render() {
@@ -188,22 +195,10 @@ class SelectRoom extends Component {
             {
               this.state.showDataGithubMode === true ? 
               <div id="GithubModeDetails" onMouseLeave={this.changeDiv} >
-                {/* <div className="dropdown"  >
-                <Button className="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-addHovered="false" >
-                  Repos
-                </Button>
-                <div className="dropdown-menu"  >
-                  {
-                    this.state.repos.map((repo, i) => {
-                      return <a className="dropdown-item" key={i} onClick={()=>{ this.setState({ selectedRepo: repo.name }, () => { this.createNewRoom() })}} >{repo.name}</a>
-                    })
-                  }
-                </div>
-                 */}
                 <div className="container-fluid" id="SelectRoomBox" >
-                <div className="row" id="formBox" >
-                  <div className="col-md-1"   ></div>
-                  <div className="col-md-10"  >
+                <div className="row" id="formBoxGithub" >
+                  <div className="col-md-3"   ></div>
+                  <div className="col-md-6"  >
                     <form role="form" >
                       <div className="form-group" style={{ marginLeft: '10px', marginRight: '10px' }} >
                         <a className="text-center" >Join a Room </a><br />
@@ -235,9 +230,9 @@ class SelectRoom extends Component {
                           <table id="session" className="table col-xs-12 col-sm-12 col-md-12 col-lg-12" >
                             <thead  >
                               <tr>
-                                <th align="left" className="text-center" >Title</th>
+                                <th align="left" className="text-center" >Repo Name</th>
                                 <th className="text-center" ></th>
-                                <th align="right" className="text-center" >Last Modified</th>
+                                <th align="right" className="text-center" >Language</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -262,9 +257,9 @@ class SelectRoom extends Component {
             {this.state.showDataReplMode === true ? 
               <div id="ReplModeDetails" onMouseLeave={this.changeDiv} >
                 <div className="container-fluid" id="SelectRoomBox" >
-                <div className="row" id="formBox" >
-                  <div className="col-md-1"   ></div>
-                  <div className="col-md-10"  >
+                <div className="row" id="formBoxRepl" >
+                  <div className="col-md-3"   ></div>
+                  <div className="col-md-6"  >
                     <form role="form" >
                       <div className="form-group" >
                         <label htmlFor="NewEditor">Open New Editor</label><br />
