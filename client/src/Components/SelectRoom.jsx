@@ -170,8 +170,8 @@ class SelectRoom extends Component {
     console.log(e.target.id.includes('G'));
     console.log(this.state.showDataGithubMode)
     e.target.id.includes('G') ? this.setState({ showDataGithubMode: false }) : this.setState({ showDataReplMode: false });
-    e.target.id.includes('G') ? null : document.getElementById('ReplModeDetails').style.width='50%';
-    e.target.id.includes('G') ? document.getElementById('GithubMode').style.width='50%' : null;
+    // e.target.id.includes('G') ? null : document.getElementById('ReplModeDetails').style.width='50%';
+    // e.target.id.includes('G') ? document.getElementById('GithubMode').style.width='50%' : null;
   }
 
   render() {
