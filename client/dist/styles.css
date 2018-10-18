@@ -753,13 +753,14 @@ tr:hover {
   height: 200px;
   width: 250px;
   background: white;
+  border-bottom: 3px solid black;
 }
 
 .message-container {
   padding-left: 5px;
   padding-right: 5px;
   width: 100%;
-  border-bottom: 2px #25282d solid;
+  border-bottom: 2px solid #25282d;
 }
 
 .user-message {
@@ -842,4 +843,23 @@ tr:hover {
   margin-top:5px;
   padding-right: 0px;
   margin-right: 0px;
+}
+
+.message-box-container {
+  padding: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+}
+
+#message-input {
+  width: 199px;
+}
+
+.message-input-container {
+
+}
+
+.send-message-container {
+
 }

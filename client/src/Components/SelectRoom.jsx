@@ -103,7 +103,7 @@ class SelectRoom extends Component {
   }
 
   expand(e) {
-    console.log(e.target);
+    //console.log(e.target);
   }
 
   render() {
