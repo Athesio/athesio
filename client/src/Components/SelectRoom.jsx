@@ -120,17 +120,10 @@ class SelectRoom extends Component {
   }
 
   removeHover(e) {
-    if(e.target.id === "GithubMode") {
-      let side = document.getElementById("GithubMode");
-      side.removeChild(side.childNodes[0]);
-      side.style.width = '50%';
-      document.getElementById('ReplMode').style.width = '50%';
-    } else {
-      let side = document.getElementById("ReplMode");
-      side.removeChild(side.childNodes[0]);
-      side.style.width = '50%';
-      document.getElementById('GithubMode').style.width = '50%';
-    }
+    let target = document.getElementById(`${e.target.id}`);
+    target.removeChild(target.childNodes[0]);
+    target.style.width = '50%';
+    e.target.id === 'GithubMode' ?  document.getElementById('ReplMode').style.width='50%' :  document.getElementById('GithubMode').style.width='50%';
   }
 
 
