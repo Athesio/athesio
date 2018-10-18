@@ -29,6 +29,8 @@ const EditorHolder = (props) => {
           <div className="col-xs-12  col-sm-6 col-md-6 col-lg-6" id="Ace" >
             <div className='editor-container'>
               <Firepad 
+                user={props.user}
+                socket={props.socket}
                 roomId={props.roomId} 
                 refId={props.refId} 
                 runCode={props.runCode} 
