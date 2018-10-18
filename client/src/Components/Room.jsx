@@ -8,6 +8,7 @@ import FloatingChatDiv from './FloatingChatDiv.jsx';
 import GistModal from './GistModal.jsx';
 import querystring from 'querystring';
 import { Button } from 'reactstrap';
+import FloatingWhiteBoardDiv from './FloatingWhiteBoardDiv.jsx';
 
 
 
@@ -27,6 +28,8 @@ class Room extends Component {
       code: "hello world",
       showChatDiv: false,
       minimizeDiv: false,
+      showWhiteBoardDiv: false,
+      minimizeWhiteBoardDiv: false,
       messages: [],
       repoName: roomPath.length === 4 ? roomPath[2] : '',
       githubMode: roomPath.length === 4 ? true : false,
@@ -76,8 +79,10 @@ class Room extends Component {
     this.handleSaveClick = this.handleSaveClick.bind(this);
     this.runCode = this.runCode.bind(this);
     this.createFloatingChat = this.createFloatingChat.bind(this);
+    this.createFloatingWhiteBoard = this.createFloatingWhiteBoard.bind(this);
     this.sendNewMessage = this.sendNewMessage.bind(this);
     this.minimizeFloatingDiv = this.minimizeFloatingDiv.bind(this);
+    this.minimizeFloatingWhiteBoardDiv = this.minimizeFloatingWhiteBoardDiv.bind(this);
     this.startRepoContentLoading = this.startRepoContentLoading.bind(this);
     this.openRepo = this.openRepo.bind(this);
     this.toggleGistModal = this.toggleGistModal.bind(this);
@@ -177,8 +182,17 @@ class Room extends Component {
     this.setState({ showChatDiv: !(this.state.showChatDiv) });
   }
 
+  createFloatingWhiteBoard() {
+    this.setState({ showWhiteBoardDiv: !(this.state.WhiteBoardDiv) });
+  }
+
   minimizeFloatingDiv() {
     this.setState({ minimizeDiv: !(this.state.minimizeDiv) });
+  }
+
+
+  minimizeFloatingWhiteBoardDiv() {
+    this.setState({ minimizeWhiteBoardDiv: !(this.state.minimizeWhiteBoardDiv) });
   }
 
   handleFileClick(path){
@@ -199,6 +213,7 @@ class Room extends Component {
         return (
           <div className="wrapper">
             {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv} miniStatus={this.state.minimizeDiv} /> : null}
+            {this.state.showWhiteBoardDiv === true ? <FloatingWhiteBoardDiv user={this.state.user}  minimize={this.minimizeFloatingWhiteBoardDiv} miniStatus={this.state.minimizeWhiteBoardDiv} /> : null}
             {/* USER NAVIGATION BAR */}
             <nav id="userNav" className="sidenav">
               <UserNav roomId={this.state.roomId} socket={this.socket} user={this.state.user} logout={this.logout} contentLoaded={this.state.contentsLoaded} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} handleFileClick = { this.handleFileClick } />
@@ -218,6 +233,12 @@ class Room extends Component {
                     <p style={{ marginTop: '5px', marginBottom: '8px', cursor: 'pointer' }} data-toggle="tooltip" data-placement="right" title="Click to open and close chat" >
                       <em onClick={this.createFloatingChat} style={{ color: 'white', fontSize: '15px' }}> Chat </em>
                     </p>
+                    <p style={{ marginTop: '5px', marginBottom: '8px', cursor: 'pointer' }} data-toggle="tooltip" data-placement="right" title="Click to open and close chat" >
+                      <em onClick={this.createFloatingWhiteBoard} style={{ color: 'white', fontSize: '15px' }}> 
+                      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAC8UlEQVRIS62TX0hTURzHf+fOu53NuztGBMFiXhaILQbaQ1sRzCzCAiECJYIsH+olCqR6KYmBf94SeunPo0ZQ2lsFERIhDCzDmJMtN1If5samYKVr9+zMe+IMN0b4Z5seuBw4nO/v8/t+f+ciqGAtLCycQwiZ6+rqRsqVoXIv8nuhUGjMYDBYHA7HMYQQK0dbNiAWix1PpVJ+SZJAr9e3KYryfk8B8Xj8XTKZPM8BJpPpq81m8+wZIBqNNsmy/C2RSAi1tbVMlmVIp9OtDofj406QsiKKxWIjoii2x+Nx4ACLxYIIIX673X5y14BIJHLYbDYHEULC4uIi8IgsFgswxoAQckZRlE/bQXZ0MDc3N4Qx7kQIwQYg74AxxrLZ7GdFUVqqBkQiEQfG+IcgCCIvwiOSJInPgDfGGbC6utrsdDrHt4Js62B2dvY5xvg6774EAHzIhaWq6lh9ff3ZigGBQOCgJElRnU5nAIA8IZFIAMaYWa3WvAN+zm1kMpkTTqdzYjPIlg7C4fANURSfFbrn4lfDQ7C0lIJbd+4Va/GYcrncQENDQ09FgGAweEUUxWGdTpfvlIsD36fg18oK87acLjrQNA0ymczDxsbG3ooAExMTstFonDcYDNYCYKNAAZjfKaUUAA67XK6fFQH45cnJyT6M8X1BEEqjLAIYYyidTr9wu92dFQ+ZC8bHx/ebTKZ5URRNpbMoFKOUamtray6v1xuuCsBFfr//Mcb4dgmg+HoopW88Hk9H1T8aFw6PvLUfsu2L6vWivnQGuVyOJZZ/N11saw1UD/D5hAvWpgeuA3KXbDQoBRf8af4l2dRM8s+T0eWpPvD5tOoiam/XuY9eCuhqao7w57jxMU3TkKZpfI9Oh0QnjHasVwcAgI6X092MrQ+qRAVCMqASlRGiIr7TLOkJ9XcNVB8RAFx+PdNNKX1UAgBCVA4CmqV3Q/1XB/cCsKmDLM3eDPdde7pbwClK6QeVqPr/IlJpLtcc6u38sh3gH5HUeSgZCN1OAAAAAElFTkSuQmCC"></img>
+                      </em>
+                    </p>
+
 
                     {/* Unit Testing icon */}
                     {/* <img id="Test" data-toggle="tooltip" data-placement="right" title="Unit Testing" onClick={this.changeTabs} className="icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAL0SURBVGhD7ZpNiE1xGMYv+YghYygLTMyCNNRMIgsrY2PJsLnJUrKQjSRbKTXsxCxmI7JiZ6Gx8LEgnyUK42NLiTE3RcPl9x7POR333NM5Z5r/vedwnnp673nf93n/79OcW3fOvRVXqNfrm+Ao/ALfwSG4UOVigIW3wK+/GkDuFmGO2vIPFr6rxb2/AlwHnym3T22tAWfO59Cz8LMtkBXo3hNmaJyZ2/mnkg3oDC/goEZlA8JhDfoJP8WRlnH1/WiondYoD1wvga9C9QnpJkO5ZqyF5m/WuHRANxPRhIl53aN0U1Dv1kFPlUoFJFulu6NULOg5od4zSqUDmkUmBONKxYIe38hzwuK0pH8HMa2RqnovKZUOaDIbmSpY7rZGxaIlRhg+D96Hze7vJH6ERzQqFvS4N9IKlEbQlEZcoDSCpjTiAoUzwqLL4VxdBiiUEZbcBu2D4UWlAhTGCOcsYMm3diDxmNIBnBlh4DJqPSn513+EaCO3D9fn6LNFHxFmKx2A/PQbYdhaOKl6Iui9Kqlp15gWPqDUqdwANHyHG7zGBpB3YqQLjlJ7mIb0HpLU5nZy/YZosNpK6N9Sx9UWAbX8vUeY2R1a3ntAQbS/0Cy1RJBLIwbmhs18g70qNUVujRiYbWbsFt2vVCxybSQLSiNoSiMuUDgjLNoPu3QZoFBGWHIQGq4oFYBcMYxwzlKW/GAHEg8oHcCZEfJ9cHsSOXiA6H2m8kEucvtwfZk+w00YPPj2QX36jTCsF9ZVTwSt1yQ17XrlxuAK5XYrV4OrvcYGkHdipMMGQvs2KonXYVVS09pTycc2mDhG6CP6t9RBtUVALX/vEZaxrxee2HCiPe23eIMQuaV8UM/nm52Fwmbse5JVKjVFbo0YZGYEJn4TlWsjWVAaQVMacYHSCJp/wwiCDglrSrUV7LFX+1xQKj0QvZb4FGFPu8j5VXiP17bLUa2XHoh2wdRPFF2DXV7Cqf26CP1GxCfhcBt5Hh6GxfqJ1H+OSuU3BeOJgEllFsMAAAAASUVORK5CYII=" /> */}

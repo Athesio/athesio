@@ -63,16 +63,7 @@ class WhiteBoard extends Component {
 
     render(){
         return(
-            <Draggable
-        axis="both"
-        handle=".handle"
-        defaultPosition={{ x: 5, y: 5 }}
-        position={null}
-        grid={[10, 10]}
-        bounds="parent"
-        onStart={this.handleStart}
-        onDrag={this.handleDrag}
-        onStop={this.handleStop}>
+    
 
             <div style={{ backgroundColor: 'black'}}>
             <button onClick ={()=>{this.eraser();  console.log('clicked')}}>Eraser</button>
@@ -81,15 +72,12 @@ class WhiteBoard extends Component {
             <button onClick ={()=>{this.emit(); console.log('clicked')}}>Emit</button>
             <SketchField
                     ref={(c) => {
-                      console.log( `sketch is ${this.state.sketch}`);
-                      console.log( `c is ${c}`)
                      return this.state.sketch = c  
                   }}
                    tool={this.state.tool} 
                    lineColor={this.state.lineColor}
                    lineWidth={this.state.lineWidth}/>
             </div>
-            </Draggable>
         )
     }
 }
