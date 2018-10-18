@@ -17,7 +17,8 @@ class SelectRoom extends Component {
       username: '',
       selectedRepo: '',
       hovered: false,
-      showData: false,
+      showDataGithubMode: false,
+      showDataReplMode: false,
       modes: {
         GithubMode: ['Github Mode' ,'Open a repo or gist from Github to open and collaboratively edit files.'],
         ReplMode: ['REPL.mode','Perfect for interviews and collaborative code writing/testing.']
@@ -32,6 +33,7 @@ class SelectRoom extends Component {
     this.handlePreviousSessionClick = this.handlePreviousSessionClick.bind(this);
     this.addHover = this.addHover.bind(this);
     this.removeHover = this.removeHover.bind(this);
+    this.showModeContent = this.showModeContent.bind(this);
   }
 
   createRoomId(cb) {
@@ -106,27 +108,63 @@ class SelectRoom extends Component {
   }
 
   addHover(e) {
-
+    // Labels the mode with an an ID
     let target = document.getElementById(`${e.target.id}`);
     document.getElementById(`${e.target.id}`).className = `${e.target.id}Hover`;
-    let messageElement = document.createElement("h5");
-    messageElement.setAttribute('id', `${e.target.id}Hover`);
-    let message = document.createTextNode(`${this.state.modes[e.target.id][0]}`);
+    
+    // The mode's title and message appended to the title element
+    let titleElement = document.createElement("h5");
+    titleElement.setAttribute('id', `${e.target.id}Hover`);
+    let title = document.createTextNode(`${this.state.modes[e.target.id][0]}`);
+    titleElement.appendChild(title);
+    
+    // The mode's explanaition and message appended to explanaition element
+    let messageElement = document.createElement("h2");
+    let message = document.createTextNode(`${this.state.modes[e.target.id][1]}`);
+    messageElement.setAttribute('id', `${e.target.id[0]}`);
     messageElement.appendChild(message);
-    target.appendChild(messageElement);
+    
+    let br = document.createElement("br");
+
+    // The mode's start call to action and message appended to the title element    
+    let button = document.createElement("em");
+    let buttonText = document.createTextNode("[click to start]");
+    button.setAttribute('id', `${e.target.id[0]}`);
+    button.appendChild(buttonText);
+
+    // Appending all of the above elements to the original tag
+    titleElement.appendChild(messageElement);
+    titleElement.appendChild(button);
+    titleElement.appendChild(br);
+    target.appendChild(titleElement);
+    
+    // Opening the div
     target.style.width = '90%';
     e.target.id === 'GithubMode' ?  document.getElementById('ReplMode').style.width='10%' :  document.getElementById('GithubMode').style.width='10%';
 
   }
 
   removeHover(e) {
+    // removing the child element from the original div
     let target = document.getElementById(`${e.target.id}`);
-    target.removeChild(target.childNodes[0]);
+    target.childNodes.length > 0 ? target.removeChild(target.childNodes[0]) : null;
     target.style.width = '50%';
-    e.target.id === 'GithubMode' ?  document.getElementById('ReplMode').style.width='50%' :  document.getElementById('GithubMode').style.width='50%';
+    e.target.id === 'GithubMode' ? document.getElementById('ReplMode').style.width='50%' : document.getElementById('GithubMode').style.width='50%';
+    console.log(e.target.id);
+    e.target.id === 'GithubMode' ? this.setState({ showDataGithubMode: false }) : this.setState({ showDataReplMode: false });    
   }
 
+  showModeContent(e) {
+    // handles removing child element and keeping the div open to show contents
+    let GithubMode = document.getElementById('GithubMode');
+    let ReplMode = document.getElementById('ReplMode');
+    e.target.id.includes('G') ? GithubMode.removeChild(GithubMode.childNodes[0]) : ReplMode.removeChild( ReplMode.childNodes[0]); 
+    e.target.id.includes('G') ? GithubMode.style.width='90%' :  ReplMode.style.width='90%';
+    e.target.id.includes('G') ? ReplMode.style.width='10%' : GithubMode.style.width='10%';
+    e.target.id.includes('G') ? this.setState({ showDataGithubMode: true }) : this.setState({ showDataReplMode: true });
 
+   ;
+  } 
 
 
   render() {
@@ -139,9 +177,9 @@ class SelectRoom extends Component {
       if (localStorage.getItem('authenticated') === 'true') {
         return (
           <div id="Morpheus"  >
-            <div id="GithubMode" onMouseEnter={this.addHover} onMouseLeave={this.removeHover}>
+            <div id="GithubMode" onMouseEnter={this.addHover} onMouseLeave={this.removeHover} onClick={this.showModeContent}>
             {
-              this.state.showData === true ? 
+              this.state.showDataGithubMode === true ? 
               <div className="dropdown"  >
                 <Button className="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-addHovered="false" >
                   Repos
@@ -156,8 +194,8 @@ class SelectRoom extends Component {
               </div> : null
             }
             </div>
-            <div id="ReplMode" onMouseEnter={this.addHover} onMouseLeave={this.removeHover} >
-            {this.state.showData ? 
+            <div id="ReplMode" onMouseEnter={this.addHover} onMouseLeave={this.removeHover} onClick={this.showModeContent} >
+            {this.state.showDataReplMode ? 
             
               <div className="container-fluid" id="SelectRoomBox" >
                 <div className="row" id="formBox" >
