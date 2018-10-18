@@ -1,6 +1,7 @@
 import React from 'react';
 import Draggable from 'react-draggable';
 import Message from './Message.jsx';
+import { Button } from 'reactstrap';
 
 class FloatingChatDiv extends React.Component {
   constructor(props) {
@@ -61,16 +62,25 @@ class FloatingChatDiv extends React.Component {
                   }
                 </div>
                 <div className="row" >
-                  <div className="text-center" style={{ padding: '0px', width: '100%' }} >
-                    <input 
-                      type="text" 
-                      name="chatInput"
-                      value={this.state.currentMessage}
-                      onChange={(e) => this.updateMessageText(e.target.value)}
-                    />
-                      <button 
+                  <div className="message-box-container text-center" style={{ padding: '0px' }} >
+                    <div className="message-input-container">
+                      <input
+                        id="message-input"
+                        type="text"
+                        name="chatInput"
+                        value={this.state.currentMessage}
+                        onChange={(e) => this.updateMessageText(e.target.value)}
+                      />
+                    </div>
+                    <div className="send-message-container">
+                      <Button size="sm"
                         onClick={() => this.props.sendNewMessage(this.state.currentMessage, this.clearInputBox)}
-                      > Send </button>
+                      > Send </Button>
+                    </div>
+                      
+                      {/* <button 
+                        onClick={() => this.props.sendNewMessage(this.state.currentMessage, this.clearInputBox)}
+                      > Send </button> */}
                   </div>
                 </div>
               </div>

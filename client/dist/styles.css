@@ -325,7 +325,6 @@ iframe {
   transition: opacity 0.35s, transform 0.35s;
   -webkit-transform: scale(0,1);
   -ms-transform: scale(0,1);
-  transform: scale(0,1);
 }
 
 .hovereffect:hover .overlay {
@@ -344,9 +343,9 @@ iframe {
 }
 
 .hovereffect:hover img {
-  filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="linear" slope="0.6" /><feFuncG type="linear" slope="0.6" /><feFuncB type="linear" slope="0.6" /></feComponentTransfer></filter></svg>#filter');
+  /* filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="linear" slope="0.6" /><feFuncG type="linear" slope="0.6" /><feFuncB type="linear" slope="0.6" /></feComponentTransfer></filter></svg>#filter');
   filter: brightness(0.6);
-  -webkit-filter: brightness(0.6);
+  -webkit-filter: brightness(0.6); */
 }
 
 .hovereffect h2 {
@@ -385,9 +384,12 @@ iframe {
   transform: translate3d(0,0,0);
 }
 
-/* #Login div {
-  width: 100%;
-} */
+#Login {
+  background: #BA8B02;
+  background: -webkit-linear-gradient(to right, #181818, #BA8B02);
+  background: linear-gradient(to right, #181818, #BA8B02);
+}
+
 .loading {
   width: 100%;
   height: 100vh;
@@ -396,24 +398,15 @@ iframe {
 #img {
   width: 100%;
   height: 100vh;
-  /* background: #00467F;  
-background: -webkit-linear-gradient(to right, #A5CC82, #00467F); 
-background: linear-gradient(to right, #A5CC82, #00467F); */
-
-background: #BBD2C5; 
-background: -webkit-linear-gradient(to right, #292E49, #536976, #BBD2C5); 
-background: linear-gradient(to right, #292E49, #536976, #BBD2C5);
-
-/* background: #0F2027;  
-background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  
-background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
-
-
-
+  background: #BA8B02;
+  background: -webkit-linear-gradient(to right, #BA8B02, #181818);
+  background: linear-gradient(to right, #BA8B02, #181818);
 }
+
 #imgHolder {
   padding: 0px;
 }
+
 #Login a {
   padding-left: 12px;
   /* padding-top: 30px; */
@@ -599,22 +592,6 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
   height: 100vh;
 }
 
-#img {
-  width: 100%;
-  height: 100vh;
-  /* background: #00467F;  
-background: -webkit-linear-gradient(to right, #A5CC82, #00467F); 
-background: linear-gradient(to right, #A5CC82, #00467F); */
-
-background: #BBD2C5; 
-background: -webkit-linear-gradient(to right, #292E49, #536976, #BBD2C5); 
-background: linear-gradient(to right, #292E49, #536976, #BBD2C5);
-
-/* background: #0F2027;  
-background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  
-background: linear-gradient(to right, #2C5364, #203A43, #0F2027); */
-}
-
 #imgHolder {
   padding: 0px;
 }
@@ -776,13 +753,14 @@ tr:hover {
   height: 200px;
   width: 250px;
   background: white;
+  border-bottom: 3px solid black;
 }
 
 .message-container {
   padding-left: 5px;
   padding-right: 5px;
   width: 100%;
-  border-bottom: 2px #25282d solid;
+  border-bottom: 2px solid #25282d;
 }
 
 .user-message {
@@ -865,4 +843,23 @@ tr:hover {
   margin-top:5px;
   padding-right: 0px;
   margin-right: 0px;
+}
+
+.message-box-container {
+  padding: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+}
+
+#message-input {
+  width: 199px;
+}
+
+.message-input-container {
+
+}
+
+.send-message-container {
+
 }
