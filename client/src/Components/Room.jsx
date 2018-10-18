@@ -53,6 +53,7 @@ class Room extends Component {
 
     // assumes incoming message can only be from ANOTHER USER
     this.socket.on('newMessageFromServer', (newMessage) => {
+      console.log(newMessage);
       let updatedMessageList = this.state.messages;
       updatedMessageList.push(newMessage);
       this.setState({ messages: updatedMessageList });
@@ -72,6 +73,10 @@ class Room extends Component {
       this.setState({ roomUsers: roomUsers });
     })
 
+    this.socket.on('imageUpdated', (imageObj)=>{
+      console.log('from room', imageObj);
+    })
+
     // this.closeRightNav = this.closeRightNav.bind(this);
     // this.openRightNav = this.openRightNav.bind(this);
     this.logout = this.logout.bind(this);
@@ -81,6 +86,7 @@ class Room extends Component {
     this.createFloatingChat = this.createFloatingChat.bind(this);
     this.createFloatingWhiteBoard = this.createFloatingWhiteBoard.bind(this);
     this.sendNewMessage = this.sendNewMessage.bind(this);
+    this.sendNewImage = this.sendNewImage.bind(this);
     this.minimizeFloatingDiv = this.minimizeFloatingDiv.bind(this);
     this.minimizeFloatingWhiteBoardDiv = this.minimizeFloatingWhiteBoardDiv.bind(this);
     this.startRepoContentLoading = this.startRepoContentLoading.bind(this);
@@ -136,6 +142,11 @@ class Room extends Component {
       this.socket.emit('newMessage', newMessageObj);
       clearInputBoxFn();
     });
+  }
+
+  sendNewImage(newImage) {
+    let newImageObj = { image: newImage, user: this.state.user, roomId: this.state.roomId, createTime: new Date() };
+    this.socket.emit('image', newImageObj);
   }
 
   logout() {
@@ -213,7 +224,7 @@ class Room extends Component {
         return (
           <div className="wrapper">
             {this.state.showChatDiv === true ? <FloatingChatDiv user={this.state.user} messages={this.state.messages} sendNewMessage={this.sendNewMessage} minimize={this.minimizeFloatingDiv} miniStatus={this.state.minimizeDiv} /> : null}
-            {this.state.showWhiteBoardDiv === true ? <FloatingWhiteBoardDiv user={this.state.user}  minimize={this.minimizeFloatingWhiteBoardDiv} miniStatus={this.state.minimizeWhiteBoardDiv} /> : null}
+            {this.state.showWhiteBoardDiv === true ? <FloatingWhiteBoardDiv socket={this.socket} user={this.state.user} sendNewImage={this.sendNewImage} minimize={this.minimizeFloatingWhiteBoardDiv} miniStatus={this.state.minimizeWhiteBoardDiv} /> : null}
             {/* USER NAVIGATION BAR */}
             <nav id="userNav" className="sidenav">
               <UserNav roomId={this.state.roomId} socket={this.socket} user={this.state.user} logout={this.logout} contentLoaded={this.state.contentsLoaded} tab={this.state.clickedTab} fileStructure={this.state.repoFileStructure} handleFileClick = { this.handleFileClick } />

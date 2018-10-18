@@ -390,6 +390,8 @@ nsp.on('connection', (socket) => {
   });
 
   socket.on('newMessage', (messageObj) => {
+
+    console.log(messageObj);
     chatHistory[messageObj.roomId] ? chatHistory[messageObj.roomId].push(messageObj) : chatHistory[messageObj.roomId] = [messageObj];
     socket.broadcast.to(messageObj.roomId).emit('newMessageFromServer', messageObj);
   });
@@ -399,10 +401,12 @@ nsp.on('connection', (socket) => {
     socket.emit('codeUpdated', code);
   });
 
-  socket.on('image', (data) => {
-    console.log(data);
-    socket.emit('updatedImage', data);
+  socket.on('image', (imageObj) => {
+  console.log(imageObj);
+   socket.broadcast.to(imageObj.roomId).emit('updatedImage', imageObj);
   })
+
+
   socket.on('beginLoadingRepoContents', ({ repoName, username, roomId }) => {
     loadFileContents(repoName, username, roomId);
     setTimeout(()=>{ socket.emit('contentsUpdated')}, 2000);

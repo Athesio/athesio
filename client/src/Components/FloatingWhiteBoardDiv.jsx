@@ -54,7 +54,7 @@ class FloatingWhiteBoardDiv extends React.Component {
                       X
                     </div>
                   </div>
-                  < WhiteBoard />
+                  < WhiteBoard socket={this.props.socket} sendNewImage={this.props.sendNewImage}/>
               </div>
             )
           }
