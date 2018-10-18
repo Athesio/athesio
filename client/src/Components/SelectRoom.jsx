@@ -55,7 +55,6 @@ class SelectRoom extends Component {
       })
       .then(() => {
         this.retrieveUserGithubRepos();
-        this.retrieveUserGithubGists();
       })
   }
 
@@ -74,7 +73,6 @@ class SelectRoom extends Component {
   joinRoomIfValid() {
     axios.get('/api/validateRoomId', { params: { roomId: this.state.value } })
       .then((repoName) => {
-        console.log(repoName.data);
         if (repoName.data.isValid == false) {
           this.setState({
             value: ''
@@ -89,7 +87,7 @@ class SelectRoom extends Component {
 
   retrieveUserGithubRepos() {
     axios.get('/api/github/repos/', { params: { user: `${this.state.username}` } })
-      .then(({ data }) => { this.setState({repos : data}) });
+      .then(({ data }) => { this.setState({repos : data}, this.retrieveUserGithubGists) });
   }
 
   retrieveUserGithubGists() {

@@ -32,12 +32,12 @@ class Firepad extends Component {
     //   }
     // });
 
-    props.socket.on('fromServerChangeFile', (changeFileInfo) => {
+    this.props.socket.on('fromServerChangeFile', (changeFileInfo) => {
       // axios.post('/api/updateFileContents', { roomId: this.props.roomId, filePath: changeFileInfo.path, newContents: this.state.code })
       //   .then(() => {
           
       //   });
-      if (changeFileInfo.user.login === props.user.login) {
+      if (changeFileInfo.user.login === this.props.user.login) {
         firepadRef = window.firebase.database().ref(changeFileInfo.fileObj.refId);
         // firepad = window.Firepad.fromACE(firepadRef, editor);
         firepad.setText(changeFileInfo.fileObj.contents);
