@@ -4,7 +4,6 @@ import SlackNav from './NavBarComponents/SlackNav.jsx';
 import TreeMenu from './TreeMenu.jsx';
 
 const NavComponents = (props) => {
-  console.log(props.content);
   if (props.tab === 'Home') {
     return props.contentLoaded ? (
       <div id="HomeNav" >
