@@ -61,7 +61,6 @@ class LandingPage extends Component {
             </div>
           </div>
           <div className="text-center" id="getStarted" >
-            {/* <Link to='/login'> <button type="button" className="btn" > Get started </button> </Link> */}
             <Link to='/login'>Get started </Link>
           </div>
 
@@ -89,16 +88,18 @@ class LandingPage extends Component {
             </div>
             <div className="col-xs-6 col-md-6 col-lg-3" >
               <p className="text-center"  >
-                <a> <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IgogICAgIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIKICAgICB2aWV3Qm94PSIwIDAgNDggNDgiCiAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjsiPjxnIGlkPSJzdXJmYWNlMSI+PHBhdGggc3R5bGU9IiBmaWxsOiNGRkIzMDA7IiBkPSJNIDMxLjE5OTIxOSAxMC42MDE1NjMgTCAyNC42MDE1NjMgMTIuODk4NDM4IEwgMjMuMTk5MjE5IDguNjAxNTYzIEMgMjIuNjAxNTYzIDYuODAwNzgxIDIzLjUgNC44MDA3ODEgMjUuMzk4NDM4IDQuMTk5MjE5IEMgMjcuMTk5MjE5IDMuNjAxNTYzIDI5LjE5OTIxOSA0LjUgMjkuODAwNzgxIDYuMzk4NDM4IFogTSAyOS4xOTkyMTkgMjYuNjAxNTYzIEwgMzUuODAwNzgxIDI0LjMwMDc4MSBMIDMzLjUgMTcuMTk5MjE5IEwgMjYuODk4NDM4IDE5LjUgWiBNIDMyLjYwMTU2MyAzNi44MDA3ODEgQyAzMy4xMDE1NjMgMzguMTk5MjE5IDM0LjUgMzkuMTk5MjE5IDM1Ljg5ODQzOCAzOS4xOTkyMTkgQyAzNi4zMDA3ODEgMzkuMTk5MjE5IDM2LjY5OTIxOSAzOS4xMDE1NjMgMzcgMzkgQyAzOC44MDA3ODEgMzguMzk4NDM4IDM5LjgwMDc4MSAzNi4zOTg0MzggMzkuMTk5MjE5IDM0LjYwMTU2MyBMIDM4IDMxIEwgMzEuMzk4NDM4IDMzLjMwMDc4MSBaICI+PC9wYXRoPjxwYXRoIHN0eWxlPSIgZmlsbDojMDBCRkE1OyIgZD0iTSAxNy4xOTkyMTkgMTUuNSBMIDEwLjYwMTU2MyAxNy44MDA3ODEgTCA5LjE5OTIxOSAxMy42MDE1NjMgQyA4LjYwMTU2MyAxMS44MDA3ODEgOS41IDkuODAwNzgxIDExLjM5ODQzOCA5LjE5OTIxOSBDIDEzLjE5OTIxOSA4LjYwMTU2MyAxNS4xOTkyMTkgOS41IDE1LjgwMDc4MSAxMS4zOTg0MzggWiBNIDE4LjYwMTU2MyA0MS44MDA3ODEgQyAxOS4xMDE1NjMgNDMuMTk5MjE5IDIwLjUgNDQuMTk5MjE5IDIxLjg5ODQzOCA0NC4xOTkyMTkgQyAyMi4zMDA3ODEgNDQuMTk5MjE5IDIyLjY5OTIxOSA0NC4xMDE1NjMgMjMgNDQgQyAyNC44MDA3ODEgNDMuMzk4NDM4IDI1LjgwMDc4MSA0MS4zOTg0MzggMjUuMTk5MjE5IDM5LjYwMTU2MyBMIDI0IDM1Ljg5ODQzOCBMIDE3LjM5ODQzOCAzOC4xOTkyMTkgWiBNIDE5LjM5ODQzOCAyMi4xOTkyMTkgTCAxMi44MDA3ODEgMjQuNSBMIDE1LjEwMTU2MyAzMS42MDE1NjMgTCAyMS42OTkyMTkgMjkuMzAwNzgxIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiMwMEJDRDQ7IiBkPSJNIDMzLjM5ODQzOCAxNy4zMDA3ODEgTCAzMS4xOTkyMTkgMTAuNjk5MjE5IEwgMzUuMzAwNzgxIDkuMzAwNzgxIEMgMzcuMTAxNTYzIDguNjk5MjE5IDM5LjEwMTU2MyA5LjYwMTU2MyAzOS42OTkyMTkgMTEuNSBDIDQwLjMwMDc4MSAxMy4zMDA3ODEgMzkuMzk4NDM4IDE1LjMwMDc4MSAzNy41IDE1Ljg5ODQzOCBaIE0gMjYuODAwNzgxIDE5LjYwMTU2MyBMIDI0LjYwMTU2MyAxMyBMIDE3LjE5OTIxOSAxNS42MDE1NjMgTCAxOS4zOTg0MzggMjIuMTk5MjE5IFogTSA2LjM5ODQzOCAxOS4zMDA3ODEgQyA0LjYwMTU2MyAxOS44OTg0MzggMy42MDE1NjMgMjEuODk4NDM4IDQuMTk5MjE5IDIzLjY5OTIxOSBDIDQuNjk5MjE5IDI1LjE5OTIxOSA2LjEwMTU2MyAyNi4xMDE1NjMgNy41IDI2LjEwMTU2MyBDIDcuODk4NDM4IDI2LjEwMTU2MyA4LjMwMDc4MSAyNiA4LjYwMTU2MyAyNS44OTg0MzggTCAxMi42OTkyMTkgMjQuNSBMIDEwLjUgMTcuODk4NDM4IFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiNFOTFFNjM7IiBkPSJNIDE1LjEwMTU2MyAzMS41IEwgMTcuMzAwNzgxIDM4LjEwMTU2MyBMIDEyLjYwMTU2MyAzOS42OTkyMTkgQyAxMi4xOTkyMTkgMzkuODAwNzgxIDExLjgwMDc4MSAzOS44OTg0MzggMTEuNSAzOS44OTg0MzggQyAxMCAzOS44OTg0MzggOC42OTkyMTkgMzkgOC4xOTkyMTkgMzcuNSBDIDcuNjAxNTYzIDM1LjY5OTIxOSA4LjUgMzMuNjk5MjE5IDEwLjM5ODQzOCAzMy4xMDE1NjMgWiBNIDQzLjY5OTIxOSAyNS4zMDA3ODEgQyA0My4xMDE1NjMgMjMuNSA0MS4xMDE1NjMgMjIuNSAzOS4zMDA3ODEgMjMuMTAxNTYzIEwgMzUuODAwNzgxIDI0LjMwMDc4MSBMIDM4IDMxIEwgNDEuNjAxNTYzIDI5LjgwMDc4MSBDIDQzLjM5ODQzOCAyOS4xMDE1NjMgNDQuMzk4NDM4IDI3LjEwMTU2MyA0My42OTkyMTkgMjUuMzAwNzgxIFogTSAyMS42OTkyMTkgMjkuMTk5MjE5IEwgMjMuODk4NDM4IDM1LjgwMDc4MSBMIDMxLjMwMDc4MSAzMy4xOTkyMTkgTCAyOS4xMDE1NjMgMjYuNjAxNTYzIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiMzODhFM0M7IiBkPSJNIDMzLjM5ODQzOCAxNy4zMDA3ODEgTCAzMS4xOTkyMTkgMTAuNjAxNTYzIEwgMjQuNjAxNTYzIDEyLjg5ODQzOCBMIDI2LjgwMDc4MSAxOS42MDE1NjMgWiAiPjwvcGF0aD48cGF0aCBzdHlsZT0iIGZpbGw6IzAwODk3QjsiIGQ9Ik0gMTcuMTk5MjE5IDE1LjUgTCAxMC42MDE1NjMgMTcuODAwNzgxIEwgMTIuODAwNzgxIDI0LjUgTCAxOS4zOTg0MzggMjIuMTk5MjE5IFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiNCRjM2MEM7IiBkPSJNIDI5LjE5OTIxOSAyNi42MDE1NjMgTCAzMS4zOTg0MzggMzMuMzAwNzgxIEwgMzggMzEgTCAzNS44MDA3ODEgMjQuMzAwNzgxIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiM0RTM0MkU7IiBkPSJNIDE1LjEwMTU2MyAzMS41IEwgMTcuMzAwNzgxIDM4LjE5OTIxOSBMIDIzLjg5ODQzOCAzNS44OTg0MzggTCAyMS42OTkyMTkgMjkuMTk5MjE5IFogIj48L3BhdGg+PC9nPjwvc3ZnPg=="></img> </a>
+                <a><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAO7SURBVGhD7ZldiE1RFMevzxgze99L8k1R4o0XT0SUJA8SKfItjTwNj0he8CK8IEUjxsMUkRAvl3vOHYp4QCk10TyM8TH33mPuGOPj+q99/u7XnIvMLXtyfrWaOWutvff6n33OvvucEwkJCQkJsYrcs8jwtKNjtlgqrqMs7ffkcpFBGUdvTTvqacbVOdss7epPGVdd9u7XzmbJfREREHAu38jRvWjUaY05Kl0QpbpSSb2YpZeScaKbTBIapF21PhePjGDIGrru1UxAbed5ojvePxitGCqAS+ohFW+my0rMleNqV2r1HL2N7gII9kDlt3fumDq6rAUiGjgrJ+gqYGYDlxUPrQb38jq/Xn2SrgKhkH9AKMQ2QiG2EQoJoiteMz5wi1BG1h0zsSM+tpaHFflwLzble8vkkTz8JVURguIn4xc1KfmyE8Dep1G2/AznySTqZqK/JybP1V/lVxjbi8EM58Hmby5iL9hfL4o7yFBFqiIEeXdYXDt2oR/9AtR+hvP8FIG/bYh3+21UPcOG3KPIMPTRyrxXEPLZ70+vYUog/RYiO2I5u8jz2m+PG+W50QV+gfo+UwzZltGT2F+bFJty9CoWeIMphpSr57D9c5ktz9Xb/WN1nimB9F8IBpMc/1IxnR0xA5cVKCIpOOsl9EoMeCqoQLkvWNCHjFu3HP9f8vtTR5kSSL+FCOhkn8mlQcQ3nPFFDOdB0cfL8j7LDDCcB8VcLM5DDR7azmA4kKoIEfAQthGdXUObJs+Jzae7BJk9FLQTM3NdZkJuaoZKwOU6FP3sht1C3lkvWTuLoYpUTci/JhRiG6EQ2wiF2MZ/JMRVXTy0GuysN1QWYvY7ZisxnS5rQZ2H/ROvD9FVAE5u2PQFeS1Jt3V0OrGpP0+6l4gupLsAH4SyRoyr7sLqIWpNsWG/tFqeDNmkD3xIKmlTNXPVWtgB7N3e+TXq6xy2L6mEXoKEt5JY0Rz1mOklyDcLtP0S2KbKhnFudj6KaQ4djHwZwqqwC+ob0ai5zERIlqklwH9G4hhE3pSXt6uKoaZjsKUc8u+RVQ0d5uTBiS6DXJaY/l6ZzYHwNl/OurmHir/n5ZojQzCDCfHDGui2l85kdJoptuhHU1Y3+E77IlRcRDFkL1jy9kjBOPtX5VguL/j4mKpa5YWDSbQZefyUmcB98D2dUMvwdweKf+3PkH4ps8VUe5Gvpyj8DWejGwLMuyxa05+8bbQCzIRXVLgsrz1YAq+kW9Q8pgwMMkm9hev3XiyzKzA7MYYsIhL5AQtucBL71+loAAAAAElFTkSuQmCC"/></a>
                 <br />
-                <a>Slack</a>
+                <a>Messaging</a>
               </p>
             </div>
             <div className="col-xs-6 col-md-6 col-lg-3" >
               <p className="text-center"  >
-                <a><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOgSURBVGhD7Zk5aBRxGMVjPGIuNSKCeKAYFAvFRjxiYQQbGwmoBBGDR6GFwRQiCoohiJX3EQRboxiPQkHSBEQbiYUXHhER0niAwSRNxCTr75t9u7Iku5mZ/W9gYB48v5n3/96b+cjs7OxYFCNGjBjRRCKRKIZVEWKFTj0JhLKRkZFW2M92pMA5f4F13iBsXJL4F/ZGiH2p86astkF+SFjmTRYhcM7ndO4tdml50FqkwACH7Nyp1ws6CLFTYBUHKpXkFAUdhNAN8AbshsOKt4PZB7MFVqo1b5DlfhDCZsMHiksD7SdM3xHZfgv3szlL1tAgx+0g2CsIe2U51O/wJFwOS9RiB62G6UHZ7oP1Wg4F/G4HIeiaZVBfw/mSR4G1ctgA29U/BDdrOTDwuhsE60yC/sDk/dwn6D/jHTiReCkpMFwPssP8hHVK8gX6S2GvvFn/irmAz90ghDQr4rQk38DbYUbqVkmB4HqQK+anHpTkG3huybtLUiDgczrIZfNT90nyDTy35Q1198LndJBT5qcel+QbeJ7KWyspEPA5HWSP+amtknwBSzGeX/LOlRwI+JwOstL81C5JvkD/Kvk+SQoMvO4GwTrH/ITZd4nvh0N6j8j3WFJg4HX6F2kyP7UDlkseF/TWwH5oX6ShnrvwOh3krPmpTZJ8A89HeZdKCgR8TgfZbX5qJ1woOSdon0ZvLRyG9mQ8WUuBgNfpIJXwm2VQ30nOCfpqvIMCti9KDgy87gYxYF8MfxNoLzDG/ZzQ02jHpLZRpkoODPxuBzEQ9shyqA2SsoKe5+pNvsoJCfwFGWS75VC7KWWSR4H1LeqzL8PpkkOBDPeDEGHf1F2WRX0oOQPoS+CAeholhwYZ7gcxELjesqjPJGUAvVrrnymTJIcGOYUZhJiNlpVtEJYWaf2rpLwwEYM8kZQB9Hla75GUFwo2CIHnLYvaLikD6PbywW7R9tJhreTQIMPtIAStgPcth2pYp6VRYC31i3IAnmAz878HAgC/m0GwbSLkDvTeKFIHYc6frayX0HrX+g3s2wu8ZrhALb6B5/8g/DPkJfq8i9Bnz0kH4PukzQuyy6UNVqttXNBbB98owjLscrsHfV9y9KYGuWo7XhjVnmLt1U5W0rMX2q0zDfZ74FE2x/TkIr6d8CYcZD8N9u23/JieFOmphy/Ytv7DNsg2aL8JIgnO/QMl+TljZw28gGDXbiTI+dqlfAzO8IaIESNGjBgTj6KifxEFvzU5pO4HAAAAAElFTkSuQmCC" /></a>
+                <a><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAF9SURBVGhD7ZkxTsNAEEUtJBJuQYOUA9BQcwx66FNFKEUORJWKIiUH4QZUqW3+X/8Ukexk48wslpknjeLdmZ3Zp5AgQRUEQRCMirquF03TPI4peCddLx8c+sLhUcE76Xr5TFIEz3vEzx/FXtcwEXnRdnE4W9cIkUmKTOMzMhZCROfZYI2Xzt+23qHZCQuR+Na6lhA5cIkI8k96NKeYCHJL1Wy0ZQpnp0sA3knb+fCQzveKYP9VJQmszWU4W+1dRe4R3ypLYG0qw9lq7SdCkHOV4Wy19RUhyLvJcLZa+osQ1HTJvCs9GM5Wu2Iic8RORxJYb/Fyo5JBcHbbrYAISu5Q89lWt2g9U8lgOLvt6CyCdKcEYq6Sq+BstfUTQSpLAutdRjyr/Ajs+4tgf6WSBNad74TSJzkxo8g7covch2p6f5yYP0ffDO6rxE+EIE2ZFaL3M4Gat3OB8w8qP4KzkU/g2U/EmxA5ECLGWIvEH+gs+fci0/jXWxAEQeBHVf0CoYQuXFzacZYAAAAASUVORK5CYII="/></a>
+                {/* <a><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOgSURBVGhD7Zk5aBRxGMVjPGIuNSKCeKAYFAvFRjxiYQQbGwmoBBGDR6GFwRQiCoohiJX3EQRboxiPQkHSBEQbiYUXHhER0niAwSRNxCTr75t9u7Iku5mZ/W9gYB48v5n3/96b+cjs7OxYFCNGjBjRRCKRKIZVEWKFTj0JhLKRkZFW2M92pMA5f4F13iBsXJL4F/ZGiH2p86astkF+SFjmTRYhcM7ndO4tdml50FqkwACH7Nyp1ws6CLFTYBUHKpXkFAUdhNAN8AbshsOKt4PZB7MFVqo1b5DlfhDCZsMHiksD7SdM3xHZfgv3szlL1tAgx+0g2CsIe2U51O/wJFwOS9RiB62G6UHZ7oP1Wg4F/G4HIeiaZVBfw/mSR4G1ctgA29U/BDdrOTDwuhsE60yC/sDk/dwn6D/jHTiReCkpMFwPssP8hHVK8gX6S2GvvFn/irmAz90ghDQr4rQk38DbYUbqVkmB4HqQK+anHpTkG3huybtLUiDgczrIZfNT90nyDTy35Q1198LndJBT5qcel+QbeJ7KWyspEPA5HWSP+amtknwBSzGeX/LOlRwI+JwOstL81C5JvkD/Kvk+SQoMvO4GwTrH/ITZd4nvh0N6j8j3WFJg4HX6F2kyP7UDlkseF/TWwH5oX6ShnrvwOh3krPmpTZJ8A89HeZdKCgR8TgfZbX5qJ1woOSdon0ZvLRyG9mQ8WUuBgNfpIJXwm2VQ30nOCfpqvIMCti9KDgy87gYxYF8MfxNoLzDG/ZzQ02jHpLZRpkoODPxuBzEQ9shyqA2SsoKe5+pNvsoJCfwFGWS75VC7KWWSR4H1LeqzL8PpkkOBDPeDEGHf1F2WRX0oOQPoS+CAeholhwYZ7gcxELjesqjPJGUAvVrrnymTJIcGOYUZhJiNlpVtEJYWaf2rpLwwEYM8kZQB9Hla75GUFwo2CIHnLYvaLikD6PbywW7R9tJhreTQIMPtIAStgPcth2pYp6VRYC31i3IAnmAz878HAgC/m0GwbSLkDvTeKFIHYc6frayX0HrX+g3s2wu8ZrhALb6B5/8g/DPkJfq8i9Bnz0kH4PukzQuyy6UNVqttXNBbB98owjLscrsHfV9y9KYGuWo7XhjVnmLt1U5W0rMX2q0zDfZ74FE2x/TkIr6d8CYcZD8N9u23/JieFOmphy/Ytv7DNsg2aL8JIgnO/QMl+TljZw28gGDXbiTI+dqlfAzO8IaIESNGjBgTj6KifxEFvzU5pO4HAAAAAElFTkSuQmCC" /></a> */}
                 <br />
-                <a>Video Chatting</a>
+                {/* <a>Video Chatting</a> */}
+                <a>Code Execution</a>
               </p>
             </div>
           </div>
@@ -108,20 +109,29 @@ class LandingPage extends Component {
             <div className="col-xs-6 col-md-6 col-lg-3" >
               <p className="text-center"  >
                 <a>
-                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMNSURBVGhD7ZmxaxRBFMYvESVooUZMYSEi2okIAbEQFKwExSIRAkEtjI2ihYISRNBCNE0EQSSNCKKIpZWVifoH2ChaiIWiomDUSAoTvfP3hm+D593N7iW7O0vYH3zMzvfezMvL7t7t3VVKSnKmVqstr1arN9A3jlOFPd+iIZXKFgqNqegfNJmifrhugON9KpcN1OikyBT6zfFG2anBvifVyD1Z2UCNlVYIvstKFfbdaZvTyDNZ2UAN1wiF7DJYnbbYdy9jfo1kTZ5nxGh2wy5UU7k2AovjHoGyER/sm6gR4j3otKbtQ43gjRC297LnlgcXZbcHC4tyRgZRRJ/s5FCjMPcIOWeV+xX1yE4G64I0Yn8o2qrpHHgPlX9LVjJYk3sjHK9BL9EXtFm2g9QNeL/QLNokOx4W5t4I02XMo//8C4alCjnwoqfxEVnxkB/k0sLqwnul2BnZDqxe+e9lxUN+sJsdb49iHxk6ZTvw3im2RZYfcoM1YuC/tjjsluXAv2sm42FZfsgN3cgVxc/LcjAfln9Zlh9yQzcypPhNWQ7mx5r5LSE3dCP9itd9FGY+aD7cluWHxNCNnFJ8VJaD+Qn512X5ITd0I3cUPy7LgXVV/jlZfsgN1gi2fZ82aXFYL9uBP24m435ZfsgN1gjeBYvBhCwHfjeaQfY9W7dsP2wSpBHm29E0MnbIdjA/pDVPZcVDfqhGoveJa7IcWHMfshiPyo6H/JCX1hFCSzR14EVn4wNDl+x4SA7WyP+QsxZFz1jJz4bBmkI0Qoo92j+xXJhAHQolgwWFaIT4gPI+o3Wyk8PaIl1al0jdpml7sLAwjSwIaiyuRig0zXAwbbGve/fO84xkSp5nZIbhQdpi38eMuZ4R7z1C3L7ZaHbp9KOWL5fkFOdmJ7aKP8R+LG1F3dPrvxDLpxEKrFChn7IaINxB3F7jm10699EBpTZAbBd5tv+4rOygyBsVs280Gi6f+Yr9BtAjjm3vuo+ymUCRPjRrBbOAvT+h9h875gP1eik2gsZS1jBq7yeCkpIQVCp/AXAQPn5FCELWAAAAAElFTkSuQmCC" />
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASTSURBVGhD7ZltiFRVGMdXTRFsW9/BIikoUMIvGikqgpqEWdIHw7fIlIVdDVFBUUj8YLIbfdLQFRX2S2xknwqEkMIQKV+pXLINdMWXpLAURY3wZbfff+c/V6eZce89M7NecP/w49znOc/znHNmd+65505Vr8qkjo6OZ+ENWAr18CaMcne61dnZ+QSTXUZ7graDNk+4j8G7XPZ1WrrE5F6CXzzZNtgEMzDH0I6F2bAFLjjmOLzo9DBR5zl4C94uB0yojvYa7d+wmOs+HipP9OmvtgpuwhV4xV3JRGIt3KFgWUXN0/C8h+lWpEwg/rKJnReJpD/gZ3iNYq+WAjVmwZ9wHV7wELFFzkT4F762K54YfDRIG+wqSUxgvorR1tuVWORucY2ZdnUvguc4aY5dQaJEX2pMh1PwO/YAdyUWuYOpoe/LXru6F0kbQBptV2Ix4GT40XX0oWx1V7C0CLhKuXi3ZIJbCL5mM7HI1+Z2G/S92O2FzHd3sKixxrXi3Y4JbIVDNhOJPO0Dd+EHGAFzPfg0hwSLGgtda5JdxUVcfwL1aTbZFVvkVMNFaKdOjX0joQF7YFdQCaKOdnppgl3FRfA4RdIutyu2yFnh3NftKpuo+QF07Wu0+o/RWMW/KwQsUjCaaldskXsQzpJbdMcOFXVnwE5zXhOkPQojHJIrOhoVhLr+NZKI3BvQbLNiYm66rdeBvgJHsPu7677o2AfnbcaWimv15DbaVXExVr3HXGLXfWkRsM9mbGkh5P0Du+yquBizH+Pp2e2IXRnRUeMVBn2q5P0kbPaIGK8ZbtrMiDVM9UIW2ZVI5G10/st2VVxeyA2bGeFY7omMsyuRyBsFesI9TJng56q4Yow+jHUGcjdvHE1wm4D8u0BMkf++P4y9NCVvgg/TA2PV2pURjkPQajNY1PjQA+g8M8vusonSOj2uBj0KHcTu566McOgY2mKzJFHnHfjLC7pI8wXtNtqPQiH/Y/gUsuf5AzDMQ2aEv6yHKYlaTzLQStgPl6DkozM1dH7/BvQAmf+IQkdZDlOVEvOKdyMipuTDVCXFvOJtDQSUdJiqtJhbvM2agODDVE+J+enx6Sub+WKhwYepnhTz0wPtWZv5ojN7mKqzK5Vifo0gVduVKzqyZ2E99OnWllbaPM/CZ3Y6sre2VpoTaYX5/UareRbeIrILQam89WbF/LK34Md4IfiCn4TLLeaSfCH4hsK3cA9Owlh3xRY5gyB6+079GuzopwGu9QLvaZuy9TNc9BCoWHjKZvBCtmLraXgN/AoH7H8G1sF6o9yCr3/oa4Do9Mb1LmizKVv7QrQJc30YPrcpWy/7dtgMXsiX8L2vt8M5Xy+G6Hc/Lm/RDFff/0Vfk2Jsym6B6A0N1znnH11D9OKD1JxjBXbQQhbIQdsOUoO71FdN1xBT9BRI3Fz4zKYm8h72dpvqXwubbcrWhrfSpuw9sNBm2EIkJcAnsJS+R/7rKnMIW0jaxPwen4XMc4Be/xf8QTMNML9mWqnwzwp0DCDou0xMusU8H/5yhBi9R51CW/DH/jTA/MZ7ur3qVa8SqarqP6fmK/ZUpY11AAAAAElFTkSuQmCC" />
                 </a>
                 <br />
-                <a> Mobile Development </a>
+                <a>Cloud Storage</a>
+                {/* <a> Mobile Development </a> */}
               </p>
             </div>
             <div className="col-xs-6 col-md-6 col-lg-3" >
               <p className="text-center"  >
-                <a>
-                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAL0SURBVGhD7ZpNiE1xGMYv+YghYygLTMyCNNRMIgsrY2PJsLnJUrKQjSRbKTXsxCxmI7JiZ6Gx8LEgnyUK42NLiTE3RcPl9x7POR333NM5Z5r/vedwnnp673nf93n/79OcW3fOvRVXqNfrm+Ao/ALfwSG4UOVigIW3wK+/GkDuFmGO2vIPFr6rxb2/AlwHnym3T22tAWfO59Cz8LMtkBXo3hNmaJyZ2/mnkg3oDC/goEZlA8JhDfoJP8WRlnH1/WiondYoD1wvga9C9QnpJkO5ZqyF5m/WuHRANxPRhIl53aN0U1Dv1kFPlUoFJFulu6NULOg5od4zSqUDmkUmBONKxYIe38hzwuK0pH8HMa2RqnovKZUOaDIbmSpY7rZGxaIlRhg+D96Hze7vJH6ERzQqFvS4N9IKlEbQlEZcoDSCpjTiAoUzwqLL4VxdBiiUEZbcBu2D4UWlAhTGCOcsYMm3diDxmNIBnBlh4DJqPSn513+EaCO3D9fn6LNFHxFmKx2A/PQbYdhaOKl6Iui9Kqlp15gWPqDUqdwANHyHG7zGBpB3YqQLjlJ7mIb0HpLU5nZy/YZosNpK6N9Sx9UWAbX8vUeY2R1a3ntAQbS/0Cy1RJBLIwbmhs18g70qNUVujRiYbWbsFt2vVCxybSQLSiNoSiMuUDgjLNoPu3QZoFBGWHIQGq4oFYBcMYxwzlKW/GAHEg8oHcCZEfJ9cHsSOXiA6H2m8kEucvtwfZk+w00YPPj2QX36jTCsF9ZVTwSt1yQ17XrlxuAK5XYrV4OrvcYGkHdipMMGQvs2KonXYVVS09pTycc2mDhG6CP6t9RBtUVALX/vEZaxrxee2HCiPe23eIMQuaV8UM/nm52Fwmbse5JVKjVFbo0YZGYEJn4TlWsjWVAaQVMacYHSCJp/wwiCDglrSrUV7LFX+1xQKj0QvZb4FGFPu8j5VXiP17bLUa2XHoh2wdRPFF2DXV7Cqf26CP1GxCfhcBt5Hh6GxfqJ1H+OSuU3BeOJgEllFsMAAAAASUVORK5CYII=" />
-                </a>
+                  <a><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASRSURBVGhD7ZldiFVlFIZHx/zNv0hRRiRzTNEU/9AMEpwLL7wQg25CScQulEIEvbCL8sJgUASJ/AEhSrGg0EEj0ChBosTQi0HJX0RLA9FMSUUlnfF5N+83nNE5w9n7nG/PGfCFl7X3Wt+33rXmzN7729+ueY4c0NLSshT+DL+B4+zuPmhtba2l8K3YNnD+D2aqh1Q/KHgA/N7F34PLOPzO592jGYocQbHHXfQ1OMt+/ULf2l/dzVDgJHjJxZ6BYxxKgLv6m6GwefBfFQmOwKEOtQP+6m2Ggt6DD13c17CPQx2CYdXVDAX0oJBPYIuL+lQ+hzsF4wqbuQFHOZQv0H8B8S9dyP9wuUMlg6lqZr9zbLA7P6A7GOGfXMB/cL5DqcB0/aJ7nWe93fkAzdGInrL4FTjFodRgbqPzXIcj7Y4PxKbDvy3eDOscSg3mrnSeB3C23fGB2AJ4x+KH4ECHUoO5DfARFBbbHR+IrYSP3MROTC+HUoP5k5l/W7nAOrvjAiFdjJukiBU+cigTmD8KXnG+7XbHBVp9YVjo6f/4XYcygTS60510vgOYWofiAZGXEfvVojfhXIcyQUWT47DznYSDHIoHROrheYtehOMdygxybHc+3a7jP8EReRPesOjvcLhDmUGqdcoHbpNvst3xgMg78L4UsU2wn0OZQY7FUHgIG+yOB0TWSs1NbMGUfSGqcBhWxO/bHQcqGJHw/6sH1CqHygJ56kmZPCs4brQ7DtB4EZEfLHYXs8ihskCuYfCC8+7BlLSszwQERiJwwmJt79XlgnT9yXXMeXW77e1Q5YGA3qv/tNhp2O69OitIp39TPeiU9yxmsEOVBwINCIR1TtH36iwg9zYlxWpJXm935UHy+fCexIDu6S85VDbIFZbk2sOKtyQneVsTWF3Ysr/AAR6SGeRYCHXHExfaXXmQvLCJz+FYGK6Rspph7mwYcn9gd+VBcj2UgtBnmORWiH2V87KaYY7WZNedI96SnPza5QhCelq3u59znrkZpmhJHhaWcZfkCNRZ6JJdz4Bw6mYY2ptxYUmuZ0Z/h+IAgVqou9NjWHQVy5iSm2GI3hj1tNbYC3CYQ3GBUJNFl9jVIRhSUjP4k+0boD/QJLvjA7EPpYrdYVdRMKzTZjgPz4p8luSFQHCBxZvs6hQM7bAZrO5+2hYV8tu+CaCeRS6qpEYEhj/dzBsc5rt98zQoYrfUsavtKglMKWwmeeECXzmcL9APu3lXYepdC+a85QbUTNwleTEgPA3h8IaW+jWTOXUwPPB+w8RbkheDmoD6CpSA4z9gybshjC1s4iimS5rQbvlNF7EXNvu4rRlOJ3D8MdwHtRmtD/n66jSX2CvY0ISe2vk3gegMxJOPkVh90tKTXTuGhc18AcPFWxQM0eflLvklZsJbLiJpwiE1qGaSPVeB48twBZwIX4dvQ62MT2D/glqCDPH0fIH4VRepu9RGOIfTno6Nh+HjjD6XdU2RpYACG2HyiwRwrnfnXTA0cRCT/y00LSiyF8Xqo/1meE7FB3D+I6avh3YvUPxrcA3Ut++47wzPUYiamieeQRsmQjDYyQAAAABJRU5ErkJggg=="/></a>
+                  {/* <a><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAL0SURBVGhD7ZpNiE1xGMYv+YghYygLTMyCNNRMIgsrY2PJsLnJUrKQjSRbKTXsxCxmI7JiZ6Gx8LEgnyUK42NLiTE3RcPl9x7POR333NM5Z5r/vedwnnp673nf93n/79OcW3fOvRVXqNfrm+Ao/ALfwSG4UOVigIW3wK+/GkDuFmGO2vIPFr6rxb2/AlwHnym3T22tAWfO59Cz8LMtkBXo3hNmaJyZ2/mnkg3oDC/goEZlA8JhDfoJP8WRlnH1/WiondYoD1wvga9C9QnpJkO5ZqyF5m/WuHRANxPRhIl53aN0U1Dv1kFPlUoFJFulu6NULOg5od4zSqUDmkUmBONKxYIe38hzwuK0pH8HMa2RqnovKZUOaDIbmSpY7rZGxaIlRhg+D96Hze7vJH6ERzQqFvS4N9IKlEbQlEZcoDSCpjTiAoUzwqLL4VxdBiiUEZbcBu2D4UWlAhTGCOcsYMm3diDxmNIBnBlh4DJqPSn513+EaCO3D9fn6LNFHxFmKx2A/PQbYdhaOKl6Iui9Kqlp15gWPqDUqdwANHyHG7zGBpB3YqQLjlJ7mIb0HpLU5nZy/YZosNpK6N9Sx9UWAbX8vUeY2R1a3ntAQbS/0Cy1RJBLIwbmhs18g70qNUVujRiYbWbsFt2vVCxybSQLSiNoSiMuUDgjLNoPu3QZoFBGWHIQGq4oFYBcMYxwzlKW/GAHEg8oHcCZEfJ9cHsSOXiA6H2m8kEucvtwfZk+w00YPPj2QX36jTCsF9ZVTwSt1yQ17XrlxuAK5XYrV4OrvcYGkHdipMMGQvs2KonXYVVS09pTycc2mDhG6CP6t9RBtUVALX/vEZaxrxee2HCiPe23eIMQuaV8UM/nm52Fwmbse5JVKjVFbo0YZGYEJn4TlWsjWVAaQVMacYHSCJp/wwiCDglrSrUV7LFX+1xQKj0QvZb4FGFPu8j5VXiP17bLUa2XHoh2wdRPFF2DXV7Cqf26CP1GxCfhcBt5Hh6GxfqJ1H+OSuU3BeOJgEllFsMAAAAASUVORK5CYII=" /></a> */}
                 <br />
-                <a> Unit Testing</a>
+                {/* <a> Unit Testing</a> */}
+                <a>Whiteboarding</a>
               </p>
+            </div>
+            <div className="col-xs-6 col-md-6 col-lg-3" >
+              <p className="text-center"  >
+                <a><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IgogICAgIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIKICAgICB2aWV3Qm94PSIwIDAgNDggNDgiCiAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjsiPjxnIGlkPSJzdXJmYWNlMSI+PHBhdGggc3R5bGU9IiBmaWxsOiNGRkIzMDA7IiBkPSJNIDMxLjE5OTIxOSAxMC42MDE1NjMgTCAyNC42MDE1NjMgMTIuODk4NDM4IEwgMjMuMTk5MjE5IDguNjAxNTYzIEMgMjIuNjAxNTYzIDYuODAwNzgxIDIzLjUgNC44MDA3ODEgMjUuMzk4NDM4IDQuMTk5MjE5IEMgMjcuMTk5MjE5IDMuNjAxNTYzIDI5LjE5OTIxOSA0LjUgMjkuODAwNzgxIDYuMzk4NDM4IFogTSAyOS4xOTkyMTkgMjYuNjAxNTYzIEwgMzUuODAwNzgxIDI0LjMwMDc4MSBMIDMzLjUgMTcuMTk5MjE5IEwgMjYuODk4NDM4IDE5LjUgWiBNIDMyLjYwMTU2MyAzNi44MDA3ODEgQyAzMy4xMDE1NjMgMzguMTk5MjE5IDM0LjUgMzkuMTk5MjE5IDM1Ljg5ODQzOCAzOS4xOTkyMTkgQyAzNi4zMDA3ODEgMzkuMTk5MjE5IDM2LjY5OTIxOSAzOS4xMDE1NjMgMzcgMzkgQyAzOC44MDA3ODEgMzguMzk4NDM4IDM5LjgwMDc4MSAzNi4zOTg0MzggMzkuMTk5MjE5IDM0LjYwMTU2MyBMIDM4IDMxIEwgMzEuMzk4NDM4IDMzLjMwMDc4MSBaICI+PC9wYXRoPjxwYXRoIHN0eWxlPSIgZmlsbDojMDBCRkE1OyIgZD0iTSAxNy4xOTkyMTkgMTUuNSBMIDEwLjYwMTU2MyAxNy44MDA3ODEgTCA5LjE5OTIxOSAxMy42MDE1NjMgQyA4LjYwMTU2MyAxMS44MDA3ODEgOS41IDkuODAwNzgxIDExLjM5ODQzOCA5LjE5OTIxOSBDIDEzLjE5OTIxOSA4LjYwMTU2MyAxNS4xOTkyMTkgOS41IDE1LjgwMDc4MSAxMS4zOTg0MzggWiBNIDE4LjYwMTU2MyA0MS44MDA3ODEgQyAxOS4xMDE1NjMgNDMuMTk5MjE5IDIwLjUgNDQuMTk5MjE5IDIxLjg5ODQzOCA0NC4xOTkyMTkgQyAyMi4zMDA3ODEgNDQuMTk5MjE5IDIyLjY5OTIxOSA0NC4xMDE1NjMgMjMgNDQgQyAyNC44MDA3ODEgNDMuMzk4NDM4IDI1LjgwMDc4MSA0MS4zOTg0MzggMjUuMTk5MjE5IDM5LjYwMTU2MyBMIDI0IDM1Ljg5ODQzOCBMIDE3LjM5ODQzOCAzOC4xOTkyMTkgWiBNIDE5LjM5ODQzOCAyMi4xOTkyMTkgTCAxMi44MDA3ODEgMjQuNSBMIDE1LjEwMTU2MyAzMS42MDE1NjMgTCAyMS42OTkyMTkgMjkuMzAwNzgxIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiMwMEJDRDQ7IiBkPSJNIDMzLjM5ODQzOCAxNy4zMDA3ODEgTCAzMS4xOTkyMTkgMTAuNjk5MjE5IEwgMzUuMzAwNzgxIDkuMzAwNzgxIEMgMzcuMTAxNTYzIDguNjk5MjE5IDM5LjEwMTU2MyA5LjYwMTU2MyAzOS42OTkyMTkgMTEuNSBDIDQwLjMwMDc4MSAxMy4zMDA3ODEgMzkuMzk4NDM4IDE1LjMwMDc4MSAzNy41IDE1Ljg5ODQzOCBaIE0gMjYuODAwNzgxIDE5LjYwMTU2MyBMIDI0LjYwMTU2MyAxMyBMIDE3LjE5OTIxOSAxNS42MDE1NjMgTCAxOS4zOTg0MzggMjIuMTk5MjE5IFogTSA2LjM5ODQzOCAxOS4zMDA3ODEgQyA0LjYwMTU2MyAxOS44OTg0MzggMy42MDE1NjMgMjEuODk4NDM4IDQuMTk5MjE5IDIzLjY5OTIxOSBDIDQuNjk5MjE5IDI1LjE5OTIxOSA2LjEwMTU2MyAyNi4xMDE1NjMgNy41IDI2LjEwMTU2MyBDIDcuODk4NDM4IDI2LjEwMTU2MyA4LjMwMDc4MSAyNiA4LjYwMTU2MyAyNS44OTg0MzggTCAxMi42OTkyMTkgMjQuNSBMIDEwLjUgMTcuODk4NDM4IFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiNFOTFFNjM7IiBkPSJNIDE1LjEwMTU2MyAzMS41IEwgMTcuMzAwNzgxIDM4LjEwMTU2MyBMIDEyLjYwMTU2MyAzOS42OTkyMTkgQyAxMi4xOTkyMTkgMzkuODAwNzgxIDExLjgwMDc4MSAzOS44OTg0MzggMTEuNSAzOS44OTg0MzggQyAxMCAzOS44OTg0MzggOC42OTkyMTkgMzkgOC4xOTkyMTkgMzcuNSBDIDcuNjAxNTYzIDM1LjY5OTIxOSA4LjUgMzMuNjk5MjE5IDEwLjM5ODQzOCAzMy4xMDE1NjMgWiBNIDQzLjY5OTIxOSAyNS4zMDA3ODEgQyA0My4xMDE1NjMgMjMuNSA0MS4xMDE1NjMgMjIuNSAzOS4zMDA3ODEgMjMuMTAxNTYzIEwgMzUuODAwNzgxIDI0LjMwMDc4MSBMIDM4IDMxIEwgNDEuNjAxNTYzIDI5LjgwMDc4MSBDIDQzLjM5ODQzOCAyOS4xMDE1NjMgNDQuMzk4NDM4IDI3LjEwMTU2MyA0My42OTkyMTkgMjUuMzAwNzgxIFogTSAyMS42OTkyMTkgMjkuMTk5MjE5IEwgMjMuODk4NDM4IDM1LjgwMDc4MSBMIDMxLjMwMDc4MSAzMy4xOTkyMTkgTCAyOS4xMDE1NjMgMjYuNjAxNTYzIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiMzODhFM0M7IiBkPSJNIDMzLjM5ODQzOCAxNy4zMDA3ODEgTCAzMS4xOTkyMTkgMTAuNjAxNTYzIEwgMjQuNjAxNTYzIDEyLjg5ODQzOCBMIDI2LjgwMDc4MSAxOS42MDE1NjMgWiAiPjwvcGF0aD48cGF0aCBzdHlsZT0iIGZpbGw6IzAwODk3QjsiIGQ9Ik0gMTcuMTk5MjE5IDE1LjUgTCAxMC42MDE1NjMgMTcuODAwNzgxIEwgMTIuODAwNzgxIDI0LjUgTCAxOS4zOTg0MzggMjIuMTk5MjE5IFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiNCRjM2MEM7IiBkPSJNIDI5LjE5OTIxOSAyNi42MDE1NjMgTCAzMS4zOTg0MzggMzMuMzAwNzgxIEwgMzggMzEgTCAzNS44MDA3ODEgMjQuMzAwNzgxIFogIj48L3BhdGg+PHBhdGggc3R5bGU9IiBmaWxsOiM0RTM0MkU7IiBkPSJNIDE1LjEwMTU2MyAzMS41IEwgMTcuMzAwNzgxIDM4LjE5OTIxOSBMIDIzLjg5ODQzOCAzNS44OTg0MzggTCAyMS42OTkyMTkgMjkuMTk5MjE5IFogIj48L3BhdGg+PC9nPjwvc3ZnPg=="></img> </a>
+                <br />
+                <a>Slack</a>
+              </p>
+              
             </div>
             <div className="col-xs-6 col-md-6 col-lg-3" >
               <p className="text-center"  >
@@ -130,15 +140,6 @@ class LandingPage extends Component {
                 </a>
                 <br />
                 <a> Scrum Board</a>
-              </p>
-            </div>
-            <div className="col-xs-6 col-md-6 col-lg-3" >
-              <p className="text-center"  >
-                <a>
-                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASTSURBVGhD7ZltiFRVGMdXTRFsW9/BIikoUMIvGikqgpqEWdIHw7fIlIVdDVFBUUj8YLIbfdLQFRX2S2xknwqEkMIQKV+pXLINdMWXpLAURY3wZbfff+c/V6eZce89M7NecP/w49znOc/znHNmd+65505Vr8qkjo6OZ+ENWAr18CaMcne61dnZ+QSTXUZ7graDNk+4j8G7XPZ1WrrE5F6CXzzZNtgEMzDH0I6F2bAFLjjmOLzo9DBR5zl4C94uB0yojvYa7d+wmOs+HipP9OmvtgpuwhV4xV3JRGIt3KFgWUXN0/C8h+lWpEwg/rKJnReJpD/gZ3iNYq+WAjVmwZ9wHV7wELFFzkT4F762K54YfDRIG+wqSUxgvorR1tuVWORucY2ZdnUvguc4aY5dQaJEX2pMh1PwO/YAdyUWuYOpoe/LXru6F0kbQBptV2Ix4GT40XX0oWx1V7C0CLhKuXi3ZIJbCL5mM7HI1+Z2G/S92O2FzHd3sKixxrXi3Y4JbIVDNhOJPO0Dd+EHGAFzPfg0hwSLGgtda5JdxUVcfwL1aTbZFVvkVMNFaKdOjX0joQF7YFdQCaKOdnppgl3FRfA4RdIutyu2yFnh3NftKpuo+QF07Wu0+o/RWMW/KwQsUjCaaldskXsQzpJbdMcOFXVnwE5zXhOkPQojHJIrOhoVhLr+NZKI3BvQbLNiYm66rdeBvgJHsPu7677o2AfnbcaWimv15DbaVXExVr3HXGLXfWkRsM9mbGkh5P0Du+yquBizH+Pp2e2IXRnRUeMVBn2q5P0kbPaIGK8ZbtrMiDVM9UIW2ZVI5G10/st2VVxeyA2bGeFY7omMsyuRyBsFesI9TJng56q4Yow+jHUGcjdvHE1wm4D8u0BMkf++P4y9NCVvgg/TA2PV2pURjkPQajNY1PjQA+g8M8vusonSOj2uBj0KHcTu566McOgY2mKzJFHnHfjLC7pI8wXtNtqPQiH/Y/gUsuf5AzDMQ2aEv6yHKYlaTzLQStgPl6DkozM1dH7/BvQAmf+IQkdZDlOVEvOKdyMipuTDVCXFvOJtDQSUdJiqtJhbvM2agODDVE+J+enx6Sub+WKhwYepnhTz0wPtWZv5ojN7mKqzK5Vifo0gVduVKzqyZ2E99OnWllbaPM/CZ3Y6sre2VpoTaYX5/UareRbeIrILQam89WbF/LK34Md4IfiCn4TLLeaSfCH4hsK3cA9Owlh3xRY5gyB6+079GuzopwGu9QLvaZuy9TNc9BCoWHjKZvBCtmLraXgN/AoH7H8G1sF6o9yCr3/oa4Do9Mb1LmizKVv7QrQJc30YPrcpWy/7dtgMXsiX8L2vt8M5Xy+G6Hc/Lm/RDFff/0Vfk2Jsym6B6A0N1znnH11D9OKD1JxjBXbQQhbIQdsOUoO71FdN1xBT9BRI3Fz4zKYm8h72dpvqXwubbcrWhrfSpuw9sNBm2EIkJcAnsJS+R/7rKnMIW0jaxPwen4XMc4Be/xf8QTMNML9mWqnwzwp0DCDou0xMusU8H/5yhBi9R51CW/DH/jTA/MZ7ur3qVa8SqarqP6fmK/ZUpY11AAAAAElFTkSuQmCC" />
-                </a>
-                <br />
-                <a> Cloud Storage</a>
               </p>
             </div>
           </div>
@@ -155,18 +156,17 @@ class LandingPage extends Component {
             <div className="row" >
               <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6" >
                 <div className="row" >
-
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
                     <p className="text-right" >
                       <a>
                         <img src="https://avatars1.githubusercontent.com/u/20894704?s=460&v=4" alt="img" style={{ height: '70px', width: '70px' }} />
                       </a>
                       <br />
-                      <label>Jacob Hood</label>
+                      <label className="dev-team-name-label">Jacob Hood</label>
                     </p>
                   </div>
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
-                    <a>Full Stack Engineer</a>
+                    <em>Full Stack Engineer</em>
                     <p></p>
                     <a href="https://github.com/jacobwhood">Github</a>
                   </div>
@@ -180,7 +180,7 @@ class LandingPage extends Component {
                         <img src="https://avatars0.githubusercontent.com/u/40183724?s=96&v=4" alt="img" style={{ height: '70px', width: '70px' }} />
                       </a>
                       <br />
-                      <label>Shawn Acevedo</label>
+                      <label className="dev-team-name-label">Shawn Acevedo</label>
                     </p>
                   </div>
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
@@ -191,13 +191,6 @@ class LandingPage extends Component {
                 </div>
               </div>
             </div>
-            {/* Second row of our team */}
-            <div className="row" >
-              <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6" >
-                <div className="row" >
-
-                </div>
-              </div>
               {/* Second row of our team */}
               <div className="row" >
                 <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6" >
@@ -209,7 +202,7 @@ class LandingPage extends Component {
                           <img src="https://avatars2.githubusercontent.com/u/26049245?s=96&v=4" alt="img" style={{ height: '70px', width: '70px' }} />
                         </a>
                         <br />
-                        <label>Sieh Johnson</label>
+                      <label className="dev-team-name-label">Sieh Johnson</label>
                       </p>
                     </div>
                     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
@@ -227,7 +220,7 @@ class LandingPage extends Component {
                           <img src="https://avatars1.githubusercontent.com/u/31697282?s=460&v=4" alt="img" style={{ height: '70px', width: '70px' }} />
                         </a>
                         <br />
-                        <label>Taro Yamashita</label>
+                      <label className="dev-team-name-label">Taro Yamashita</label>
                       </p>
                     </div>
                     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
@@ -243,7 +236,6 @@ class LandingPage extends Component {
               </div>
             </div>
           </div>
-        </div>
       );
     }
   }
