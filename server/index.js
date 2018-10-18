@@ -444,4 +444,4 @@ nsp.on('connection', (socket) => {
 });
 
 const port = process.env.PORT || 3000;
-server.listen(port, () => console.log(`Listening on port ${port}`));
+server.listen(process.env.PORT || 3000, () => console.log(`Listening on port ${process.env.PORT || 3000}`));
