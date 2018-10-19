@@ -57,7 +57,7 @@ class LandingPage extends Component {
           <div className="row" >
             <div className="col-xs-12 col-lg-12 text-center" >
               {/* , color: 'rgb(49, 102, 218)' */}
-              <h2 id="moto" > Welcome to the best collaborative coding environment  <em style={{ textDecoration: 'underline' }} > EVER. </em> </h2>
+              <em><h2 id="moto" >  The collaborative coding solution </h2></em>
             </div>
           </div>
           <div className="text-center" id="getStarted" >
