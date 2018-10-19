@@ -20,7 +20,7 @@ class SelectRoom extends Component {
       showDataGithubMode: false,
       showDataReplMode: false,
       modes: {
-        GithubMode: ['Github Mode' ,'Open a repo from Github to open and collaboratively edit files.'],
+        GithubMode: ['Github.mode' ,'Open a repo from Github to open and collaboratively edit files.'],
         ReplMode: ['REPL.mode','Perfect for interviews and collaborative code writing/testing.']
       }
     }
@@ -224,7 +224,7 @@ class SelectRoom extends Component {
                       <div className="col-md-1" ></div>
                       <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10" >
                         <div className="text-center" id="sessionTable" >
-                          <a > PREVIOUS SESSIONS</a>
+                          <a> GITHUB REPOSITORIES </a>
                         </div>
                         <div className="table-responsive" >
                           <table id="session" className="table col-xs-12 col-sm-12 col-md-12 col-lg-12" >

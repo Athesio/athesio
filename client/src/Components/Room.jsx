@@ -26,7 +26,7 @@ class Room extends Component {
       contentsLoaded: roomPath.length === 4 ? false : true,
       refId: null,
       code: '',
-      showChatDiv: false,
+      showChatDiv: true,
       minimizeDiv: false,
       showWhiteBoardDiv: false,
       minimizeWhiteBoardDiv: false,
@@ -262,7 +262,7 @@ class Room extends Component {
                   { this.state.showGistModal === true ? <GistModal saveGist={this.saveGistData} status={this.state.showGistModal} toggle={this.toggleGistModal} /> : null }
   
                     <div id="userDiv" >
-                    <a >Share room: {this.state.roomId}</a>
+                    {/* <a >Share room: {this.state.roomId}</a> */}
                       {this.state.roomUsers.map((user, i) => {
                         if (this.state.user.login !== user.username) {
                           return ( 
