@@ -94,7 +94,7 @@ app.post('/api/logout', (req, res) => {
   delete roomInfo[roomId].users[user.login];
   roomInfo[roomId].userCount = Object.keys(roomInfo[roomId].users).length;
   if(roomInfo[roomId].userCount < 1) {
-    axios.get('http://ec2-34-220-162-97.us-west-2.compute.amazonaws.com:3069/killcontainers')
+    axios.get(`${process.env.RUN_CODE_API}/killcontainers`)
     .then(response => console.log('attempt to kill containers'))
     .catch(err => console.log(err));
   }
