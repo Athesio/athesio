@@ -94,9 +94,9 @@ app.post('/api/logout', (req, res) => {
   delete roomInfo[roomId].users[user.login];
   roomInfo[roomId].userCount = Object.keys(roomInfo[roomId].users).length;
   if(roomInfo[roomId].userCount < 1) {
-    axios.get(`${process.env.RUN_CODE_API}/killcontainers`)
-    .then(response => console.log('attempt to kill containers'))
-    .catch(err => console.log(err));
+    // axios.get(`${process.env.RUN_CODE_API}/killcontainers`)
+    // .then(response => console.log('attempt to kill containers'))
+    // .catch(err => console.log(err));
   }
   req.logout();
   res.redirect('/');
@@ -148,9 +148,9 @@ app.post('/api/enterroom', (req, res) => {
       };
 
       // MAKE CONTAINERS
-      axios.get(`${process.env.RUN_CODE_API}/makecontainers`)
-        .then(response => console.log('attempt to create container'))
-        .catch(err => console.log(err));
+      // axios.get(`${process.env.RUN_CODE_API}/makecontainers`)
+      //   .then(response => console.log('attempt to create container'))
+      //   .catch(err => console.log(err));
       res.send(response.data);
     }
 
@@ -209,7 +209,7 @@ app.post('/api/run-code', (req, res) => {
       }
     })
     .then(response => {
-      res.send(response.data);
+      res.send(response.data.toString());
     })
     // .catch((err) => {
     //   console.log('error from mother is', err);
