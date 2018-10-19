@@ -27,33 +27,38 @@ body, html {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #292E49;
+  background-color: rgb(199, 176, 47);
   width: 50%;
-  right: 0px;
+  /* right: 0px; */
+  transition: 1s;
 }
 
-
-#SelectRoom {
+#ReplMode {
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 50%;
-  left: 0px;
-  /* width: 100%; */
-  /*  rgb(63, 63, 63) */
+  right: 0px;
+  position: absolute;
   background-color: #25282d;
   color: white;
-  /* top: 50%; */
+  transition: 1s;
+  cursor: pointer;
 }
 
-#SelectRoom form {
+#ReplModeDetails form {
   border-color: gray;
   border-style: solid;
   border-width: 2px;
   text-align: center;
 }
 
-#SelectRoom .container-fluid {
+
+#GithubModeDetails form {
+  text-align: center;
+}
+
+#ReplMode .container-fluid {
   min-height: 100%;
   /* Fallback for browsers do NOT support vh unit */
   min-height: 99%;
@@ -63,7 +68,10 @@ body, html {
   /* top: 50px; */
 }
 
-#formBox {
+#formBoxGithub {
+  padding-top: 5%;
+}
+#formBoxRepl {
   padding-top: 5%;
 }
 
@@ -696,7 +704,7 @@ table, tr, tbody {
 
 tr:hover {
   cursor: pointer;
-  background-color: rgb(31, 36, 58);
+  background-color: gray;
 }
 
 #HomeNav {
@@ -856,10 +864,48 @@ tr:hover {
   width: 199px;
 }
 
-.message-input-container {
-
+#githubEditorHolder {
+  margin-top:5px;
+  padding-right: 0px;
+  margin-right: 0px;
 }
 
-.send-message-container {
+#ReplModeHover {
+  display: flex;
+  flex-direction: column;
+  font-size: 90px;
+  height: 100vh;
+  text-align: center;
+  background-color: #141618f1;
+  /* color: white; */
+  color: #3b4047da;
+  padding-top: 17%;
+}
+#GithubModeHover {
+  display: flex;
+  flex-direction: column;
+  font-size: 90px;
+  background-color: rgba(141, 125, 31, 0.637);
+  height: 100vh;
+  text-align: center;
+  padding-top: 15%;
+  color: rgba(99, 87, 22, 0.767);
+  /* color: white; */
+  padding-top: 17%;
+  cursor: pointer;
+}
 
+#Morpheus em {
+  font-size: 40px;
+  padding-top: 50px;
+}
+#GithubModeDetails {
+  background-color: rgb(199, 176, 47);
+  color: #25282d;
+  height: 100vh;
+}
+#ReplModeDetails {
+  background-color: #25282d;
+  color: white;
+  height: 100vh;
 }

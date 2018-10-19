@@ -210,9 +210,10 @@ app.post('/api/run-code', (req, res) => {
     })
     .then(response => {
       res.send(response.data);
-    }).catch((err) => {
-      console.log('error from mother is', err);
-    });
+    })
+    // .catch((err) => {
+    //   console.log('error from mother is', err);
+    // });
 });
 
 app.get('/api/github/repos', (req, res) => {
