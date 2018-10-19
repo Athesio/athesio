@@ -262,7 +262,7 @@ class Room extends Component {
                   { this.state.showGistModal === true ? <GistModal saveGist={this.saveGistData} status={this.state.showGistModal} toggle={this.toggleGistModal} /> : null }
   
                     <div id="userDiv" >
-                    <a >Share room: {this.state.roomId}</a>
+                    {/* <a >Share room: {this.state.roomId}</a> */}
                       {this.state.roomUsers.map((user, i) => {
                         if (this.state.user.login !== user.username) {
                           return ( 
