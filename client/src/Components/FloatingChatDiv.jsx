@@ -27,7 +27,7 @@ class FloatingChatDiv extends React.Component {
       <Draggable
         axis="both"
         handle=".handle"
-        defaultPosition={{ x: 5, y: 5 }}
+        defaultPosition={{ x: 50, y: 20 }}
         position={null}
         grid={[10, 10]}
         bounds="parent"
