@@ -26,7 +26,7 @@ class Room extends Component {
       contentsLoaded: roomPath.length === 4 ? false : true,
       refId: null,
       code: '',
-      showChatDiv: false,
+      showChatDiv: true,
       minimizeDiv: false,
       showWhiteBoardDiv: false,
       minimizeWhiteBoardDiv: false,
